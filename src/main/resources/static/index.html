@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>斯巴达幸运 52 后台</title>
+    <style type="text/css">
+        table
+        {
+            border-collapse: collapse;
+            text-align: center;
+            table-layout: fixed;
+            width: 700px;
+        }
+        table td, table th
+        {
+            border: 1px solid #cad9ea;
+            color: #666;
+            height: 30px;
+        }
+        table thead th
+        {
+            background-color: #CCE8EB;
+            width: 100px;
+        }
+        table tr:nth-child(odd)
+        {
+            background: #fff;
+        }
+        table tr:nth-child(even)
+        {
+            background: #F5FAFA;
+        }
+    </style>
+</head>
+<body>
+<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th>姓名</th>
+        <th>得分</th>
+    </tr>
+    </thead>
+    <tbody class="Members">
+
+    </tbody>
+</table>
+</body>
+</html>
+<script>
+  $(document).ready(function () {
+    var str = "";
+    $.ajax({
+      type: "GET",
+      url: "/mozi/v1/lucky-52/get-members",
+      async: true,
+      success: function (data) {
+        window.console.log(data)
+        data.forEach(member => {
+          console.log(member);
+          str += `<tr><td>${member.name}</td><td>${member.valuePoint}</td></tr>`
+        });
+        $('.Members').empty().append(str);
+      },
+      error: function (data) {
+        window.console.log(data);
+      },
+    })
+  })
+</script>

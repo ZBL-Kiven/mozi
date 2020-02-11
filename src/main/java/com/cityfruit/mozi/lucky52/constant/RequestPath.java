@@ -4,7 +4,7 @@ package com.cityfruit.mozi.lucky52.constant;
  * @author tianyuheng
  * @date 2020/02/06
  */
-public class RequestPath {
+public final class RequestPath {
 
     /**
      * 测试

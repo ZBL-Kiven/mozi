@@ -16,6 +16,11 @@ public class Member {
     private String name;
 
     /**
+     * 倍洽 ID
+     */
+    private String bearyChatId;
+
+    /**
      * Value Point
      */
     private String valuePoint;

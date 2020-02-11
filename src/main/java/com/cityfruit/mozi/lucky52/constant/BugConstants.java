@@ -8,7 +8,7 @@ import java.util.stream.Stream;
  * @author tianyuheng
  * @date 2020/02/10
  */
-public class BugConstants {
+public final class BugConstants {
 
     public static final String ACTION_TYPE_CONFIRM = "确认了Bug";
 

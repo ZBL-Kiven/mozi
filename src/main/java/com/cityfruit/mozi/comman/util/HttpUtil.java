@@ -20,15 +20,13 @@ import java.util.Map;
  */
 public class HttpUtil {
 
-    public static String cookies = "zentaosid=9kfif5uhfkd6d0esmt2c2f7e42";
-
     /**
      * 发送 GET 请求
      *
      * @param url 请求 URL
      * @return 相应参数字符串
      */
-    public static String get(String url) {
+    public static String get(String url, String cookie) {
         String result = null;
         try {
             CloseableHttpClient client = null;
@@ -36,7 +34,7 @@ public class HttpUtil {
             try {
                 HttpGet httpGet = new HttpGet(url);
                 httpGet.setHeader(HTTP.CONTENT_TYPE, "application/json");
-                httpGet.setHeader("Cookie", cookies);
+                httpGet.setHeader("Cookie", cookie);
                 client = HttpClients.createDefault();
                 response = client.execute(httpGet);
                 HttpEntity httpEntity = response.getEntity();
@@ -62,7 +60,7 @@ public class HttpUtil {
      * @param body 请求体
      * @return 响应参数字符串
      */
-    public static String post(String url, Map<String, Object> body) {
+    public static String post(String url, Map<String, Object> body, String cookie) {
         String result = null;
         try {
             CloseableHttpClient client = null;
@@ -71,7 +69,7 @@ public class HttpUtil {
                 ObjectMapper objectMapper = new ObjectMapper();
                 HttpPost httpPost = new HttpPost(url);
                 httpPost.setHeader(HTTP.CONTENT_TYPE, "application/json");
-                httpPost.setHeader("Cookie", cookies);
+                httpPost.setHeader("Cookie", cookie);
                 httpPost.setEntity(new StringEntity(objectMapper.writeValueAsString(body),
                         ContentType.create("text/json", "UTF-8")));
                 client = HttpClients.createDefault();

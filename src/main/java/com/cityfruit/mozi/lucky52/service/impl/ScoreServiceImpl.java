@@ -1,16 +1,18 @@
 package com.cityfruit.mozi.lucky52.service.impl;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.cityfruit.mozi.comman.util.DateUtil;
 import com.cityfruit.mozi.comman.util.HttpUtil;
 import com.cityfruit.mozi.comman.util.JsonUtil;
 import com.cityfruit.mozi.comman.util.StringUtil;
 import com.cityfruit.mozi.lucky52.constant.BugConstants;
 import com.cityfruit.mozi.lucky52.constant.FilePath;
+import com.cityfruit.mozi.lucky52.constant.JsonField;
 import com.cityfruit.mozi.lucky52.entity.Bug;
 import com.cityfruit.mozi.lucky52.parameter.ZentaoNoticeRequestParam;
 import com.cityfruit.mozi.lucky52.service.ScoreService;
 import com.cityfruit.mozi.lucky52.util.Utils;
+import com.cityfruit.mozi.lucky52.util.ZentaoUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -43,54 +45,25 @@ public class ScoreServiceImpl implements ScoreService {
         if (actionType == null) {
             return;
         }
-        String bugViewString = HttpUtil.get(StringUtil.getZentaoBugUrl(text));
-        assert !bugViewString.startsWith("<html>");
+        // 请求禅道 BUG 详情链接
+        String bugViewString = HttpUtil.get(StringUtil.getZentaoBugUrl(text), ZentaoUtil.zentaoCookie);
+        // 未登录禅道，登录、重新请求
+        if (bugViewString.startsWith(ZentaoUtil.ZENTAO_NOT_LOGGED_IN_PREFIX)) {
+            ZentaoUtil.login();
+            HttpUtil.get(StringUtil.getZentaoBugUrl(text), ZentaoUtil.zentaoCookie);
+        }
+        // 获取 FastJson 对象的 BUG 详情
         JSONObject jsonBug = JSONObject.parseObject(bugViewString).getJSONObject("data");
         assert jsonBug != null;
         // Bug 对象创建
-        Bug bug = new Bug(jsonBug);
+        Bug bug = new Bug(jsonBug.getJSONObject("bug"));
         // 读取得分统计 json 文件
-        JSONObject jsonScore = null;
-        try {
-            jsonScore = JsonUtil.getJsonFromFile(FilePath.SCORE_JSON_FILE);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        JSONObject jsonScore = JsonUtil.getJsonFromFile(FilePath.SCORE_JSON_FILE);
         assert jsonScore != null;
         // 校验日期
         Utils.checkDate(jsonScore);
-        JSONObject jsonMembers = jsonScore.getJSONObject("members");
-        try {
-            // 校验是否为有效创建/关闭
-            if (bug.checkValid(actionType, jsonMembers)) {
-                // 判断创建/关闭，增加相应分数
-                if (actionType.equals(BugConstants.ACTION_TYPE_CONFIRM)) {
-                    // 成员
-                    JSONObject jsonMember = jsonMembers.getJSONObject(bug.getOpenedBy());
-                    float valuePoint = jsonMember.getFloatValue("valuePoint");
-                    // 增加 VP 值
-                    float valuePointAdd = BugConstants.VALUE_POINTS.get(actionType).get(bug.getSeverity());
-                    valuePoint += valuePointAdd;
-                    jsonMember.put("valuePoint", valuePoint);
-                    log.info("{} 获得 Value Point：{} 分，当前总共 {} 分", jsonMember.getString("name"), valuePointAdd, valuePoint);
-                } else if (actionType.equals(BugConstants.ACTION_TYPE_CLOSE)) {
-                    JSONObject jsonMember = jsonMembers.getJSONObject(bug.getClosedBy());
-                    float valuePoint = jsonMember.getFloatValue("valuePoint");
-                    float valuePointAdd = BugConstants.VALUE_POINTS.get(actionType).get(bug.getSeverity());
-                    valuePoint += valuePointAdd;
-                    jsonMember.put("valuePoint", valuePoint);
-                    log.info("{} 获得 Value Point：{} 分，当前总共 {} 分", jsonMember.getString("name"), valuePointAdd, valuePoint);
-                }
-                // 保存 json 文件
-                try {
-                    JsonUtil.saveJsonFile(jsonScore, FilePath.SCORE_JSON_FILE);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+        // 更新 VP 值并保存
+        Utils.updateValuePointAndSave(jsonScore, bug, actionType);
     }
 
 }

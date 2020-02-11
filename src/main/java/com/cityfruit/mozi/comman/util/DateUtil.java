@@ -23,11 +23,16 @@ public class DateUtil {
      *
      * @param timeString 禅道 BUG 中的时间字符串
      * @return 时间戳
-     * @throws ParseException 时间格式化异常
      */
-    public static long getTimeMillisFromBug(String timeString) throws ParseException {
+    public static long getTimeMillisFromBug(String timeString) {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        Date date = simpleDateFormat.parse(timeString);
+        Date date = null;
+        try {
+            date = simpleDateFormat.parse(timeString);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        assert date != null;
         return date.getTime();
     }
 }

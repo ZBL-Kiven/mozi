@@ -51,7 +51,7 @@ public class Runner implements CommandLineRunner {
             // 遍历 BUG 列表，更新并保存 VP 值
             for (int i = 0; i < jsonBugs.size(); i++) {
                 Bug bug = new Bug(jsonBugs.getJSONObject(i));
-                Utils.updateValuePointAndSave(jsonScore, bug, BugConstants.ACTION_TYPE_CONFIRM);
+                Utils.updateValuePointAndSave(jsonScore, bug, BugConstants.ACTION_TYPE_CONFIRM, false);
             }
             // 统计关闭 BUG 得分
             searchResult = ZentaoUtil.getSearchResult(ZentaoUtil.SEARCH_TODAY_CLOSED, ZentaoUtil.zentaoCookie, productId);
@@ -59,7 +59,7 @@ public class Runner implements CommandLineRunner {
             // 遍历 BUG 列表，更新并保存 VP 值
             for (int i = 0; i < jsonBugs.size(); i++) {
                 Bug bug = new Bug(jsonBugs.getJSONObject(i));
-                Utils.updateValuePointAndSave(jsonScore, bug, BugConstants.ACTION_TYPE_CLOSE);
+                Utils.updateValuePointAndSave(jsonScore, bug, BugConstants.ACTION_TYPE_CLOSE, false);
             }
         }
         log.info("[当日 Value Point 获取情况统计完毕]");

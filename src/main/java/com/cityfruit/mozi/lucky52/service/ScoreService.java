@@ -1,7 +1,5 @@
 package com.cityfruit.mozi.lucky52.service;
 
-import com.alibaba.fastjson.JSONObject;
-import com.cityfruit.mozi.lucky52.entity.Bug;
 import com.cityfruit.mozi.lucky52.parameter.ZentaoNoticeRequestParam;
 
 /**

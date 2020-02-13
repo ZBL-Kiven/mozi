@@ -33,11 +33,6 @@ public class Bug {
     private String openedDate;
 
     /**
-     * 是否需要确认
-     */
-    private boolean needConfirm;
-
-    /**
      * 解决人
      */
     private String resolvedBy;
@@ -62,7 +57,6 @@ public class Bug {
         severity = bugDetail.getString("severity");
         openedBy = bugDetail.getString("openedBy");
         openedDate = bugDetail.getString("openedDate");
-        needConfirm = bugDetail.getBoolean("needconfirm");
         resolution = bugDetail.getString("resolution");
         resolvedBy = bugDetail.getString("resolvedBy");
         closedBy = bugDetail.getString("closedBy");

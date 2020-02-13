@@ -1,13 +1,10 @@
 package com.cityfruit.mozi.lucky52.service.impl;
 
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.cityfruit.mozi.comman.util.HttpUtil;
 import com.cityfruit.mozi.comman.util.JsonUtil;
 import com.cityfruit.mozi.comman.util.StringUtil;
-import com.cityfruit.mozi.lucky52.constant.BugConstants;
 import com.cityfruit.mozi.lucky52.constant.FilePath;
-import com.cityfruit.mozi.lucky52.constant.JsonField;
 import com.cityfruit.mozi.lucky52.entity.Bug;
 import com.cityfruit.mozi.lucky52.parameter.ZentaoNoticeRequestParam;
 import com.cityfruit.mozi.lucky52.service.ScoreService;
@@ -15,9 +12,6 @@ import com.cityfruit.mozi.lucky52.util.Utils;
 import com.cityfruit.mozi.lucky52.util.ZentaoUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-
-import java.io.IOException;
-import java.text.ParseException;
 
 /**
  * @author tianyuheng
@@ -63,7 +57,7 @@ public class ScoreServiceImpl implements ScoreService {
         // 校验日期
         Utils.checkDate(jsonScore);
         // 更新 VP 值并保存
-        Utils.updateValuePointAndSave(jsonScore, bug, actionType);
+        Utils.updateValuePointAndSave(jsonScore, bug, actionType, true);
     }
 
 }

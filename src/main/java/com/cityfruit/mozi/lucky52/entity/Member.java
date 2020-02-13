@@ -1,6 +1,7 @@
 package com.cityfruit.mozi.lucky52.entity;
 
 import com.alibaba.fastjson.JSONObject;
+import com.cityfruit.mozi.lucky52.constant.JsonField;
 import lombok.Data;
 
 /**
@@ -26,8 +27,9 @@ public class Member {
     private String valuePoint;
 
     public Member(JSONObject jsonMember) {
-        name = jsonMember.getString("name");
-        valuePoint = jsonMember.getString("valuePoint");
+        name = jsonMember.getString(JsonField.NAME);
+        bearyChatId = jsonMember.getString(JsonField.BEARY_CHAT_ID);
+        valuePoint = jsonMember.getString(JsonField.VALUE_POINT);
     }
 
 }

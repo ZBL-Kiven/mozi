@@ -9,7 +9,6 @@ import com.cityfruit.mozi.lucky52.service.MemberService;
 import com.cityfruit.mozi.lucky52.util.Utils;
 import org.springframework.stereotype.Service;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 

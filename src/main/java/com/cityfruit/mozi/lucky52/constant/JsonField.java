@@ -12,6 +12,8 @@ public final class JsonField {
 
     public static final String NAME = "name";
 
+    public static final String BEARY_CHAT_ID = "bearyChatId";
+
     public static final String VALUE_POINT = "valuePoint";
 
 }

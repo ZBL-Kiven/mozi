@@ -7,6 +7,7 @@ import com.cityfruit.mozi.lucky52.constant.BugConstants;
 import com.cityfruit.mozi.lucky52.constant.FilePath;
 import com.cityfruit.mozi.lucky52.constant.JsonField;
 import com.cityfruit.mozi.lucky52.entity.Bug;
+import com.cityfruit.mozi.lucky52.service.impl.BearyChatPushServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -42,7 +43,7 @@ public class Utils {
      * @param bug        要校验的 BUG 对象
      * @param actionType BUG 操作类型
      */
-    public static void updateValuePointAndSave(JSONObject jsonScore, Bug bug, String actionType) {
+    public static void updateValuePointAndSave(JSONObject jsonScore, Bug bug, String actionType, boolean pushOpenTreasureBoxNotice) {
         JSONObject jsonMembers = jsonScore.getJSONObject(JsonField.MEMBERS);
         // 校验是否为有效创建/关闭
         if (bug.checkValid(actionType, jsonMembers)) {
@@ -52,8 +53,11 @@ public class Utils {
             float valuePoint = jsonMember.getFloatValue(JsonField.VALUE_POINT);
             // 增加相应 VP 值
             float valuePointAdd = BugConstants.VALUE_POINTS.get(actionType).get(bug.getSeverity());
+            // 分数超过 50 推送
+            if (pushOpenTreasureBoxNotice) {
+                BearyChatPushServiceImpl.checkValuePointAndPushNotice(valuePoint, valuePoint + valuePointAdd, jsonMember.getString(JsonField.BEARY_CHAT_ID));
+            }
             valuePoint += valuePointAdd;
-            // todo 分数超过 50 推送
             jsonMember.put(JsonField.VALUE_POINT, valuePoint);
             log.info("{} {} 获得 Value Point：{} 分，当前总共 {} 分。\nBug 详情：{}", jsonMember.getString(JsonField.NAME), actionType, valuePointAdd, valuePoint, bug);
             // 保存 json 文件

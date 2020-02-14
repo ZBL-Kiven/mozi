@@ -1,6 +1,6 @@
 package com.cityfruit.mozi.lucky52.controller;
 
-import com.cityfruit.mozi.lucky52.constant.RequestPath;
+import com.cityfruit.mozi.lucky52.constant.RequestPathConst;
 import com.cityfruit.mozi.lucky52.entity.Member;
 import com.cityfruit.mozi.lucky52.service.MemberService;
 import lombok.extern.slf4j.Slf4j;
@@ -24,9 +24,9 @@ public class MemberController {
     MemberService memberService;
 
     @ResponseBody
-    @RequestMapping(value = RequestPath.GET_MEMBERS, method = RequestMethod.GET)
+    @RequestMapping(value = RequestPathConst.GET_MEMBERS, method = RequestMethod.GET)
     public List<Member> getMembers() {
-        log.info("[RequestPath: {}]", RequestPath.GET_MEMBERS);
+        log.info("[RequestPathConst: {}]", RequestPathConst.GET_MEMBERS);
         return memberService.getMembers();
     }
 

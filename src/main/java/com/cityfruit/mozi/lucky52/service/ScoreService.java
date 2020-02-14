@@ -14,4 +14,5 @@ public interface ScoreService {
      * @param zentaoNoticeRequestParam 禅道通知请求参数
      */
     void score(ZentaoNoticeRequestParam zentaoNoticeRequestParam);
+
 }

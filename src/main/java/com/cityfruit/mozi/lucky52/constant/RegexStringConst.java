@@ -6,7 +6,7 @@ package com.cityfruit.mozi.lucky52.constant;
  * @author tianyuheng
  * @date 2020/02/10
  */
-public class RegexString {
+public final class RegexStringConst {
 
     /**
      * 禅道通知类型：解决 BUG

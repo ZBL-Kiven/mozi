@@ -2,13 +2,12 @@ package com.cityfruit.mozi.lucky52.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
 import com.cityfruit.mozi.comman.util.JsonUtil;
-import com.cityfruit.mozi.lucky52.constant.FilePath;
+import com.cityfruit.mozi.lucky52.constant.FilePathConst;
+import com.cityfruit.mozi.lucky52.constant.JsonKeysConst;
 import com.cityfruit.mozi.lucky52.entity.Member;
 import com.cityfruit.mozi.lucky52.service.MemberService;
-import com.cityfruit.mozi.lucky52.util.Utils;
 import org.springframework.stereotype.Service;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,17 +26,10 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public List<Member> getMembers() {
         List<Member> members = new ArrayList<>(4);
-        JSONObject jsonScore = new JSONObject();
-        try {
-            // 从 JSON 文件中获取用户
-            jsonScore = JsonUtil.getJsonFromFile(FilePath.SCORE_JSON_FILE);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        // 从 JSON 文件中获取用户
+        JSONObject jsonScore = JsonUtil.getJsonObjectFromFile(FilePathConst.SCORE_JSON_FILE);
         assert jsonScore != null;
-        // 校验日期
-        Utils.checkDate(jsonScore);
-        JSONObject jsonMembers = jsonScore.getJSONObject("members");
+        JSONObject jsonMembers = jsonScore.getJSONObject(JsonKeysConst.MEMBERS);
         // 将用户添加至返回列表
         for (String memberName : jsonMembers.keySet()) {
             Member member = new Member(jsonMembers.getJSONObject(memberName));

@@ -1,21 +1,19 @@
 package com.cityfruit.mozi.lucky52.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
-import com.cityfruit.mozi.comman.util.DateUtil;
 import com.cityfruit.mozi.comman.util.HttpUtil;
 import com.cityfruit.mozi.comman.util.JsonUtil;
 import com.cityfruit.mozi.comman.util.StringUtil;
-import com.cityfruit.mozi.lucky52.constant.BugConstants;
-import com.cityfruit.mozi.lucky52.constant.FilePath;
+import com.cityfruit.mozi.lucky52.constant.BugConst;
+import com.cityfruit.mozi.lucky52.constant.FilePathConst;
+import com.cityfruit.mozi.lucky52.constant.RegexStringConst;
 import com.cityfruit.mozi.lucky52.entity.Bug;
 import com.cityfruit.mozi.lucky52.parameter.ZentaoNoticeRequestParam;
 import com.cityfruit.mozi.lucky52.service.ScoreService;
 import com.cityfruit.mozi.lucky52.util.Utils;
+import com.cityfruit.mozi.lucky52.util.ZentaoUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-
-import java.io.IOException;
-import java.text.ParseException;
 
 /**
  * @author tianyuheng
@@ -37,60 +35,39 @@ public class ScoreServiceImpl implements ScoreService {
         if (text.isEmpty()) {
             return;
         }
-        // 操作类型
-        String actionType = StringUtil.getZentaoNoticeType(text);
-        // 操作类型不是确认/关闭 BUG，跳出
+        // 获取 BUG 操作类型
+        String actionType = null;
+        String[] textArray = text.split(RegexStringConst.ZENTAO_NOTICE_TYPE_SPLIT);
+        if (textArray[0].contains(BugConst.ACTION_TYPE_CONFIRM)) {
+            actionType = BugConst.ACTION_TYPE_CONFIRM;
+        } else if (textArray[0].contains(BugConst.ACTION_TYPE_CLOSE)) {
+            actionType = BugConst.ACTION_TYPE_CLOSE;
+        } else if (textArray[0].contains(BugConst.ACTION_TYPE_OPEN)) {
+            actionType = BugConst.ACTION_TYPE_OPEN;
+        } else if (textArray[0].contains(BugConst.ACTION_TYPE_RESOLVE)) {
+            actionType = BugConst.ACTION_TYPE_RESOLVE;
+        }
+        // 操作类型不是创建/确认/解决/关闭 BUG，跳出
         if (actionType == null) {
             return;
         }
-        String bugViewString = HttpUtil.get(StringUtil.getZentaoBugUrl(text));
-        assert !bugViewString.startsWith("<html>");
+        // 请求禅道 BUG 详情链接
+        String bugViewString = HttpUtil.get(StringUtil.getZentaoBugUrl(text), ZentaoUtil.zentaoCookie);
+        // 未登录禅道，登录、重新请求
+        if (bugViewString.startsWith(ZentaoUtil.ZENTAO_NOT_LOGGED_IN_PREFIX)) {
+            ZentaoUtil.login();
+            HttpUtil.get(StringUtil.getZentaoBugUrl(text), ZentaoUtil.zentaoCookie);
+        }
+        // 获取 FastJson 对象的 BUG 详情
         JSONObject jsonBug = JSONObject.parseObject(bugViewString).getJSONObject("data");
         assert jsonBug != null;
         // Bug 对象创建
-        Bug bug = new Bug(jsonBug);
+        Bug bug = new Bug(jsonBug.getJSONObject("bug"));
         // 读取得分统计 json 文件
-        JSONObject jsonScore = null;
-        try {
-            jsonScore = JsonUtil.getJsonFromFile(FilePath.SCORE_JSON_FILE);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        JSONObject jsonScore = JsonUtil.getJsonObjectFromFile(FilePathConst.SCORE_JSON_FILE);
         assert jsonScore != null;
-        // 校验日期
-        Utils.checkDate(jsonScore);
-        JSONObject jsonMembers = jsonScore.getJSONObject("members");
-        try {
-            // 校验是否为有效创建/关闭
-            if (bug.checkValid(actionType, jsonMembers)) {
-                // 判断创建/关闭，增加相应分数
-                if (actionType.equals(BugConstants.ACTION_TYPE_CONFIRM)) {
-                    // 成员
-                    JSONObject jsonMember = jsonMembers.getJSONObject(bug.getOpenedBy());
-                    float valuePoint = jsonMember.getFloatValue("valuePoint");
-                    // 增加 VP 值
-                    float valuePointAdd = BugConstants.VALUE_POINTS.get(actionType).get(bug.getSeverity());
-                    valuePoint += valuePointAdd;
-                    jsonMember.put("valuePoint", valuePoint);
-                    log.info("{} 获得 Value Point：{} 分，当前总共 {} 分", jsonMember.getString("name"), valuePointAdd, valuePoint);
-                } else if (actionType.equals(BugConstants.ACTION_TYPE_CLOSE)) {
-                    JSONObject jsonMember = jsonMembers.getJSONObject(bug.getClosedBy());
-                    float valuePoint = jsonMember.getFloatValue("valuePoint");
-                    float valuePointAdd = BugConstants.VALUE_POINTS.get(actionType).get(bug.getSeverity());
-                    valuePoint += valuePointAdd;
-                    jsonMember.put("valuePoint", valuePoint);
-                    log.info("{} 获得 Value Point：{} 分，当前总共 {} 分", jsonMember.getString("name"), valuePointAdd, valuePoint);
-                }
-                // 保存 json 文件
-                try {
-                    JsonUtil.saveJsonFile(jsonScore, FilePath.SCORE_JSON_FILE);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+        // 更新 QP 值并保存
+        Utils.updateQualityPointAndSave(jsonScore, bug, actionType, true);
     }
 
 }

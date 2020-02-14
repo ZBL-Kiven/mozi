@@ -1,6 +1,6 @@
 package com.cityfruit.mozi.lucky52.controller;
 
-import com.cityfruit.mozi.lucky52.constant.RequestPath;
+import com.cityfruit.mozi.lucky52.constant.RequestPathConst;
 import com.cityfruit.mozi.lucky52.parameter.ZentaoNoticeRequestParam;
 import com.cityfruit.mozi.lucky52.service.ScoreService;
 import lombok.extern.slf4j.Slf4j;
@@ -20,9 +20,9 @@ public class ScoreController {
     ScoreService scoreService;
 
     @ResponseBody
-    @RequestMapping(value = RequestPath.ZENTAO_NOTICE_WEB_HOOK, method = RequestMethod.POST)
+    @RequestMapping(value = RequestPathConst.ZENTAO_NOTICE_WEB_HOOK, method = RequestMethod.POST)
     public void score(@RequestBody ZentaoNoticeRequestParam zentaoNoticeRequestParam) {
-        log.info("[RequestPath: {}] text: {}", RequestPath.ZENTAO_NOTICE_WEB_HOOK, zentaoNoticeRequestParam.getText());
+        log.info("[RequestPathConst: {}] text: {}", RequestPathConst.ZENTAO_NOTICE_WEB_HOOK, zentaoNoticeRequestParam.getText());
         scoreService.score(zentaoNoticeRequestParam);
     }
 

@@ -1,7 +1,7 @@
 package com.cityfruit.mozi.comman.util;
 
-import com.cityfruit.mozi.lucky52.constant.BugConstants;
-import com.cityfruit.mozi.lucky52.constant.RegexString;
+import com.cityfruit.mozi.lucky52.constant.BugConst;
+import com.cityfruit.mozi.lucky52.constant.RegexStringConst;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -13,19 +13,13 @@ import java.util.regex.Pattern;
 public class StringUtil {
 
     /**
-     * 从禅道通知中获取 BUG 状态
+     * 字符串是否为空
      *
-     * @param text 禅道通知
-     * @return BUG 状态（确认了Bug、关闭了Bug、null）
+     * @param str 字符串
+     * @return 为空：true；不为空：false
      */
-    public static String getZentaoNoticeType(String text) {
-        String[] textArray = text.split(RegexString.ZENTAO_NOTICE_TYPE_SPLIT);
-        if (textArray[0].contains(BugConstants.ACTION_TYPE_CONFIRM)) {
-            return BugConstants.ACTION_TYPE_CONFIRM;
-        } else if (textArray[0].contains(BugConstants.ACTION_TYPE_CLOSE)) {
-            return BugConstants.ACTION_TYPE_CLOSE;
-        }
-        return null;
+    public static boolean isEmpty(String str) {
+        return str == null || "".equals(str.trim()) || "null".equals(str);
     }
 
     /**
@@ -35,7 +29,7 @@ public class StringUtil {
      * @return BUG 链接字符串（匹配不到返回 null）
      */
     public static String getZentaoBugUrl(String text) {
-        Pattern pattern = Pattern.compile(RegexString.ZENTAO_BUG_VIEW_URL, Pattern.CASE_INSENSITIVE);
+        Pattern pattern = Pattern.compile(RegexStringConst.ZENTAO_BUG_VIEW_URL, Pattern.CASE_INSENSITIVE);
         Matcher matcher = pattern.matcher(text);
         if (matcher.find()) {
             return matcher.group().replace(".html", ".json");

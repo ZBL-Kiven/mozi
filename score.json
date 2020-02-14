@@ -1,1 +1,29 @@
-{"ts":1581264000000,"members":{"tlf.xwt":{"name":"许文婷","valuePoint":0},"cfruit.hq":{"name":"何情","valuePoint":1.5},"tfl.hlf":{"name":"胡丽芳","valuePoint":0},"cfruit.zdq":{"name":"郑大钱","valuePoint":0}}}
+{
+  "ts": 1581609600000,
+  "members": {
+    "cfruit.hq": {
+      "name": "何情",
+      "bearyChatId": "heqing",
+      "qualityPoint": 60.0,
+      "openedBugs": [],
+      "opened": false,
+      "qualityFragment": 0
+    },
+    "tfl.hlf": {
+      "name": "胡立芳",
+      "bearyChatId": "hulifang20191125",
+      "qualityPoint": 25.5,
+      "openedBugs": [],
+      "opened": false,
+      "qualityFragment": 0
+    },
+    "cfruit.zdq": {
+      "name": "郑大钱",
+      "bearyChatId": "zgtmac",
+      "qualityPoint": 0,
+      "openedBugs": [],
+      "opened": false,
+      "qualityFragment": 0
+    }
+  }
+}

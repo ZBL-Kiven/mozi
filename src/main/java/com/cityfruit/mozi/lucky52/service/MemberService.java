@@ -5,7 +5,7 @@ import com.cityfruit.mozi.lucky52.entity.Member;
 import java.util.List;
 
 /**
- * @author cityfruit
+ * @author tianyuheng
  */
 public interface MemberService {
 

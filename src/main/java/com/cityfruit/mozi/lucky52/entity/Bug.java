@@ -2,10 +2,8 @@ package com.cityfruit.mozi.lucky52.entity;
 
 import com.alibaba.fastjson.JSONObject;
 import com.cityfruit.mozi.comman.util.DateUtil;
-import com.cityfruit.mozi.lucky52.constant.BugConstants;
+import com.cityfruit.mozi.lucky52.constant.BugConst;
 import lombok.Data;
-
-import java.text.ParseException;
 
 /**
  * @author tianyuheng
@@ -13,6 +11,16 @@ import java.text.ParseException;
  */
 @Data
 public class Bug {
+
+    /**
+     * BUG ID
+     */
+    private String id;
+
+    /**
+     * 严重级别
+     */
+    private String severity;
 
     /**
      * 创建人
@@ -25,9 +33,9 @@ public class Bug {
     private String openedDate;
 
     /**
-     * 确认人
+     * 是否解决
      */
-    private String confirmedBy;
+    private boolean confirmed;
 
     /**
      * 解决人
@@ -45,18 +53,20 @@ public class Bug {
     private String closedBy;
 
     /**
-     * 严重级别
+     * 关闭日期
      */
-    private String severity;
+    private String closedDate;
 
-    public Bug(JSONObject jsonBug) {
-        JSONObject bugDetail = jsonBug.getJSONObject("bug");
+    public Bug(JSONObject bugDetail) {
+        id = bugDetail.getString("id");
+        severity = bugDetail.getString("severity");
         openedBy = bugDetail.getString("openedBy");
         openedDate = bugDetail.getString("openedDate");
         resolution = bugDetail.getString("resolution");
+        confirmed = ("1".equals(bugDetail.getString("confirmed")));
         resolvedBy = bugDetail.getString("resolvedBy");
         closedBy = bugDetail.getString("closedBy");
-        severity = bugDetail.getString("severity");
+        closedDate = bugDetail.getString("closedDate");
     }
 
     /**
@@ -66,11 +76,11 @@ public class Bug {
      *
      * @param members QA 成员得分 JSON 对象
      * @return 有效：true；无效：false
-     * @throws ParseException 时间格式化异常
      */
-    public boolean checkValid(String actionType, JSONObject members) throws ParseException {
-        return (actionType.equals(BugConstants.ACTION_TYPE_CONFIRM) && (DateUtil.getTimeMillisFromBug(openedDate) > DateUtil.getTodayTimeMillis() && members.containsKey(openedBy)))
-                || (actionType.equals(BugConstants.ACTION_TYPE_CLOSE) && (!resolvedBy.isEmpty()) && (BugConstants.BUG_RESOLUTIONS.contains(resolution) && members.containsKey(closedBy)));
+    public boolean checkValid(String actionType, JSONObject members)  {
+        long today = DateUtil.getTodayTimeMillis();
+        return (actionType.equals(BugConst.ACTION_TYPE_CONFIRM) && (DateUtil.getTimeMillisFromBug(openedDate) > today && members.containsKey(openedBy)))
+                || (actionType.equals(BugConst.ACTION_TYPE_CLOSE) && (!resolvedBy.isEmpty()) && (BugConst.BUG_RESOLUTIONS.contains(resolution) && members.containsKey(closedBy)));
     }
 
 }

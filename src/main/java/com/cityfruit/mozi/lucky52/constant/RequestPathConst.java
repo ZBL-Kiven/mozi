@@ -4,7 +4,7 @@ package com.cityfruit.mozi.lucky52.constant;
  * @author tianyuheng
  * @date 2020/02/06
  */
-public final class RequestPath {
+public final class RequestPathConst {
 
     /**
      * 测试
@@ -20,5 +20,10 @@ public final class RequestPath {
      * 获取成员得分
      */
     public static final String GET_MEMBERS = "/mozi/v1/lucky-52/get-members";
+
+    /**
+     * 开宝箱
+     */
+    public static final String OPEN_TREASURE_BOX = "/mozi/v1/lucky-52/open-treasure-box";
 
 }

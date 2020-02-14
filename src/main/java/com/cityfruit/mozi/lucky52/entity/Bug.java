@@ -2,7 +2,7 @@ package com.cityfruit.mozi.lucky52.entity;
 
 import com.alibaba.fastjson.JSONObject;
 import com.cityfruit.mozi.comman.util.DateUtil;
-import com.cityfruit.mozi.lucky52.constant.BugConstants;
+import com.cityfruit.mozi.lucky52.constant.BugConst;
 import lombok.Data;
 
 /**
@@ -33,6 +33,11 @@ public class Bug {
     private String openedDate;
 
     /**
+     * 是否解决
+     */
+    private boolean confirmed;
+
+    /**
      * 解决人
      */
     private String resolvedBy;
@@ -58,6 +63,7 @@ public class Bug {
         openedBy = bugDetail.getString("openedBy");
         openedDate = bugDetail.getString("openedDate");
         resolution = bugDetail.getString("resolution");
+        confirmed = ("1".equals(bugDetail.getString("confirmed")));
         resolvedBy = bugDetail.getString("resolvedBy");
         closedBy = bugDetail.getString("closedBy");
         closedDate = bugDetail.getString("closedDate");
@@ -73,8 +79,8 @@ public class Bug {
      */
     public boolean checkValid(String actionType, JSONObject members)  {
         long today = DateUtil.getTodayTimeMillis();
-        return (actionType.equals(BugConstants.ACTION_TYPE_CONFIRM) && (DateUtil.getTimeMillisFromBug(openedDate) > today && members.containsKey(openedBy)))
-                || (actionType.equals(BugConstants.ACTION_TYPE_CLOSE) && (!resolvedBy.isEmpty()) && (BugConstants.BUG_RESOLUTIONS.contains(resolution) && members.containsKey(closedBy)));
+        return (actionType.equals(BugConst.ACTION_TYPE_CONFIRM) && (DateUtil.getTimeMillisFromBug(openedDate) > today && members.containsKey(openedBy)))
+                || (actionType.equals(BugConst.ACTION_TYPE_CLOSE) && (!resolvedBy.isEmpty()) && (BugConst.BUG_RESOLUTIONS.contains(resolution) && members.containsKey(closedBy)));
     }
 
 }

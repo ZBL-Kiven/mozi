@@ -4,7 +4,7 @@ package com.cityfruit.mozi.lucky52.constant;
  * @author tianyuheng
  * @date 2020/02/11
  */
-public final class Url {
+public final class UrlConst {
 
     /**
      * 禅道获取 SESSION ID URL
@@ -29,6 +29,6 @@ public final class Url {
     /**
      * 倍洽机器人：斯巴达幸运52
      */
-    public static final String BC_VALUE_POINT_PUSH = "https://hook.bearychat.com/=bwD9B/incoming/d9571a4426967225a1cf34acaafcbe5f";
+    public static final String BC_QUALITY_POINT_PUSH = "https://hook.bearychat.com/=bwD9B/incoming/d9571a4426967225a1cf34acaafcbe5f";
 
 }

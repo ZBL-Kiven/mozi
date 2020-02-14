@@ -58,7 +58,7 @@
         window.console.log(data)
         data.forEach(member => {
           console.log(member);
-          str += `<tr><td>${member.name}</td><td>${member.valuePoint}</td></tr>`
+          str += `<tr><td>${member.name}</td><td>${member.qualityPoint}</td></tr>`
         });
         $('.Members').empty().append(str);
       },

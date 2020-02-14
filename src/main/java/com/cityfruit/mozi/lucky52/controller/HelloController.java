@@ -1,6 +1,6 @@
 package com.cityfruit.mozi.lucky52.controller;
 
-import com.cityfruit.mozi.lucky52.constant.RequestPath;
+import com.cityfruit.mozi.lucky52.constant.RequestPathConst;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -18,11 +18,11 @@ import java.text.SimpleDateFormat;
 public class HelloController {
 
     @ResponseBody
-    @RequestMapping(value = RequestPath.HELLO, method = RequestMethod.GET)
+    @RequestMapping(value = RequestPathConst.HELLO, method = RequestMethod.GET)
     public String hello() {
-        log.info("[{} RequestPath: {}]",
+        log.info("[{} RequestPathConst: {}]",
                 new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(System.currentTimeMillis()),
-                RequestPath.HELLO);
+                RequestPathConst.HELLO);
         return "Hello!";
     }
 

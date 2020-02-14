@@ -4,7 +4,9 @@ import com.alibaba.fastjson.JSONObject;
 import com.cityfruit.mozi.comman.util.HttpUtil;
 import com.cityfruit.mozi.comman.util.JsonUtil;
 import com.cityfruit.mozi.comman.util.StringUtil;
-import com.cityfruit.mozi.lucky52.constant.FilePath;
+import com.cityfruit.mozi.lucky52.constant.BugConst;
+import com.cityfruit.mozi.lucky52.constant.FilePathConst;
+import com.cityfruit.mozi.lucky52.constant.RegexStringConst;
 import com.cityfruit.mozi.lucky52.entity.Bug;
 import com.cityfruit.mozi.lucky52.parameter.ZentaoNoticeRequestParam;
 import com.cityfruit.mozi.lucky52.service.ScoreService;
@@ -33,9 +35,19 @@ public class ScoreServiceImpl implements ScoreService {
         if (text.isEmpty()) {
             return;
         }
-        // 操作类型
-        String actionType = StringUtil.getZentaoNoticeType(text);
-        // 操作类型不是确认/关闭 BUG，跳出
+        // 获取 BUG 操作类型
+        String actionType = null;
+        String[] textArray = text.split(RegexStringConst.ZENTAO_NOTICE_TYPE_SPLIT);
+        if (textArray[0].contains(BugConst.ACTION_TYPE_CONFIRM)) {
+            actionType = BugConst.ACTION_TYPE_CONFIRM;
+        } else if (textArray[0].contains(BugConst.ACTION_TYPE_CLOSE)) {
+            actionType = BugConst.ACTION_TYPE_CLOSE;
+        } else if (textArray[0].contains(BugConst.ACTION_TYPE_OPEN)) {
+            actionType = BugConst.ACTION_TYPE_OPEN;
+        } else if (textArray[0].contains(BugConst.ACTION_TYPE_RESOLVE)) {
+            actionType = BugConst.ACTION_TYPE_RESOLVE;
+        }
+        // 操作类型不是创建/确认/解决/关闭 BUG，跳出
         if (actionType == null) {
             return;
         }
@@ -52,12 +64,10 @@ public class ScoreServiceImpl implements ScoreService {
         // Bug 对象创建
         Bug bug = new Bug(jsonBug.getJSONObject("bug"));
         // 读取得分统计 json 文件
-        JSONObject jsonScore = JsonUtil.getJsonFromFile(FilePath.SCORE_JSON_FILE);
+        JSONObject jsonScore = JsonUtil.getJsonObjectFromFile(FilePathConst.SCORE_JSON_FILE);
         assert jsonScore != null;
-        // 校验日期
-        Utils.checkDate(jsonScore);
-        // 更新 VP 值并保存
-        Utils.updateValuePointAndSave(jsonScore, bug, actionType, true);
+        // 更新 QP 值并保存
+        Utils.updateQualityPointAndSave(jsonScore, bug, actionType, true);
     }
 
 }

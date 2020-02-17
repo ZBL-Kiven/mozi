@@ -14,7 +14,7 @@ public final class RequestPathConst {
     /**
      * 禅道通知 WebHook
      */
-    public static final String ZENTAO_NOTICE_WEB_HOOK = "/mozi/v1/treasure-box/zentao-notice";
+    public static final String ZENTAO_NOTICE_WEB_HOOK = "/mozi/v1/lucky-52/zentao-notice";
 
     /**
      * 获取成员得分

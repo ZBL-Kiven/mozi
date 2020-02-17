@@ -106,6 +106,28 @@ public class TreasureBoxUtil {
     /**
      * 根据得分前后的分数获取 Quality Point 对应的概率名称
      *
+     * @param qualityPoint 分数
+     * @return 获取成功：概率名称；获取失败：空
+     */
+    public static String getProbabilityName(float qualityPoint) {
+        if (qualityPoint >= QP_50 && qualityPoint < QP_60) {
+            return PROBABILITY_NAME.get(QP_50);
+        } else if (qualityPoint >= QP_60 && qualityPoint < QP_80) {
+            return PROBABILITY_NAME.get(QP_60);
+        } else if (qualityPoint >= QP_80 && qualityPoint < QP_100) {
+            return PROBABILITY_NAME.get(QP_80);
+        } else if (qualityPoint >= QP_100 && qualityPoint < QP_120) {
+            return PROBABILITY_NAME.get(QP_100);
+        } else if (qualityPoint >= QP_120) {
+            return PROBABILITY_NAME.get(QP_120);
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     * 根据得分前后的分数获取 Quality Point 对应的概率名称
+     *
      * @param beforeQualityPoint 得分前分数
      * @param nowQualityPoint    现在的分数
      * @return 获取成功：概率名称；获取失败：空

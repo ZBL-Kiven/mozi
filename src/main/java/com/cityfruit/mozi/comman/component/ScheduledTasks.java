@@ -50,4 +50,13 @@ public class ScheduledTasks {
         BearyChatPushUtil.pushCannotOpenTreasureBoxMembers(members);
     }
 
+    /**
+     * 每日 18 点向倍洽群组推送满足开宝箱条件的用户提醒
+     */
+    @Scheduled(cron = "0 0 18 * * ?")
+    public void pushOpenTreasureBoxNoticeToBearyChat() {
+        List<Member> members = memberService.getMembers();
+        BearyChatPushUtil.pushOpenTreasureBoxNotice(members);
+    }
+
 }

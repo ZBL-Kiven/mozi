@@ -114,8 +114,4 @@ public class HttpUtil {
         return result;
     }
 
-    public static void main(String[] args) {
-        String searchResult = get("http://cf-issue.i-mocca.com/bug-browse-5-0-unclosed.json", ZentaoUtil.zentaoCookie);
-        System.out.println(JSONObject.parseObject(searchResult).getJSONObject("data").toString());
-    }
 }

@@ -36,6 +36,12 @@ public final class BugConst {
             put("3", 1f);
             put("4", 0.5f);
         }});
+        QUALITY_POINTS.put(ACTION_TYPE_RESOLVE, new HashMap<String, Float>() {{
+            put("1", 16f);
+            put("2", 8f);
+            put("3", 1f);
+            put("4", 0.5f);
+        }});
         QUALITY_POINTS.put(ACTION_TYPE_CLOSE, new HashMap<String, Float>() {{
             put("1", 20f);
             put("2", 8f);

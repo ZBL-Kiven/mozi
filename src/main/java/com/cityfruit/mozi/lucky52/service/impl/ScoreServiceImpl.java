@@ -67,6 +67,7 @@ public class ScoreServiceImpl implements ScoreService {
         // 读取得分统计 json 文件
         JSONObject jsonScore = JsonUtil.getJsonObjectFromFile(FilePathConst.SCORE_JSON_FILE);
         assert jsonScore != null;
+
         // 更新 QP 值并保存
         Utils.updateQualityPointAndSave(jsonScore, bug, actionType, false);
     }

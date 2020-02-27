@@ -109,4 +109,19 @@ public class BearyChatPushUtil {
         }
     }
 
+    /**
+     * 推送任务完成情况到 BC
+     */
+    public static void pushBcByFinishedTask(String bearyChatId, String taskName, int qp, double sumQp) {
+        // 获取概率名称
+        String text = BearyChatConst.getPushBcByFinishedTask(bearyChatId, taskName, qp, sumQp);
+        // 构造推送请求体
+        Map<String, Object> body = new HashMap<String, Object>(1) {{
+            put("text", text);
+        }};
+        // 推送至 BC 群组
+        HttpUtil.post(UrlConst.BC_QUALITY_POINT_PUSH, body, "", HttpUtil.CONTENT_TYPE_JSON);
+        log.info("[推送完成]{}", text);
+    }
 }
+

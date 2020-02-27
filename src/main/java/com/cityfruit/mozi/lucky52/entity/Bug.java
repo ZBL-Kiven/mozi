@@ -57,18 +57,6 @@ public class Bug {
      */
     private String closedDate;
 
-    public Bug(JSONObject bugDetail) {
-        id = bugDetail.getString("id");
-        severity = bugDetail.getString("severity");
-        openedBy = bugDetail.getString("openedBy");
-        openedDate = bugDetail.getString("openedDate");
-        resolution = bugDetail.getString("resolution");
-        confirmed = ("1".equals(bugDetail.getString("confirmed")));
-        resolvedBy = bugDetail.getString("resolvedBy");
-        closedBy = bugDetail.getString("closedBy");
-        closedDate = bugDetail.getString("closedDate");
-    }
-
     /**
      * 校验是否为有效创建/关闭的 BUG
      * 当 BUG 被确认后，判断此 BUG 是否为今日创建、创建人是否为 QA

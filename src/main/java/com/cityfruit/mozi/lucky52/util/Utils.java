@@ -91,7 +91,8 @@ public class Utils {
                 if (jsonMembers.containsKey(bug.getOpenedBy()) && DateUtil.getTimeMillisFromBug(bug.getOpenedDate()) > today) {
                     // 获取该创建人未确认的 BUG 列表
                     JSONObject jsonMember = jsonMembers.getJSONObject(bug.getOpenedBy());
-                    Member member = new Member(jsonMember);
+                    Member member = Member.toMember(jsonMember);
+
                     List<String> openedBugs = member.getOpenedBugs();
                     openedBugs.add(bug.getId());
                     jsonMember.put(JsonKeysConst.OPENED_BUGS, openedBugs);
@@ -104,7 +105,7 @@ public class Utils {
                 if (jsonMembers.containsKey(bug.getOpenedBy()) && DateUtil.getTimeMillisFromBug(bug.getOpenedDate()) > today) {
                     // 获取该创建人未确认的 BUG 列表
                     JSONObject jsonMember = jsonMembers.getJSONObject(bug.getOpenedBy());
-                    Member member = new Member(jsonMember);
+                    Member member = Member.toMember(jsonMember);
                     List<String> openedBugs = member.getOpenedBugs();
                     // 逆向遍历列表，移除 bugId 相等的元素
                     for (int i = openedBugs.size() - 1; i >= 0; i--) {
@@ -126,7 +127,7 @@ public class Utils {
                 // 当天创建的 BUG、创建人属于 QA
                 if (jsonMembers.containsKey(bug.getOpenedBy()) && DateUtil.getTimeMillisFromBug(bug.getOpenedDate()) > today) {
                     JSONObject jsonMember = jsonMembers.getJSONObject(bug.getOpenedBy());
-                    Member member = new Member(jsonMember);
+                    Member member = Member.toMember(jsonMember);
                     List<String> openedBugs = member.getOpenedBugs();
                     // 逆向遍历列表，若存在 BUG ID 相等的元素，移除此元素，并统计加分
                     for (int i = openedBugs.size() - 1; i >= 0; i--) {
@@ -149,7 +150,7 @@ public class Utils {
                     // 解决方案有效
                     if (BugConst.BUG_RESOLUTIONS.contains(bug.getResolution())) {
                         JSONObject jsonMember = jsonMembers.getJSONObject(bug.getClosedBy());
-                        Member member = new Member(jsonMember);
+                        Member member = Member.toMember(jsonMember);
                         // 统计加分
                         increaseQualityPointAndPushNotice(jsonMember, bug, actionType, pushOpenTreasureBoxNotice);
                         // 增加创建相应级别 BUG 数量 1 个

@@ -1,5 +1,6 @@
 package com.cityfruit.mozi.lucky52.service.impl;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.cityfruit.mozi.comman.util.HttpUtil;
 import com.cityfruit.mozi.comman.util.JsonUtil;
@@ -62,7 +63,7 @@ public class ScoreServiceImpl implements ScoreService {
         JSONObject jsonBug = JSONObject.parseObject(bugViewString).getJSONObject("data");
         assert jsonBug != null;
         // Bug 对象创建
-        Bug bug = new Bug(jsonBug.getJSONObject("bug"));
+        Bug bug = JSON.parseObject(jsonBug.getJSONObject("bug").toJSONString(), Bug.class);
         // 读取得分统计 json 文件
         JSONObject jsonScore = JsonUtil.getJsonObjectFromFile(FilePathConst.SCORE_JSON_FILE);
         assert jsonScore != null;

@@ -36,7 +36,7 @@ public class MemberServiceImpl implements MemberService {
         JSONObject jsonMembers = jsonScore.getJSONObject(JsonKeysConst.MEMBERS);
         // 将用户添加至返回列表
         for (String memberName : jsonMembers.keySet()) {
-            Member member = new Member(jsonMembers.getJSONObject(memberName));
+            Member member = Member.toMember(jsonMembers.getJSONObject(memberName));
             members.add(member);
         }
         // 按 QP 得分排序

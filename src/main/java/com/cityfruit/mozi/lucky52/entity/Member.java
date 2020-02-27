@@ -1,5 +1,6 @@
 package com.cityfruit.mozi.lucky52.entity;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.cityfruit.mozi.lucky52.constant.JsonKeysConst;
 import lombok.Data;
@@ -59,24 +60,12 @@ public class Member {
 
     private int qualityFragment;
 
-    public Member(JSONObject jsonMember) {
-        name = jsonMember.getString(JsonKeysConst.NAME);
-        zentaoId = jsonMember.getString(JsonKeysConst.ZENTAO_ID);
-        bearyChatId = jsonMember.getString(JsonKeysConst.BEARY_CHAT_ID);
-        qualityPoint = jsonMember.getFloatValue(JsonKeysConst.QUALITY_POINT);
-        open.put("1", jsonMember.getJSONObject(JsonKeysConst.OPEN).getInteger(JsonKeysConst.S1));
-        open.put("2", jsonMember.getJSONObject(JsonKeysConst.OPEN).getInteger(JsonKeysConst.S2));
-        open.put("3", jsonMember.getJSONObject(JsonKeysConst.OPEN).getInteger(JsonKeysConst.S3));
-        open.put("4", jsonMember.getJSONObject(JsonKeysConst.OPEN).getInteger(JsonKeysConst.S4));
-        close.put("1", jsonMember.getJSONObject(JsonKeysConst.CLOSE).getInteger(JsonKeysConst.S1));
-        close.put("2", jsonMember.getJSONObject(JsonKeysConst.CLOSE).getInteger(JsonKeysConst.S2));
-        close.put("3", jsonMember.getJSONObject(JsonKeysConst.CLOSE).getInteger(JsonKeysConst.S3));
-        close.put("4", jsonMember.getJSONObject(JsonKeysConst.CLOSE).getInteger(JsonKeysConst.S4));
-        for (Object bugId : jsonMember.getJSONArray(JsonKeysConst.OPENED_BUGS)) {
-            openedBugs.add(bugId.toString());
-        }
-        opened = jsonMember.getBoolean(JsonKeysConst.OPENED);
-        qualityFragment = jsonMember.getIntValue(JsonKeysConst.QUALITY_FRAGMENT);
+    public static Member toMember(String json) {
+        return JSON.parseObject(json, Member.class);
+    }
+
+    public static Member toMember(JSONObject json) {
+        return toMember(json.toJSONString());
     }
 
 }

@@ -63,7 +63,6 @@ public class Runner implements CommandLineRunner {
 
     private void execUpdate(JSONObject jsonScore, String content, String type) {
         String bugsStr = JSONObject.parseObject(content).getJSONObject("data").getJSONArray("bugs").toJSONString();
-        System.out.println(bugsStr);
         List<Bug> bugs = JSON.parseArray(bugsStr, Bug.class);
         for (Bug bug : bugs) {
             log.info("{}", bug);

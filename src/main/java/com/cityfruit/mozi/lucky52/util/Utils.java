@@ -96,6 +96,8 @@ public class Utils {
                     }
                     // 统计加分
                     increaseQualityPointAndPushNotice(jsonMember, bug, actionType, pushOpenTreasureBoxNotice);
+                    // 增加创建相应级别 BUG 数量 1 个
+                    jsonMember.getJSONObject(JsonKeysConst.OPEN).put(bug.getSeverity(), member.getOpen().get(bug.getSeverity()) + 1);
                     // 保存列表
                     jsonMember.put(JsonKeysConst.OPENED_BUGS, openedBugs);
                 }
@@ -114,6 +116,8 @@ public class Utils {
                             openedBugs.remove(i);
                             // 统计加分
                             increaseQualityPointAndPushNotice(jsonMember, bug, actionType, pushOpenTreasureBoxNotice);
+                            // 增加创建相应级别 BUG 数量 1 个
+                            jsonMember.getJSONObject(JsonKeysConst.OPEN).put(bug.getSeverity(), member.getOpen().get(bug.getSeverity()) + 1);
                         }
                     }
                     jsonMember.put(JsonKeysConst.OPENED_BUGS, openedBugs);
@@ -127,8 +131,11 @@ public class Utils {
                     // 解决方案有效
                     if (BugConst.BUG_RESOLUTIONS.contains(bug.getResolution())) {
                         JSONObject jsonMember = jsonMembers.getJSONObject(bug.getClosedBy());
+                        Member member = new Member(jsonMember);
                         // 统计加分
                         increaseQualityPointAndPushNotice(jsonMember, bug, actionType, pushOpenTreasureBoxNotice);
+                        // 增加创建相应级别 BUG 数量 1 个
+                        jsonMember.getJSONObject(JsonKeysConst.CLOSE).put(bug.getSeverity(), member.getClose().get(bug.getSeverity()) + 1);
                     }
                 }
                 break;

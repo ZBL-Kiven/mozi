@@ -47,26 +47,14 @@ public class TreasureBoxUtil {
             put(2, 0);
             put(3, 0);
             put(4, 0);
-            put(5, 0);
-            put(6, 0);
+            put(5, 1);
+            put(6, 1);
             put(7, 1);
             put(8, 1);
             put(9, 1);
         }});
         QUALITY_FRAGMENT_MAP.put(QP_60, new HashMap<Integer, Integer>() {{
-            put(0, 0);
-            put(1, 0);
-            put(2, 0);
-            put(3, 0);
-            put(4, 0);
-            put(5, 1);
-            put(6, 1);
-            put(7, 1);
-            put(8, 1);
-            put(9, 2);
-        }});
-        QUALITY_FRAGMENT_MAP.put(QP_80, new HashMap<Integer, Integer>() {{
-            put(0, 0);
+            put(0, 1);
             put(1, 1);
             put(2, 1);
             put(3, 1);
@@ -75,6 +63,18 @@ public class TreasureBoxUtil {
             put(6, 1);
             put(7, 1);
             put(8, 1);
+            put(9, 2);
+        }});
+        QUALITY_FRAGMENT_MAP.put(QP_80, new HashMap<Integer, Integer>() {{
+            put(0, 1);
+            put(1, 1);
+            put(2, 1);
+            put(3, 1);
+            put(4, 1);
+            put(5, 1);
+            put(6, 2);
+            put(7, 2);
+            put(8, 2);
             put(9, 2);
         }});
         QUALITY_FRAGMENT_MAP.put(QP_100, new HashMap<Integer, Integer>() {{

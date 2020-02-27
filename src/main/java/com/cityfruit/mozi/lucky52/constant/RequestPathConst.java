@@ -22,6 +22,16 @@ public final class RequestPathConst {
     public static final String GET_MEMBERS = "/mozi/v1/lucky-52/get-members";
 
     /**
+     * 获取个人得分
+     */
+    public static final String GET_QUALITY_POINT = "/mozi/v1/lucky-52/get-quality-point";
+
+    /**
+     * 获取个人碎片数量
+     */
+    public static final String GET_QUALITY_FRAGMENT = "/mozi/v1/lucky-52/get-quality-fragment";
+
+    /**
      * 开宝箱
      */
     public static final String OPEN_TREASURE_BOX = "/mozi/v1/lucky-52/open-treasure-box";

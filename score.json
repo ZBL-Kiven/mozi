@@ -1,1 +1,94 @@
-{"ts":1581868800000,"members":{"cfruit.hq":{"name":"何情","bearyChatId":"heqing","qualityPoint":0,"openedBugs":[],"opened":false,"qualityFragment":0},"tfl.hlf":{"name":"胡立芳","bearyChatId":"hulifang20191125","qualityPoint":0,"openedBugs":[],"opened":false,"qualityFragment":0},"cfruit.zdq":{"name":"郑大钱","bearyChatId":"zgtmac","qualityPoint":0,"openedBugs":[],"opened":false,"qualityFragment":0}}}
+{
+  "ts": 1582646400000,
+  "members": {
+    "cfruit.hq": {
+      "name": "何情",
+      "zentaoId": "cfruit.hq",
+      "bearyChatId": "heqing",
+      "qualityPoint": 11.0,
+      "openedBugs": [],
+      "open": {
+        "1": 0,
+        "2": 0,
+        "3": 2,
+        "4": 0
+      },
+      "close": {
+        "1": 0,
+        "2": 0,
+        "3": 6,
+        "4": 0
+      },
+      "opened": false,
+      "qualityFragment": 0
+    },
+    "tfl.hlf": {
+      "name": "胡立芳",
+      "zentaoId": "tfl.hlf",
+      "bearyChatId": "hulifang20191125",
+      "qualityPoint": 9.0,
+      "openedBugs": [
+        "4431",
+        "4436",
+        "4435",
+        "4433"
+      ],
+      "open": {
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0
+      },
+      "close": {
+        "1": 0,
+        "2": 0,
+        "3": 6,
+        "4": 0
+      },
+      "opened": false,
+      "qualityFragment": 0
+    },
+    "cfruit.zdq": {
+      "name": "郑大钱",
+      "zentaoId": "cfruit.zdq",
+      "bearyChatId": "zgtmac",
+      "qualityPoint": 0,
+      "openedBugs": [],
+      "open": {
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0
+      },
+      "close": {
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0
+      },
+      "opened": false,
+      "qualityFragment": 0
+    },
+    "tlf.zr": {
+      "name": "周锐",
+      "zentaoId": "tlf.zr",
+      "bearyChatId": "Areo.Chou",
+      "qualityPoint": 0,
+      "openedBugs": [],
+      "open": {
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0
+      },
+      "close": {
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0
+      },
+      "opened": false,
+      "qualityFragment": 0
+    }
+  }
+}

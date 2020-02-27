@@ -27,7 +27,7 @@ public class BearyChatPushUtil {
         // 获取用户信息
         for (Member member : members) {
             // 构造消息体
-            pushTextStringBuilder.append("\n").append(member.getName()).append("的 QP 得分为 ").append(member.getQualityPoint());
+            pushTextStringBuilder.append("\n").append(member.getName()).append(BearyChatConst.scheduleQualityPoint(member));
         }
         String pushText = pushTextStringBuilder.toString();
         // 构造请求体

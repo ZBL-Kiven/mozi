@@ -35,12 +35,21 @@ public class Utils {
             jsonScore.put(JsonKeysConst.TS, todayTimeMillis);
             for (String member : jsonMembers.keySet()) {
                 JSONObject jsonMember = jsonMembers.getJSONObject(member);
-                // 情况 QP 值
+                // 清空 QP 值
                 jsonMember.put(JsonKeysConst.QUALITY_POINT, 0);
                 // 清空未确认 BUG 列表
                 jsonMember.put(JsonKeysConst.OPENED_BUGS, new JSONArray());
                 // 清空当日开宝箱情况
                 jsonMember.put(JsonKeysConst.OPENED, false);
+                // 清空当日创建、关闭的 BUG
+                jsonMember.getJSONObject(JsonKeysConst.OPEN).put(JsonKeysConst.S1, 0);
+                jsonMember.getJSONObject(JsonKeysConst.OPEN).put(JsonKeysConst.S2, 0);
+                jsonMember.getJSONObject(JsonKeysConst.OPEN).put(JsonKeysConst.S3, 0);
+                jsonMember.getJSONObject(JsonKeysConst.OPEN).put(JsonKeysConst.S4, 0);
+                jsonMember.getJSONObject(JsonKeysConst.CLOSE).put(JsonKeysConst.S1, 0);
+                jsonMember.getJSONObject(JsonKeysConst.CLOSE).put(JsonKeysConst.S2, 0);
+                jsonMember.getJSONObject(JsonKeysConst.CLOSE).put(JsonKeysConst.S3, 0);
+                jsonMember.getJSONObject(JsonKeysConst.CLOSE).put(JsonKeysConst.S4, 0);
             }
         } else {
             // 清零 QP 统计
@@ -48,6 +57,15 @@ public class Utils {
                 jsonMembers.getJSONObject(member).put(JsonKeysConst.QUALITY_POINT, 0);
                 // 清空未确认 BUG 列表
                 jsonMembers.getJSONObject(member).put(JsonKeysConst.OPENED_BUGS, new JSONArray());
+                // 清空当日创建、关闭的 BUG
+                jsonMembers.getJSONObject(member).getJSONObject(JsonKeysConst.OPEN).put(JsonKeysConst.S1, 0);
+                jsonMembers.getJSONObject(member).getJSONObject(JsonKeysConst.OPEN).put(JsonKeysConst.S2, 0);
+                jsonMembers.getJSONObject(member).getJSONObject(JsonKeysConst.OPEN).put(JsonKeysConst.S3, 0);
+                jsonMembers.getJSONObject(member).getJSONObject(JsonKeysConst.OPEN).put(JsonKeysConst.S4, 0);
+                jsonMembers.getJSONObject(member).getJSONObject(JsonKeysConst.CLOSE).put(JsonKeysConst.S1, 0);
+                jsonMembers.getJSONObject(member).getJSONObject(JsonKeysConst.CLOSE).put(JsonKeysConst.S2, 0);
+                jsonMembers.getJSONObject(member).getJSONObject(JsonKeysConst.CLOSE).put(JsonKeysConst.S3, 0);
+                jsonMembers.getJSONObject(member).getJSONObject(JsonKeysConst.CLOSE).put(JsonKeysConst.S4, 0);
             }
         }
         // 存储

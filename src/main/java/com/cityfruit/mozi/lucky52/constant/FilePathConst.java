@@ -15,4 +15,9 @@ public final class FilePathConst {
 
     public static final String RECORDS_JSON_FILE = JSON_FILE_PATH + "/records.json";
 
+    public static final String DAY_SCORE_JSON_FILE = JSON_FILE_PATH + "/%s_score.json";
+
+    public static final String MEMBERS_JSON_FILE = JSON_FILE_PATH + "/membser.json";
+
+
 }

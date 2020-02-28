@@ -1,14 +1,10 @@
 package com.cityfruit.mozi.lucky52.util;
 
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.cityfruit.mozi.comman.util.DateUtil;
 import com.cityfruit.mozi.comman.util.JsonUtil;
-import com.cityfruit.mozi.lucky52.constant.BearyChatConst;
-import com.cityfruit.mozi.lucky52.constant.BugConst;
-import com.cityfruit.mozi.lucky52.constant.FilePathConst;
-import com.cityfruit.mozi.lucky52.constant.JsonKeysConst;
+import com.cityfruit.mozi.lucky52.constant.*;
 import com.cityfruit.mozi.lucky52.entity.Bug;
 import com.cityfruit.mozi.lucky52.entity.Member;
 import com.cityfruit.mozi.lucky52.entity.TaskStatus;
@@ -54,6 +50,7 @@ public class Utils {
                 jsonMember.getJSONObject(JsonKeysConst.CLOSE).put(JsonKeysConst.S2, 0);
                 jsonMember.getJSONObject(JsonKeysConst.CLOSE).put(JsonKeysConst.S3, 0);
                 jsonMember.getJSONObject(JsonKeysConst.CLOSE).put(JsonKeysConst.S4, 0);
+                jsonMember.remove("status");
             }
         } else {
             // 清零 QP 统计
@@ -74,6 +71,88 @@ public class Utils {
         }
         // 存储
         JsonUtil.saveJsonFile(jsonScore, FilePathConst.SCORE_JSON_FILE);
+    }
+
+    public static void updateQualityPointAndSave(Map<String, Member> memberMap, Bug bug, String actionType, boolean pushOpenTreasureBoxNotice) {
+
+        //获取当前 BUG 创建人
+        Member member = memberMap.get(bug.getOpenedBy());
+        if (member == null) {
+            log.info("本地数据 没有该创建人" + bug.getOpenedBy());
+            return;
+        }
+
+
+        // 获取该创建人未确认的 BUG 列表
+        List<String> openedBugs = member.getOpenedBugs();
+
+        switch (actionType) {
+
+            // 创建新 BUG，将 BUG ID 添加至 json 文件
+            case BugConst.ACTION_TYPE_OPEN: {
+                // 当天创建的 BUG、创建人属于 QA
+                openedBugs.add(bug.getId());
+                member.setOpenedBugs(openedBugs);
+                break;
+            }
+
+            // 确认 BUG，将 BUG ID 从 json 文件中移除
+            case BugConst.ACTION_TYPE_CONFIRM: {
+                // 当天创建的 BUG、创建人属于 QA
+                // 获取该创建人未确认的 BUG 列表
+                // 逆向遍历列表，移除 bugId 相等的元素
+                for (int i = openedBugs.size() - 1; i >= 0; i--) {
+                    if (openedBugs.get(i).equals(bug.getId())) {
+                        openedBugs.remove(i);
+                    }
+                }
+
+                // 统计加分
+                increaseQualityPointAndPushNotice(member, bug, actionType, pushOpenTreasureBoxNotice);
+
+                // 增加创建相应级别 BUG 数量 1 个
+                member.getOpen().put(bug.getSeverity(), member.getOpen().get(bug.getSeverity()) + 1);
+
+                // 保存列表
+                member.setOpenedBugs(openedBugs);
+                break;
+            }
+
+            // 解决 BUG，若 json 文件中存在此未确认的 BUG，移除此 BUG ID，并进行统计加分
+            case BugConst.ACTION_TYPE_RESOLVE: {
+                // 当天创建的 BUG、创建人属于 QA
+                // 逆向遍历列表，若存在 BUG ID 相等的元素，移除此元素，并统计加分
+                for (int i = openedBugs.size() - 1; i >= 0; i--) {
+                    if (openedBugs.get(i).equals(bug.getId())) {
+                        openedBugs.remove(i);
+                        // 统计加分
+                        increaseQualityPointAndPushNotice(member, bug, actionType, pushOpenTreasureBoxNotice);
+                        // 增加创建相应级别 BUG 数量 1 个
+                        member.getOpen().put(bug.getSeverity(), member.getOpen().get(bug.getSeverity()) + 1);
+                    }
+                }
+                member.setOpenedBugs(openedBugs);
+                break;
+            }
+
+            // 关闭 BUG，校验有效，统计加分
+            case BugConst.ACTION_TYPE_CLOSE: {
+                // 当天关闭的 BUG，关闭人属于 QA
+                // 解决方案有效
+                if (BugConst.BUG_RESOLUTIONS.contains(bug.getResolution())) {
+                    // 统计加分
+                    increaseQualityPointAndPushNotice(member, bug, actionType, pushOpenTreasureBoxNotice);
+
+                    // 增加创建相应级别 BUG 数量 1 个
+                    member.getClose().put(bug.getSeverity(), member.getClose().get(bug.getSeverity()) + 1);
+                }
+                break;
+            }
+
+            default:
+                break;
+        }
+        checkTaskPush(member);
     }
 
     public static void updateQualityPointAndSave(JSONObject jsonScore, Bug bug, String actionType, boolean pushOpenTreasureBoxNotice) {
@@ -213,30 +292,30 @@ public class Utils {
         if (status.isTaskSuccess1() && !status.isTaskPush1()) {
             status.setTaskPush1(true);
             //需要推送
-            pushTask(member, status.getTaskName1(), 1);
+            pushTask(member, TaskConst.TASK_NAME_1, 1);
         }
 
         if (status.isTaskSuccess2() && !status.isTaskPush2()) {
             status.setTaskPush2(true);
             //需要推送
-            pushTask(member, status.getTaskName2(), 1);
+            pushTask(member, TaskConst.TASK_NAME_2, 1);
         }
 
         if (status.isTaskSuccess3() && !status.isTaskPush3()) {
             status.setTaskPush3(true);
             //需要推送
-            pushTask(member, status.getTaskName3(), 3);
+            pushTask(member, TaskConst.TASK_NAME_3, 3);
         }
 
         if (status.isTaskSuccess4() && !status.isTaskPush4()) {
             status.setTaskPush4(true);
             //需要推送
-            pushTask(member, status.getTaskName4(), 5);
+            pushTask(member, TaskConst.TASK_NAME_4, 5);
         }
         if (status.isTaskSuccess5() && !status.isTaskPush5()) {
             status.setTaskPush5(true);
             //需要推送
-            pushTask(member, status.getTaskName5(), 5);
+            pushTask(member, TaskConst.TASK_NAME_5, 5);
         }
 
         // 6、判断今日 S1 BUG 总数 > 0
@@ -247,7 +326,7 @@ public class Utils {
         if (status.isTaskSuccess6() && !status.isTaskPush6()) {
             status.setTaskPush6(true);
             //需要推送
-            pushTask(member, status.getTaskName6(), 2);
+            pushTask(member, TaskConst.TASK_NAME_6, 2);
         }
 
         // 7、判断今日 S2 BUG 总数 > 3
@@ -258,7 +337,7 @@ public class Utils {
         if (status.isTaskSuccess7() && !status.isTaskPush7()) {
             status.setTaskPush7(true);
             //需要推送
-            pushTask(member, status.getTaskName7(), 2);
+            pushTask(member, TaskConst.TASK_NAME_7, 2);
         }
 
         // 8、判断今日 BUG 关闭总数 > 20
@@ -273,7 +352,7 @@ public class Utils {
         if (status.isTaskSuccess8() && !status.isTaskPush8()) {
             status.setTaskPush8(true);
             //需要推送
-            pushTask(member, status.getTaskName8(), 5);
+            pushTask(member, TaskConst.TASK_NAME_8, 5);
         }
 
         // 9、判断今日 BUG S3+S4 关闭总数 > 30
@@ -286,11 +365,11 @@ public class Utils {
         if (status.isTaskSuccess9() && !status.isTaskPush9()) {
             status.setTaskPush9(true);
             //需要推送
-            pushTask(member, status.getTaskName9(), 5);
+            pushTask(member, TaskConst.TASK_NAME_9, 5);
         }
 
         // 10、僵尸 BUG 两个月前的
-        
+
 
         // 11、前一天第一名
 

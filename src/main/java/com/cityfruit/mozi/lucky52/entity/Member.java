@@ -2,6 +2,8 @@ package com.cityfruit.mozi.lucky52.entity;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.cityfruit.mozi.lucky52.bean.MemberBean;
+import com.cityfruit.mozi.lucky52.constant.JsonKeysConst;
 import lombok.Data;
 
 import java.util.ArrayList;
@@ -55,11 +57,23 @@ public class Member {
      * 当日是否开过宝箱
      * 1：开过；0：没开过
      */
-    private boolean opened;
+    private boolean opened = false;
 
     private int qualityFragment;
 
     private TaskStatus status = new TaskStatus();
+
+
+
+
+    public static Member create(MemberBean memberBean) {
+        //非当天数据，更新时间戳，数据清零，重置开宝箱次数
+        Member member = new Member();
+        member.setBearyChatId(memberBean.getBearyChatId());
+        member.setZentaoId(memberBean.getZentaoId());
+        member.setName(memberBean.getName());
+        return member;
+    }
 
     public static Member toMember(String json) {
         return JSON.parseObject(json, Member.class);

@@ -34,9 +34,12 @@ public class JsonUtil {
         return JSON.parseArray(getStringFromFile(fileName));
     }
 
-    private static String getStringFromFile(String fileName) {
+    public static String getStringFromFile(String fileName) {
         // 读取文件
         File jsonFile = new File(fileName);
+        if (!jsonFile.exists()) {
+            return "";
+        }
         FileReader fileReader = null;
         Reader reader = null;
         try {
@@ -64,8 +67,26 @@ public class JsonUtil {
     /**
      * JSON 文件写入、保存
      *
-     * @param jsonObject   JSONObject
+     * @param object   任意对象
      * @param fileName JSON 文件名
+     */
+    public static void saveJsonFile(Object object, String fileName) {
+        BufferedWriter bufferedWriter = openFile(fileName);
+        // 以 JSON 字符串形式写入
+        try {
+            assert bufferedWriter != null;
+            bufferedWriter.write(JSON.toJSONString(object));
+            bufferedWriter.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * JSON 文件写入、保存
+     *
+     * @param jsonObject JSONObject
+     * @param fileName   JSON 文件名
      */
     public static void saveJsonFile(JSONObject jsonObject, String fileName) {
         BufferedWriter bufferedWriter = openFile(fileName);
@@ -82,8 +103,8 @@ public class JsonUtil {
     /**
      * JSON 文件写入、保存
      *
-     * @param jsonArray   JSONArray
-     * @param fileName JSON 文件名
+     * @param jsonArray JSONArray
+     * @param fileName  JSON 文件名
      */
     public static void saveJsonFile(JSONArray jsonArray, String fileName) {
         BufferedWriter bufferedWriter = openFile(fileName);

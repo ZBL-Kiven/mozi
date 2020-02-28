@@ -89,12 +89,12 @@ public class BearyChatConst {
         int addOpen = 0;
         for (String severity : member.getOpen().keySet()
         ) {
-            addOpen += member.getOpen().get(severity);
+            addOpen += member.getOpen().getOrDefault(severity, 0);
         }
         int addClose = 0;
         for (String severity : member.getClose().keySet()
         ) {
-            addOpen += member.getClose().get(severity);
+            addOpen += member.getClose().getOrDefault(severity, 0);
         }
         return "@" + member.getBearyChatId() + "，您当前的 QP 总得分为 " + calculateQualityPoint(member) + "（有效创建 " + addOpen + " 个 bug，有效关闭 " + addClose + " 个 bug。\n" +
                 "> 有效创建 S1 级 bug " + member.getOpen().get("1") + " 个 | S2 级 bug " + member.getOpen().get("2") + " 个 | S3 级 bug " + member.getOpen().get("3") + " 个 | S4 级 bug " + member.getOpen().get("4") + " 个\n" +

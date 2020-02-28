@@ -11,6 +11,13 @@ import java.util.TimeZone;
  */
 public class DateUtil {
 
+    public static String getCurrentDay() {
+        long currentTs = System.currentTimeMillis();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        return sdf.format(new Date(currentTs));
+    }
+
+
     /**
      * @return 当日零点时间戳
      */

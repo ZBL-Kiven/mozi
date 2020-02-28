@@ -23,7 +23,7 @@ public class BearyChatConst {
      */
     public static final String OPEN_TREASURE_BOX_GROUP = "推送测试";
 
-    private static final String PORTAL = "\n---\n[传送门：我有建议提给「斯巴达幸运 52」](http://cityfruit-doc.i-mocca.com/web/#/27?page_id=751)";
+    private static final String PORTAL = "\n---\n [ 传送门：我有建议提给「斯巴达幸运 52」](http://cityfruit-doc.i-mocca.com/web/#/27?page_id=751)";
 
     /**
      * 无效开奖群

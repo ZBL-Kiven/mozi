@@ -29,7 +29,6 @@ public class MemberServiceImpl implements MemberService {
     public List<Member> getMembers() {
 
         List<Member> members = ScoreUtil.getMembers(map -> new ArrayList<>(map.values()));
-
         // 按 QP 得分排序
         return members.stream().sorted(Comparator.comparing(Member::getQualityPoint)).collect(Collectors.toList());
     }

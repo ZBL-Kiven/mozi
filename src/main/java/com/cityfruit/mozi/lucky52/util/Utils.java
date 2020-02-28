@@ -94,6 +94,9 @@ public class Utils {
                 }
                 break;
             }
+            case BugConst.ACTION_TYPE_ZOMBIE: {
+                member.setZombieCount(member.getZombieCount() + 1);
+            }
 
             default:
                 break;
@@ -241,6 +244,21 @@ public class Utils {
      */
     private static void pushTask(Member member, String taskName, int qp) {
         BearyChatPushUtil.pushBcByFinishedTask(member.getBearyChatId(), taskName, qp, member.getQualityPoint());
+    }
+
+
+    public static void pushTask10or11(Map<String, Member> members) {
+        for (Member member : members.values()) {
+            TaskStatus task = member.getStatus();
+            if (task.isTaskSuccess11() && !task.isTaskPush11()) {
+                task.setTaskPush11(true);
+                BearyChatPushUtil.pushBcByFinishedTask(member.getBearyChatId(), TaskConst.TASK_NAME_11, 5, member.getQualityPoint());
+            }
+            if (task.isTaskSuccess10() && !task.isTaskPush10()) {
+                task.setTaskPush10(true);
+                BearyChatPushUtil.pushBcByFinishedTask(member.getBearyChatId(), TaskConst.TASK_NAME_10, 2, member.getQualityPoint());
+            }
+        }
     }
 
 }

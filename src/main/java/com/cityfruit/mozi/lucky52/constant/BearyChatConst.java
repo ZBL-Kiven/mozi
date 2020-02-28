@@ -118,13 +118,15 @@ public class BearyChatConst {
         // (关闭 S3 级 Bug 数)x1.5 +
         // (关闭 S4 级 Bug 数)x2
 
-        float qp = (float) (member.getOpen().getOrDefault("2", 0) * 8 +
-                member.getOpen().getOrDefault("3", 0) +
-                member.getOpen().getOrDefault("4", 0) * 0.5 +
-                member.getClose().getOrDefault("1", 0) * 20 +
-                member.getClose().getOrDefault("2", 0) * 8 +
-                member.getClose().getOrDefault("3", 0) * 1.5 +
-                member.getClose().getOrDefault("4", 0) * 2);
+        float qp = (float) (
+                member.getOpen().getOrDefault("1", 0) * 16 +
+                        member.getOpen().getOrDefault("2", 0) * 8 +
+                        member.getOpen().getOrDefault("3", 0) +
+                        member.getOpen().getOrDefault("4", 0) * 0.5 +
+                        member.getClose().getOrDefault("1", 0) * 20 +
+                        member.getClose().getOrDefault("2", 0) * 8 +
+                        member.getClose().getOrDefault("3", 0) * 1.5 +
+                        member.getClose().getOrDefault("4", 0) * 2);
 
 
         return calculateSpecialQualityPoint(member.getStatus()) + qp;

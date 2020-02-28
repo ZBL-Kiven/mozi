@@ -14,6 +14,12 @@ public class MemberBean {
     public MemberBean() {
     }
 
+    /**
+     *
+     * @param bearyChatId
+     * @param name
+     * @param zentaoId
+     */
     public MemberBean(String bearyChatId, String name, String zentaoId) {
         this.bearyChatId = bearyChatId;
         this.name = name;

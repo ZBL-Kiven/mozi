@@ -2,6 +2,7 @@ package com.cityfruit.mozi.comman.util;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
 
@@ -17,6 +18,25 @@ public class DateUtil {
         return sdf.format(new Date(currentTs));
     }
 
+    public static String getYesterday() {
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.DAY_OF_MONTH, -1);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        return sdf.format(calendar.getTime());
+    }
+
+    /**
+     * 获取上周末 再减去14天（国外时间这个周第一天）
+     *
+     * @return 周末
+     */
+    public static String getZombieDate() {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.DAY_OF_WEEK, 2);
+        calendar.add(Calendar.DAY_OF_MONTH, -14);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        return sdf.format(calendar.getTime());
+    }
 
     /**
      * @return 当日零点时间戳

@@ -1,6 +1,9 @@
 package com.cityfruit.mozi.comman.component;
 
+import com.cityfruit.mozi.lucky52.constant.BearyChatConst;
+import com.cityfruit.mozi.lucky52.constant.TaskConst;
 import com.cityfruit.mozi.lucky52.entity.Member;
+import com.cityfruit.mozi.lucky52.entity.TaskStatus;
 import com.cityfruit.mozi.lucky52.service.MemberService;
 import com.cityfruit.mozi.lucky52.util.BearyChatPushUtil;
 import com.cityfruit.mozi.lucky52.util.ScoreUtil;
@@ -12,6 +15,8 @@ import org.springframework.stereotype.Component;
 import javax.annotation.Resource;
 import java.util.List;
 import java.util.Map;
+
+import static com.cityfruit.mozi.lucky52.constant.TaskConst.TASK_NAME_11;
 
 /**
  * 定时任务
@@ -31,27 +36,20 @@ public class ScheduledTasks {
      */
     @Scheduled(cron = "0 0 0 * * ?")
     public void clearData() {
-        ScoreUtil.getMembers(map -> true);
-
-    }
-
-    /**
-     * 统计昨天排名 以及 统计 僵尸 BUG
-     */
-    @Scheduled(cron = "0 0 9 * * ?")
-    public void statSpecial() {
-        ScoreUtil.getMembers(map -> true);
+        ScoreUtil.getMembers(true, memberMap -> true);
     }
 
 
     /**
      * 10 点,推送特殊任务 10、11
      */
-    @Scheduled(cron = "0 0 9 * * ?")
+    @Scheduled(cron = "0 0 10 * * ?")
     public void pushSpecial() {
-        ScoreUtil.getMembers(map -> true);
+        ScoreUtil.getMembers(map -> {
+            Utils.pushTask10or11(map);
+            return true;
+        });
     }
-
 
     /**
      * 每日 12、15、18 点向倍洽机器人中推送 QP 得分情况

@@ -55,6 +55,8 @@ public class Member {
 
     private int qualityFragment;
 
+    private int zombieCount = 0;
+
     private TaskStatus status = new TaskStatus();
 
     public static Member create(MemberBean memberBean) {
@@ -70,4 +72,5 @@ public class Member {
     public float getQualityPoint() {
         return BearyChatConst.calculateQualityPoint(this);
     }
+
 }

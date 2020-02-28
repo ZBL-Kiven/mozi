@@ -8,13 +8,14 @@ import com.cityfruit.mozi.lucky52.constant.BearyChatConst;
 import com.cityfruit.mozi.lucky52.constant.FilePathConst;
 import com.cityfruit.mozi.lucky52.constant.JsonKeysConst;
 import com.cityfruit.mozi.lucky52.entity.Member;
+import com.cityfruit.mozi.lucky52.entity.RecordInfo;
 import com.cityfruit.mozi.lucky52.parameter.BearyChatRequestParam;
 import com.cityfruit.mozi.lucky52.service.TreasureBoxService;
-import com.cityfruit.mozi.lucky52.util.ScoreUtil;
-import com.cityfruit.mozi.lucky52.util.TreasureBoxUtil;
-import com.cityfruit.mozi.lucky52.util.UserUtil;
+import com.cityfruit.mozi.lucky52.util.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * @author tianyuheng
@@ -79,16 +80,20 @@ public class TreasureBoxServiceImpl implements TreasureBoxService {
             });
 
             // 开宝箱记录
-            JSONArray jsonRecords = JsonUtil.getJsonArrayFromFile(FilePathConst.RECORDS_JSON_FILE);
-            JSONObject jsonRecord = new JSONObject(true);
-            jsonRecord.put(JsonKeysConst.TS, System.currentTimeMillis());
-            jsonRecord.put(JsonKeysConst.NAME, member.getName());
-            jsonRecord.put(JsonKeysConst.QUALITY_POINT, qp);
-            jsonRecord.put(JsonKeysConst.OPENED, true);
-            jsonRecord.put(JsonKeysConst.QUALITY_FRAGMENT, qualityFragment);
-            jsonRecord.put(JsonKeysConst.EXCHANGED, false);
-            jsonRecords.add(jsonRecord);
-            JsonUtil.saveJsonFile(jsonRecords, FilePathConst.RECORDS_JSON_FILE);
+            Member temp = member;
+
+            RecordUtil.listRecord(true, recordInfos -> {
+                RecordInfo info = new RecordInfo();
+                info.setTs(System.currentTimeMillis());
+                info.setName(temp.getName());
+                info.setQualityPoint(qp);
+                info.setOpened(true);
+                info.setQualityFragment(qualityFragment);
+                info.setExchanged(false);
+                recordInfos.add(info);
+                return recordInfos;
+            });
+
             log.info("{}，打开了宝箱，获得了 {} 个品质碎片", member.getName(), qualityFragment);
             // 返回推送内容
             return BearyChatConst.openTreasureBoxResult(bearyChatName, qualityFragment);

@@ -9,12 +9,16 @@ import com.cityfruit.mozi.lucky52.constant.BugConst;
 import com.cityfruit.mozi.lucky52.constant.FilePathConst;
 import com.cityfruit.mozi.lucky52.constant.RegexStringConst;
 import com.cityfruit.mozi.lucky52.entity.Bug;
+import com.cityfruit.mozi.lucky52.entity.Member;
 import com.cityfruit.mozi.lucky52.parameter.ZentaoNoticeRequestParam;
 import com.cityfruit.mozi.lucky52.service.ScoreService;
+import com.cityfruit.mozi.lucky52.util.ScoreUtil;
 import com.cityfruit.mozi.lucky52.util.Utils;
 import com.cityfruit.mozi.lucky52.util.ZentaoUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+
+import java.util.Map;
 
 /**
  * @author tianyuheng
@@ -64,12 +68,15 @@ public class ScoreServiceImpl implements ScoreService {
         assert jsonBug != null;
         // Bug 对象创建
         Bug bug = JSON.parseObject(jsonBug.getJSONObject("bug").toJSONString(), Bug.class);
-        // 读取得分统计 json 文件
-        JSONObject jsonScore = JsonUtil.getJsonObjectFromFile(FilePathConst.SCORE_JSON_FILE);
-        assert jsonScore != null;
 
-        // 更新 QP 值并保存
-        Utils.updateQualityPointAndSave(jsonScore, bug, actionType, false);
+        String type = actionType;
+
+
+        ScoreUtil.getMembers(map -> {
+            // 更新 QP 值并保存
+            Utils.updateQualityPointAndSave(map, bug, type, false);
+            return true;
+        });
     }
 
 }

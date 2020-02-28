@@ -1,14 +1,10 @@
 package com.cityfruit.mozi.lucky52.util;
 
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.cityfruit.mozi.comman.util.DateUtil;
 import com.cityfruit.mozi.comman.util.JsonUtil;
-import com.cityfruit.mozi.lucky52.constant.BearyChatConst;
-import com.cityfruit.mozi.lucky52.constant.BugConst;
-import com.cityfruit.mozi.lucky52.constant.FilePathConst;
-import com.cityfruit.mozi.lucky52.constant.JsonKeysConst;
+import com.cityfruit.mozi.lucky52.constant.*;
 import com.cityfruit.mozi.lucky52.entity.Bug;
 import com.cityfruit.mozi.lucky52.entity.Member;
 import com.cityfruit.mozi.lucky52.entity.TaskStatus;
@@ -24,69 +20,14 @@ import java.util.Map;
 @Slf4j
 public class Utils {
 
-    /**
-     * 校验日期是否为今天
-     * 若不是今天，将时间戳更新为今日零点时间戳，清零 QP 统计，重置开宝箱次数，清空未确认 BUG 列表
-     * 若是今天，清零 QP 统计，清空未确认 BUG 列表
-     */
-    public static void checkDateAndClearData() {
-        JSONObject jsonScore = JsonUtil.getJsonObjectFromFile(FilePathConst.SCORE_JSON_FILE);
-        JSONObject jsonMembers = jsonScore.getJSONObject(JsonKeysConst.MEMBERS);
-        // 判断得分统计是否为当天统计
-        long todayTimeMillis = DateUtil.getTodayTimeMillis();
-        // json 文件数据非当天数据，更新时间戳，数据清零，重置开宝箱次数
-        if (jsonScore.getLongValue(JsonKeysConst.TS) < todayTimeMillis) {
-            jsonScore.put(JsonKeysConst.TS, todayTimeMillis);
-            for (String member : jsonMembers.keySet()) {
-                JSONObject jsonMember = jsonMembers.getJSONObject(member);
-                // 清空 QP 值
-                jsonMember.put(JsonKeysConst.QUALITY_POINT, 0);
-                // 清空未确认 BUG 列表
-                jsonMember.put(JsonKeysConst.OPENED_BUGS, new JSONArray());
-                // 清空当日开宝箱情况
-                jsonMember.put(JsonKeysConst.OPENED, false);
-                // 清空当日创建、关闭的 BUG
-                jsonMember.getJSONObject(JsonKeysConst.OPEN).put(JsonKeysConst.S1, 0);
-                jsonMember.getJSONObject(JsonKeysConst.OPEN).put(JsonKeysConst.S2, 0);
-                jsonMember.getJSONObject(JsonKeysConst.OPEN).put(JsonKeysConst.S3, 0);
-                jsonMember.getJSONObject(JsonKeysConst.OPEN).put(JsonKeysConst.S4, 0);
-                jsonMember.getJSONObject(JsonKeysConst.CLOSE).put(JsonKeysConst.S1, 0);
-                jsonMember.getJSONObject(JsonKeysConst.CLOSE).put(JsonKeysConst.S2, 0);
-                jsonMember.getJSONObject(JsonKeysConst.CLOSE).put(JsonKeysConst.S3, 0);
-                jsonMember.getJSONObject(JsonKeysConst.CLOSE).put(JsonKeysConst.S4, 0);
-            }
-        } else {
-            // 清零 QP 统计
-            for (String member : jsonMembers.keySet()) {
-                jsonMembers.getJSONObject(member).put(JsonKeysConst.QUALITY_POINT, 0);
-                // 清空未确认 BUG 列表
-                jsonMembers.getJSONObject(member).put(JsonKeysConst.OPENED_BUGS, new JSONArray());
-                // 清空当日创建、关闭的 BUG
-                jsonMembers.getJSONObject(member).getJSONObject(JsonKeysConst.OPEN).put(JsonKeysConst.S1, 0);
-                jsonMembers.getJSONObject(member).getJSONObject(JsonKeysConst.OPEN).put(JsonKeysConst.S2, 0);
-                jsonMembers.getJSONObject(member).getJSONObject(JsonKeysConst.OPEN).put(JsonKeysConst.S3, 0);
-                jsonMembers.getJSONObject(member).getJSONObject(JsonKeysConst.OPEN).put(JsonKeysConst.S4, 0);
-                jsonMembers.getJSONObject(member).getJSONObject(JsonKeysConst.CLOSE).put(JsonKeysConst.S1, 0);
-                jsonMembers.getJSONObject(member).getJSONObject(JsonKeysConst.CLOSE).put(JsonKeysConst.S2, 0);
-                jsonMembers.getJSONObject(member).getJSONObject(JsonKeysConst.CLOSE).put(JsonKeysConst.S3, 0);
-                jsonMembers.getJSONObject(member).getJSONObject(JsonKeysConst.CLOSE).put(JsonKeysConst.S4, 0);
-            }
-        }
-        // 存储
-        JsonUtil.saveJsonFile(jsonScore, FilePathConst.SCORE_JSON_FILE);
-    }
-
-    public static void updateQualityPointAndSave(JSONObject jsonScore, Bug bug, String actionType, boolean pushOpenTreasureBoxNotice) {
-        // 当日零点时间戳
-        long today = jsonScore.getLongValue(JsonKeysConst.TS);
-        JSONObject jsonMembers = jsonScore.getJSONObject(JsonKeysConst.MEMBERS);
-
-        if (jsonMembers.containsKey(bug.getOpenedBy()) && DateUtil.getTimeMillisFromBug(bug.getOpenedDate()) < today) {
-            return;
-        }
+    public static void updateQualityPointAndSave(Map<String, Member> memberMap, Bug bug, String actionType, boolean pushOpenTreasureBoxNotice) {
 
         //获取当前 BUG 创建人
-        Member member = Member.toMember(jsonMembers.getJSONObject(bug.getOpenedBy()));
+        Member member = memberMap.get(bug.getOpenedBy());
+        if (member == null) {
+            log.info("本地数据 没有该创建人" + bug.getOpenedBy());
+            return;
+        }
 
         // 获取该创建人未确认的 BUG 列表
         List<String> openedBugs = member.getOpenedBugs();
@@ -153,13 +94,14 @@ public class Utils {
                 }
                 break;
             }
+            case BugConst.ACTION_TYPE_ZOMBIE: {
+                member.setZombieCount(member.getZombieCount() + 1);
+            }
 
             default:
                 break;
         }
         checkTaskPush(member);
-        jsonMembers.put(bug.getOpenedBy(), member);
-        JsonUtil.saveJsonFile(jsonScore, FilePathConst.SCORE_JSON_FILE);
     }
 
     /**
@@ -180,9 +122,6 @@ public class Utils {
         if (pushOpenTreasureBoxNotice) {
             BearyChatPushUtil.checkQualityPointAndPushNotice(qualityPoint, qualityPoint + qualityPointAdd, member.getBearyChatId());
         }
-
-        qualityPoint += qualityPointAdd;
-        member.setQualityPoint(qualityPoint);
 
         log.info("{} {} 获得 Quality Point：{} 分，当前总共 {} 分。\nBug 详情：{}", member.getName(), actionType, qualityPointAdd, qualityPoint, bug);
     }
@@ -213,30 +152,30 @@ public class Utils {
         if (status.isTaskSuccess1() && !status.isTaskPush1()) {
             status.setTaskPush1(true);
             //需要推送
-            pushTask(member, status.getTaskName1(), 1);
+            pushTask(member, TaskConst.TASK_NAME_1, 1);
         }
 
         if (status.isTaskSuccess2() && !status.isTaskPush2()) {
             status.setTaskPush2(true);
             //需要推送
-            pushTask(member, status.getTaskName2(), 1);
+            pushTask(member, TaskConst.TASK_NAME_2, 1);
         }
 
         if (status.isTaskSuccess3() && !status.isTaskPush3()) {
             status.setTaskPush3(true);
             //需要推送
-            pushTask(member, status.getTaskName3(), 3);
+            pushTask(member, TaskConst.TASK_NAME_3, 3);
         }
 
         if (status.isTaskSuccess4() && !status.isTaskPush4()) {
             status.setTaskPush4(true);
             //需要推送
-            pushTask(member, status.getTaskName4(), 5);
+            pushTask(member, TaskConst.TASK_NAME_4, 5);
         }
         if (status.isTaskSuccess5() && !status.isTaskPush5()) {
             status.setTaskPush5(true);
             //需要推送
-            pushTask(member, status.getTaskName5(), 5);
+            pushTask(member, TaskConst.TASK_NAME_5, 5);
         }
 
         // 6、判断今日 S1 BUG 总数 > 0
@@ -247,7 +186,7 @@ public class Utils {
         if (status.isTaskSuccess6() && !status.isTaskPush6()) {
             status.setTaskPush6(true);
             //需要推送
-            pushTask(member, status.getTaskName6(), 2);
+            pushTask(member, TaskConst.TASK_NAME_6, 2);
         }
 
         // 7、判断今日 S2 BUG 总数 > 3
@@ -258,7 +197,7 @@ public class Utils {
         if (status.isTaskSuccess7() && !status.isTaskPush7()) {
             status.setTaskPush7(true);
             //需要推送
-            pushTask(member, status.getTaskName7(), 2);
+            pushTask(member, TaskConst.TASK_NAME_7, 2);
         }
 
         // 8、判断今日 BUG 关闭总数 > 20
@@ -273,7 +212,7 @@ public class Utils {
         if (status.isTaskSuccess8() && !status.isTaskPush8()) {
             status.setTaskPush8(true);
             //需要推送
-            pushTask(member, status.getTaskName8(), 5);
+            pushTask(member, TaskConst.TASK_NAME_8, 5);
         }
 
         // 9、判断今日 BUG S3+S4 关闭总数 > 30
@@ -286,11 +225,11 @@ public class Utils {
         if (status.isTaskSuccess9() && !status.isTaskPush9()) {
             status.setTaskPush9(true);
             //需要推送
-            pushTask(member, status.getTaskName9(), 5);
+            pushTask(member, TaskConst.TASK_NAME_9, 5);
         }
 
         // 10、僵尸 BUG 两个月前的
-        
+
 
         // 11、前一天第一名
 
@@ -304,7 +243,25 @@ public class Utils {
      * @param qp       当前qp 点数
      */
     private static void pushTask(Member member, String taskName, int qp) {
-        BearyChatPushUtil.pushBcByFinishedTask(member.getBearyChatId(), taskName, qp, BearyChatConst.calculateQualityPoint(member));
+        BearyChatPushUtil.pushBcByFinishedTask(member.getBearyChatId(), taskName, qp, member.getQualityPoint());
+    }
+
+
+    public static void pushTask10or11(Map<String, Member> members) {
+        log.info("[开始向倍洽群组推送 一群 特殊任务 完成情况]");
+        for (Member member : members.values()) {
+            TaskStatus task = member.getStatus();
+            if (task.isTaskSuccess11() && !task.isTaskPush11()) {
+                log.info("[开始向倍洽群组推送 {} {} 特殊任务 完成情况]", member.getName(), 11);
+                task.setTaskPush11(true);
+                BearyChatPushUtil.pushBcByFinishedTask(member.getBearyChatId(), TaskConst.TASK_NAME_11, 5, member.getQualityPoint());
+            }
+            if (task.isTaskSuccess10() && !task.isTaskPush10()) {
+                log.info("[开始向倍洽群组推送 {} {} 特殊任务 完成情况]", member.getName(), 10);
+                task.setTaskPush10(true);
+                BearyChatPushUtil.pushBcByFinishedTask(member.getBearyChatId(), TaskConst.TASK_NAME_10, 2, member.getQualityPoint());
+            }
+        }
     }
 
 }

@@ -1,18 +1,13 @@
 package com.cityfruit.mozi.lucky52.service.impl;
 
-import com.alibaba.fastjson.JSONObject;
-import com.cityfruit.mozi.comman.util.JsonUtil;
 import com.cityfruit.mozi.lucky52.constant.BearyChatConst;
-import com.cityfruit.mozi.lucky52.constant.FilePathConst;
-import com.cityfruit.mozi.lucky52.constant.JsonKeysConst;
 import com.cityfruit.mozi.lucky52.entity.Member;
 import com.cityfruit.mozi.lucky52.parameter.BearyChatRequestParam;
 import com.cityfruit.mozi.lucky52.service.MemberService;
+import com.cityfruit.mozi.lucky52.util.ScoreUtil;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -29,18 +24,11 @@ public class MemberServiceImpl implements MemberService {
      */
     @Override
     public List<Member> getMembers() {
-        List<Member> members = new ArrayList<>(8);
-        // 从 JSON 文件中获取用户
-        JSONObject jsonScore = JsonUtil.getJsonObjectFromFile(FilePathConst.SCORE_JSON_FILE);
-        assert jsonScore != null;
-        JSONObject jsonMembers = jsonScore.getJSONObject(JsonKeysConst.MEMBERS);
-        // 将用户添加至返回列表
-        for (String memberName : jsonMembers.keySet()) {
-            Member member = Member.toMember(jsonMembers.getJSONObject(memberName));
-            members.add(member);
-        }
+        List<Member> members = ScoreUtil.getMembers(map -> new ArrayList<>(map.values()));
         // 按 QP 得分排序
-        return members.stream().sorted(Comparator.comparing(Member::getQualityPoint)).collect(Collectors.toList());
+        members = members.stream().sorted(Comparator.comparing(Member::getQualityPoint)).collect(Collectors.toList());
+        Collections.reverse(members);
+        return members;
     }
 
     /**

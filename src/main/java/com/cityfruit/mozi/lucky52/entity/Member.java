@@ -1,7 +1,7 @@
 package com.cityfruit.mozi.lucky52.entity;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.annotation.JSONField;
+import com.cityfruit.mozi.lucky52.constant.BearyChatConst;
 import lombok.Data;
 
 import java.util.ArrayList;
@@ -32,11 +32,6 @@ public class Member {
     private String bearyChatId;
 
     /**
-     * Quality Point
-     */
-    private float qualityPoint;
-
-    /**
      * 有效创建不同级别的 BUG 数量
      */
     private Map<String, Integer> open = new HashMap<>(4);
@@ -55,18 +50,24 @@ public class Member {
      * 当日是否开过宝箱
      * 1：开过；0：没开过
      */
-    private boolean opened;
+    private boolean opened = false;
 
-    private int qualityFragment;
+    private int zombieCount = 0;
 
     private TaskStatus status = new TaskStatus();
 
-    public static Member toMember(String json) {
-        return JSON.parseObject(json, Member.class);
+    public static Member create(UserInfo memberBean) {
+        //非当天数据，更新时间戳，数据清零，重置开宝箱次数
+        Member member = new Member();
+        member.setBearyChatId(memberBean.getBearyChatId());
+        member.setZentaoId(memberBean.getZentaoId());
+        member.setName(memberBean.getName());
+        return member;
     }
 
-    public static Member toMember(JSONObject json) {
-        return toMember(json.toJSONString());
+    @JSONField(serialize = false)
+    public float getQualityPoint() {
+        return BearyChatConst.calculateQualityPoint(this);
     }
 
 }

@@ -19,6 +19,8 @@ public final class BugConst {
 
     public static final String ACTION_TYPE_CLOSE = "关闭了Bug";
 
+    public static final String ACTION_TYPE_ZOMBIE = "僵尸BUG";
+
     public static final Set<String> BUG_RESOLUTIONS = Stream.of("fixed", "tostory", "postponed", "timebomb")
             .collect(Collectors.toCollection(HashSet::new));
 

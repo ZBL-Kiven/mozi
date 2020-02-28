@@ -23,7 +23,7 @@ public class ScoreUtil {
     public static void setListener(ScoreListener listener) {
         ScoreUtil.listener = listener;
     }
-    
+
     public interface Fun<T, R> {
         R exec(T t);
     }
@@ -50,6 +50,7 @@ public class ScoreUtil {
         HashMap<String, Member> members = new HashMap<>();
         //生成今日 members
         String membersStr = JsonUtil.getStringFromFile(FilePathConst.MEMBERS_JSON_FILE);
+
         List<MemberBean> memberBeans = JSON.parseArray(membersStr, MemberBean.class);
 
         // 生成今日的统计报告 MemberBean -> Member

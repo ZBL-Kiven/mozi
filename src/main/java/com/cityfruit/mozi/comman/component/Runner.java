@@ -2,22 +2,15 @@ package com.cityfruit.mozi.comman.component;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.cityfruit.mozi.comman.util.DateUtil;
-import com.cityfruit.mozi.comman.util.JsonUtil;
-import com.cityfruit.mozi.comman.util.StringUtil;
-import com.cityfruit.mozi.lucky52.bean.MemberBean;
 import com.cityfruit.mozi.lucky52.constant.BugConst;
-import com.cityfruit.mozi.lucky52.constant.FilePathConst;
 import com.cityfruit.mozi.lucky52.entity.Bug;
 import com.cityfruit.mozi.lucky52.entity.Member;
-import com.cityfruit.mozi.lucky52.tools.MapType;
 import com.cityfruit.mozi.lucky52.util.ScoreUtil;
 import com.cityfruit.mozi.lucky52.util.Utils;
 import com.cityfruit.mozi.lucky52.util.ZentaoUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
-import org.springframework.util.SocketUtils;
 
 import java.util.List;
 import java.util.Map;
@@ -32,13 +25,11 @@ public class Runner implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
-//        initQualityPoint();
         init();
     }
 
     private void init() {
         ScoreUtil.setListener(ScoreUtil::createScore);
-
         ScoreUtil.getMembers(memberMap -> {
             //清空数据
             ScoreUtil.clearCurrentDayCache(memberMap);

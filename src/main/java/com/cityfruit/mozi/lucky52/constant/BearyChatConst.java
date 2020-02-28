@@ -96,7 +96,7 @@ public class BearyChatConst {
         ) {
             addOpen += member.getClose().getOrDefault(severity, 0);
         }
-        return "@" + member.getBearyChatId() + "，您当前的 QP 总得分为 " + calculateQualityPoint(member) + "（有效创建 " + addOpen + " 个 bug，有效关闭 " + addClose + " 个 bug。\n" +
+        return "@" + member.getBearyChatId() + "，您当前的 QP 总得分为 " + member.getQualityPoint() + "（有效创建 " + addOpen + " 个 bug，有效关闭 " + addClose + " 个 bug。\n" +
                 "> 有效创建 S1 级 bug " + member.getOpen().get("1") + " 个 | S2 级 bug " + member.getOpen().get("2") + " 个 | S3 级 bug " + member.getOpen().get("3") + " 个 | S4 级 bug " + member.getOpen().get("4") + " 个\n" +
                 "> 有效创建 S1 级 bug " + member.getClose().get("1") + " 个 | S2 级 bug " + member.getClose().get("2") + " 个 | S3 级 bug " + member.getClose().get("3") + " 个 | S4 级 bug " + member.getClose().get("4") + " 个\n" + PORTAL;
     }
@@ -107,7 +107,7 @@ public class BearyChatConst {
      * @param member 用户
      * @return 总 QP
      */
-    public static double calculateQualityPoint(Member member) {
+    public static float calculateQualityPoint(Member member) {
 
         //QP = (新建 S1 级 Bug 数)x16 +
         // (新建 S2 级 Bug 数)x8 +
@@ -118,13 +118,13 @@ public class BearyChatConst {
         // (关闭 S3 级 Bug 数)x1.5 +
         // (关闭 S4 级 Bug 数)x2
 
-        double qp = member.getOpen().getOrDefault("2", 0) * 8 +
+        float qp = (float) (member.getOpen().getOrDefault("2", 0) * 8 +
                 member.getOpen().getOrDefault("3", 0) +
                 member.getOpen().getOrDefault("4", 0) * 0.5 +
                 member.getClose().getOrDefault("1", 0) * 20 +
                 member.getClose().getOrDefault("2", 0) * 8 +
                 member.getClose().getOrDefault("3", 0) * 1.5 +
-                member.getClose().getOrDefault("4", 0) * 2;
+                member.getClose().getOrDefault("4", 0) * 2);
 
 
         return calculateSpecialQualityPoint(member.getStatus()) + qp;

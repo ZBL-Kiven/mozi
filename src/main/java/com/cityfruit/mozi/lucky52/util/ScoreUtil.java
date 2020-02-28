@@ -72,7 +72,7 @@ public class ScoreUtil {
     }
 
     public static void clearCurrentDayCache(Member member) {
-        member.setQualityPoint(0);
+//        member.setQualityPoint(0);
         member.setOpenedBugs(new ArrayList<>());
 
         member.setOpen(new HashMap<>());

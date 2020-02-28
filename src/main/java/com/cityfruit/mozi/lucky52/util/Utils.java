@@ -121,9 +121,6 @@ public class Utils {
             BearyChatPushUtil.checkQualityPointAndPushNotice(qualityPoint, qualityPoint + qualityPointAdd, member.getBearyChatId());
         }
 
-        qualityPoint += qualityPointAdd;
-        member.setQualityPoint(qualityPoint);
-
         log.info("{} {} 获得 Quality Point：{} 分，当前总共 {} 分。\nBug 详情：{}", member.getName(), actionType, qualityPointAdd, qualityPoint, bug);
     }
 
@@ -244,7 +241,7 @@ public class Utils {
      * @param qp       当前qp 点数
      */
     private static void pushTask(Member member, String taskName, int qp) {
-        BearyChatPushUtil.pushBcByFinishedTask(member.getBearyChatId(), taskName, qp, BearyChatConst.calculateQualityPoint(member));
+        BearyChatPushUtil.pushBcByFinishedTask(member.getBearyChatId(), taskName, qp, member.getQualityPoint());
     }
 
 }

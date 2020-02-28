@@ -2,7 +2,9 @@ package com.cityfruit.mozi.lucky52.entity;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.annotation.JSONField;
 import com.cityfruit.mozi.lucky52.bean.MemberBean;
+import com.cityfruit.mozi.lucky52.constant.BearyChatConst;
 import com.cityfruit.mozi.lucky52.constant.JsonKeysConst;
 import lombok.Data;
 
@@ -34,11 +36,6 @@ public class Member {
     private String bearyChatId;
 
     /**
-     * Quality Point
-     */
-    private float qualityPoint;
-
-    /**
      * 有效创建不同级别的 BUG 数量
      */
     private Map<String, Integer> open = new HashMap<>(4);
@@ -64,8 +61,6 @@ public class Member {
     private TaskStatus status = new TaskStatus();
 
 
-
-
     public static Member create(MemberBean memberBean) {
         //非当天数据，更新时间戳，数据清零，重置开宝箱次数
         Member member = new Member();
@@ -75,12 +70,8 @@ public class Member {
         return member;
     }
 
-    public static Member toMember(String json) {
-        return JSON.parseObject(json, Member.class);
+    @JSONField(serialize = false)
+    public float getQualityPoint() {
+        return BearyChatConst.calculateQualityPoint(this);
     }
-
-    public static Member toMember(JSONObject json) {
-        return toMember(json.toJSONString());
-    }
-
 }

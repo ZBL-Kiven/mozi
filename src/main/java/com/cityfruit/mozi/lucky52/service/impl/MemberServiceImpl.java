@@ -1,10 +1,6 @@
 package com.cityfruit.mozi.lucky52.service.impl;
 
-import com.alibaba.fastjson.JSONObject;
-import com.cityfruit.mozi.comman.util.JsonUtil;
 import com.cityfruit.mozi.lucky52.constant.BearyChatConst;
-import com.cityfruit.mozi.lucky52.constant.FilePathConst;
-import com.cityfruit.mozi.lucky52.constant.JsonKeysConst;
 import com.cityfruit.mozi.lucky52.entity.Member;
 import com.cityfruit.mozi.lucky52.parameter.BearyChatRequestParam;
 import com.cityfruit.mozi.lucky52.service.MemberService;

@@ -27,7 +27,7 @@ public class BearyChatPushUtil {
         // 获取用户信息
         for (Member member : members) {
             // 构造消息体
-            pushTextStringBuilder.append("\n").append(member.getName()).append(BearyChatConst.scheduleQualityPoint(member));
+            pushTextStringBuilder.append("\n").append(BearyChatConst.scheduleQualityPoint(member));
         }
         String pushText = pushTextStringBuilder.toString();
         // 构造请求体
@@ -94,7 +94,7 @@ public class BearyChatPushUtil {
      * @param nowQualityPoint    加分后分数
      * @param bearyChatId        倍洽 ID
      */
-    public static void checkQualityPointAndPushNotice(float beforeQualityPoint, float nowQualityPoint, String bearyChatId) {
+    public static void checkQualityPointAndPushNotice(double beforeQualityPoint, float nowQualityPoint, String bearyChatId) {
         // 获取概率名称
         String probabilityName = TreasureBoxUtil.getProbabilityName(beforeQualityPoint, nowQualityPoint);
         if (probabilityName != null) {

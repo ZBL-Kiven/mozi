@@ -109,7 +109,7 @@ public class TreasureBoxUtil {
      * @param qualityPoint 分数
      * @return 获取成功：概率名称；获取失败：空
      */
-    public static String getProbabilityName(float qualityPoint) {
+    public static String getProbabilityName(double qualityPoint) {
         if (qualityPoint >= QP_50 && qualityPoint < QP_60) {
             return PROBABILITY_NAME.get(QP_50);
         } else if (qualityPoint >= QP_60 && qualityPoint < QP_80) {
@@ -132,7 +132,7 @@ public class TreasureBoxUtil {
      * @param nowQualityPoint    现在的分数
      * @return 获取成功：概率名称；获取失败：空
      */
-    public static String getProbabilityName(float beforeQualityPoint, float nowQualityPoint) {
+    public static String getProbabilityName(double beforeQualityPoint, float nowQualityPoint) {
         if ((beforeQualityPoint < QP_50) && (nowQualityPoint >= QP_50)) {
             return PROBABILITY_NAME.get(QP_50);
         } else if ((beforeQualityPoint < QP_60) && (nowQualityPoint >= QP_60)) {

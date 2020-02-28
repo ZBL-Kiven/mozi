@@ -15,8 +15,6 @@ import com.cityfruit.mozi.lucky52.util.TreasureBoxUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.util.Map;
-
 /**
  * @author tianyuheng
  * @date 2020/02/13
@@ -60,8 +58,11 @@ public class TreasureBoxServiceImpl implements TreasureBoxService {
             if (member.isOpened()) {
                 return BearyChatConst.opened(bearyChatName);
             }
+
+            float qp = member.getQualityPoint();
+
             // 获取开宝箱结果
-            int qualityFragment = TreasureBoxUtil.getQualityFragmentsByQualityPoint(member.getQualityPoint());
+            int qualityFragment = TreasureBoxUtil.getQualityFragmentsByQualityPoint(qp);
             // 标记已开宝箱
             member.setOpened(true);
             // 增加品质碎片
@@ -71,7 +72,7 @@ public class TreasureBoxServiceImpl implements TreasureBoxService {
             JSONObject jsonRecord = new JSONObject(true);
             jsonRecord.put(JsonKeysConst.TS, System.currentTimeMillis());
             jsonRecord.put(JsonKeysConst.NAME, member.getName());
-            jsonRecord.put(JsonKeysConst.QUALITY_POINT, member.getQualityPoint());
+            jsonRecord.put(JsonKeysConst.QUALITY_POINT, qp);
             jsonRecord.put(JsonKeysConst.OPENED, true);
             jsonRecord.put(JsonKeysConst.QUALITY_FRAGMENT, qualityFragment);
             jsonRecord.put(JsonKeysConst.EXCHANGED, false);

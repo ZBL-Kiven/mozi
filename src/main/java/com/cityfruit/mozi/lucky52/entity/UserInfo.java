@@ -1,9 +1,9 @@
-package com.cityfruit.mozi.lucky52.bean;
+package com.cityfruit.mozi.lucky52.entity;
 
 import lombok.Data;
 
 @Data
-public class MemberBean {
+public class UserInfo {
 
     private String bearyChatId;
 
@@ -11,20 +11,25 @@ public class MemberBean {
 
     private String zentaoId;
 
-    public MemberBean() {
+    /**
+     * 质量碎片
+     */
+    private int qualityFragment = 0;
+
+    public UserInfo() {
     }
 
     /**
-     *
      * @param bearyChatId
      * @param name
      * @param zentaoId
      */
-    public MemberBean(String bearyChatId, String name, String zentaoId) {
+    public UserInfo(String bearyChatId, String name, String zentaoId) {
         this.bearyChatId = bearyChatId;
         this.name = name;
         this.zentaoId = zentaoId;
     }
+
 }
 
 

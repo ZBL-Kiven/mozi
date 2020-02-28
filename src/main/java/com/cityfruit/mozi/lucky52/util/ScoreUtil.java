@@ -5,7 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.cityfruit.mozi.comman.util.DateUtil;
 import com.cityfruit.mozi.comman.util.JsonUtil;
 import com.cityfruit.mozi.comman.util.StringUtil;
-import com.cityfruit.mozi.lucky52.bean.MemberBean;
+import com.cityfruit.mozi.lucky52.entity.UserInfo;
 import com.cityfruit.mozi.lucky52.constant.BugConst;
 import com.cityfruit.mozi.lucky52.constant.FilePathConst;
 import com.cityfruit.mozi.lucky52.constant.JsonKeysConst;
@@ -140,41 +140,37 @@ public class ScoreUtil {
             return null;
         }
 
-        ArrayList<Member> members1 = (ArrayList<Member>) memberMap.values().stream().sorted(Comparator.comparing(Member::getQualityPoint)).collect(Collectors.toList());
-        Collections.reverse(members1);
-        if (members1.size() == 1) {
-            if (members1.get(0).getQualityPoint() > 0) {
-                return members1.get(0);
+        ArrayList<Member> members = (ArrayList<Member>) memberMap.values().stream().sorted(Comparator.comparing(Member::getQualityPoint)).collect(Collectors.toList());
+        Collections.reverse(members);
+        if (members.size() == 1) {
+            if (members.get(0).getQualityPoint() > 0) {
+                return members.get(0);
             }
         }
-        if (members1.size() >= 2) {
-            if (members1.get(0).getQualityPoint() == members1.get(1).getQualityPoint()) {
+        if (members.size() >= 2) {
+            if (members.get(0).getQualityPoint() == members.get(1).getQualityPoint()) {
                 return null;
             }
-            if (members1.get(0).getQualityPoint() > 0) {
-                return members1.get(0);
+            if (members.get(0).getQualityPoint() > 0) {
+                return members.get(0);
             }
         }
         return null;
     }
 
     public static HashMap<String, Member> createScore(String fileName) {
-        HashMap<String, Member> members = new HashMap<>();
-
         log.error("文件地址：{}", FilePathConst.MEMBERS_JSON_FILE);
-
-        //生成今日 members
-        String membersStr = JsonUtil.getStringFromFile(FilePathConst.MEMBERS_JSON_FILE);
-
-        List<MemberBean> memberBeans = JSON.parseArray(membersStr, MemberBean.class);
-
-        // 生成今日的统计报告 MemberBean -> Member
-        for (MemberBean memberBean : memberBeans) {
-            Member member = Member.create(memberBean);
-            members.put(member.getZentaoId(), member);
-        }
-        return members;
+        return UserUtil.listUer(true, userInfos -> {
+            HashMap<String, Member> members = new HashMap<>();
+            // 生成今日的统计报告 MemberBean -> Member
+            for (UserInfo user : userInfos) {
+                Member member = Member.create(user);
+                members.put(member.getZentaoId(), member);
+            }
+            return members;
+        });
     }
+
 
     public static void clearCurrentDayCache(Collection<Member> members) {
         for (Member member : members) {

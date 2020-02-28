@@ -1,7 +1,9 @@
 package com.cityfruit.mozi.lucky52.constant;
 
+import com.cityfruit.mozi.lucky52.entity.UserInfo;
 import com.cityfruit.mozi.lucky52.entity.Member;
 import com.cityfruit.mozi.lucky52.entity.TaskStatus;
+import com.cityfruit.mozi.lucky52.util.UserUtil;
 
 /**
  * 返回信息常量
@@ -21,7 +23,7 @@ public class BearyChatConst {
      */
     public static final String OPEN_TREASURE_BOX_GROUP = "推送测试";
 
-    private static final String PORTAL = "\n---\n传送门：我有建议提给「斯巴达幸运 52」](http://cityfruit-doc.i-mocca.com/web/#/27?page_id=751)";
+    private static final String PORTAL = "\n---\n[传送门：我有建议提给「斯巴达幸运 52」](http://cityfruit-doc.i-mocca.com/web/#/27?page_id=751)";
 
     /**
      * 无效开奖群
@@ -39,7 +41,7 @@ public class BearyChatConst {
         ) {
             addOpen += member.getClose().get(severity);
         }
-        return member.getName() + "的 QP 得分为 " + member.getQualityPoint() + "（有效创建 " + addOpen + "个 bug，有效关闭" + addClose + "个 bug）";
+        return member.getName() + "的 QP 得分为 " + member.getQualityPoint() + "（有效创建 " + addOpen + " 个 bug，有效关闭 " + addClose + " 个 bug）";
     }
 
     public static String cannotOpenBoxNotice(String bearyChatId) {
@@ -69,10 +71,9 @@ public class BearyChatConst {
 
     public static String openTreasureBoxResult(String bearyChatId, int qualityFragment) {
         return (qualityFragment == 0)
-                ? "@" + bearyChatId + "，很遗憾没有抽中，明天再来～\n" +
-                "---\n" +
-                "[传送门：我有建议提给「斯巴达幸运 52」](http://cityfruit-doc.i-mocca.com/web/#/27?page_id=751)"
-                : "@" + bearyChatId + "，恭喜您，您已获得 " + qualityFragment + " 个 `品质碎片`" + PORTAL;
+                ?
+                ("@" + bearyChatId + "，很遗憾没有抽中，明天再来～" + PORTAL)
+                : ("@" + bearyChatId + "，恭喜您，您已获得 " + qualityFragment + " 个 `品质碎片`" + PORTAL);
     }
 
     public static String noRights(String bearyChatId) {
@@ -155,7 +156,15 @@ public class BearyChatConst {
     }
 
     public static String getQualityFragment(Member member) {
-        return "@" + member.getBearyChatId() + "，您的碎片数还有 " + member.getQualityFragment() + " 个（每 20 个碎片可兑换 1 颗品值星）" + PORTAL;
+        return UserUtil.listUer(false, userInfos -> {
+            String userName = member.getName();
+            for (UserInfo userInfo : userInfos) {
+                if (userName.equals(userInfo.getName())) {
+                    return "@" + member.getBearyChatId() + "，您的碎片数还有 " + userInfo.getQualityFragment() + " 个（每 20 个碎片可兑换 1 颗品值星）" + PORTAL;
+                }
+            }
+            return "";
+        });
     }
 
     public static String getPushBcByFinishedTask(String bcId, String taskName, int qp, double sumQp) {
@@ -163,7 +172,6 @@ public class BearyChatConst {
                 "@%s，恭喜您完成 `%s`，获得 QP + %d（当前总 QP 总分为 %s）\n" +
                         "---\n" +
                         "[传送门：我有建议提给「斯巴达幸运 52」](http://cityfruit-doc.i-mocca.com/web/#/27?page_id=751)";
-
         return String.format(content, bcId, taskName, qp, sumQp);
     }
 }

@@ -248,13 +248,16 @@ public class Utils {
 
 
     public static void pushTask10or11(Map<String, Member> members) {
+        log.info("[开始向倍洽群组推送 一群 特殊任务 完成情况]");
         for (Member member : members.values()) {
             TaskStatus task = member.getStatus();
             if (task.isTaskSuccess11() && !task.isTaskPush11()) {
+                log.info("[开始向倍洽群组推送 {} {} 特殊任务 完成情况]", member.getName(), 11);
                 task.setTaskPush11(true);
                 BearyChatPushUtil.pushBcByFinishedTask(member.getBearyChatId(), TaskConst.TASK_NAME_11, 5, member.getQualityPoint());
             }
             if (task.isTaskSuccess10() && !task.isTaskPush10()) {
+                log.info("[开始向倍洽群组推送 {} {} 特殊任务 完成情况]", member.getName(), 10);
                 task.setTaskPush10(true);
                 BearyChatPushUtil.pushBcByFinishedTask(member.getBearyChatId(), TaskConst.TASK_NAME_10, 2, member.getQualityPoint());
             }

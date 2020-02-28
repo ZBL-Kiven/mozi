@@ -12,6 +12,7 @@ import com.cityfruit.mozi.lucky52.parameter.BearyChatRequestParam;
 import com.cityfruit.mozi.lucky52.service.TreasureBoxService;
 import com.cityfruit.mozi.lucky52.util.ScoreUtil;
 import com.cityfruit.mozi.lucky52.util.TreasureBoxUtil;
+import com.cityfruit.mozi.lucky52.util.UserUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -65,8 +66,18 @@ public class TreasureBoxServiceImpl implements TreasureBoxService {
             int qualityFragment = TreasureBoxUtil.getQualityFragmentsByQualityPoint(qp);
             // 标记已开宝箱
             member.setOpened(true);
-            // 增加品质碎片
-            member.setQualityFragment(member.getQualityFragment() + qualityFragment);
+
+            UserUtil.getUser(true, member.getName(), user -> {
+                if (user != null) {
+                    // 增加品质碎片
+                    user.setQualityFragment(user.getQualityFragment() + qualityFragment);
+                    log.info("【保存品质星碎片】{} {}", user.getName(), user.getQualityFragment());
+                } else {
+                    log.info("【保存品质星碎片】{} ", "用户不存在");
+                }
+                return true;
+            });
+
             // 开宝箱记录
             JSONArray jsonRecords = JsonUtil.getJsonArrayFromFile(FilePathConst.RECORDS_JSON_FILE);
             JSONObject jsonRecord = new JSONObject(true);

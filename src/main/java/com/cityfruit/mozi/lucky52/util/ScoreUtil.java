@@ -23,12 +23,12 @@ public class ScoreUtil {
     public static void setListener(ScoreListener listener) {
         ScoreUtil.listener = listener;
     }
-
-    public interface QueryCallBack {
-        void onSuccess(Map<String, Member> map);
+    
+    public interface Fun<T, R> {
+        R exec(T t);
     }
 
-    public static void getMembers(QueryCallBack callBack) {
+    public static <R> R getMembers(Fun<Map<String, Member>, R> callBack) {
         String currentDay = DateUtil.getCurrentDay();
         String fileName = String.format(FilePathConst.DAY_SCORE_JSON_FILE, currentDay);
         String content = JsonUtil.getStringFromFile(fileName);
@@ -40,9 +40,10 @@ public class ScoreUtil {
             MapType type = new MapType(Map.class, new Type[]{String.class, Member.class});
             memberMap = JSON.parseObject(content, type);
         }
-        callBack.onSuccess(memberMap);
+        R r = callBack.exec(memberMap);
         //保存数据
         JsonUtil.saveJsonFile(memberMap, fileName);
+        return r;
     }
 
     public static HashMap<String, Member> createScore(String fileName) {

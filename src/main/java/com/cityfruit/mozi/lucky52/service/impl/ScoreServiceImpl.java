@@ -71,9 +71,11 @@ public class ScoreServiceImpl implements ScoreService {
 
         String type = actionType;
 
+
         ScoreUtil.getMembers(map -> {
             // 更新 QP 值并保存
             Utils.updateQualityPointAndSave(map, bug, type, false);
+            return true;
         });
     }
 

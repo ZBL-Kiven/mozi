@@ -31,8 +31,7 @@ public class ScheduledTasks {
      */
     @Scheduled(cron = "0 0 0 * * ?")
     public void clearData() {
-        ScoreUtil.getMembers(map -> {
-        });
+        ScoreUtil.getMembers(map -> true);
     }
 
     /**

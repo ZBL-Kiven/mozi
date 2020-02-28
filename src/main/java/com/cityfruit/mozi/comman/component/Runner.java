@@ -17,6 +17,7 @@ import com.cityfruit.mozi.lucky52.util.ZentaoUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
+import org.springframework.util.SocketUtils;
 
 import java.util.List;
 import java.util.Map;
@@ -38,10 +39,11 @@ public class Runner implements CommandLineRunner {
     private void init() {
         ScoreUtil.setListener(ScoreUtil::createScore);
 
-        ScoreUtil.getMembers(map -> {
+        ScoreUtil.getMembers(memberMap -> {
             //清空数据
-            ScoreUtil.clearCurrentDayCache(map);
-            syncBug(map);
+            ScoreUtil.clearCurrentDayCache(memberMap);
+            syncBug(memberMap);
+            return true;
         });
     }
 

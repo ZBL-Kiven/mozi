@@ -9,7 +9,7 @@ public final class FilePathConst {
     /**
      * json 文件绝对路径
      */
-    private static final String JSON_FILE_PATH = System.getenv("JSON_FILE_PATH");
+    private static final String JSON_FILE_PATH = System.getenv("MZ_JSON_FILE_PATH");
 
     public static final String RECORDS_JSON_FILE = JSON_FILE_PATH + "/records.json";
 

@@ -32,7 +32,26 @@ public class ScheduledTasks {
     @Scheduled(cron = "0 0 0 * * ?")
     public void clearData() {
         ScoreUtil.getMembers(map -> true);
+
     }
+
+    /**
+     * 统计昨天排名 以及 统计 僵尸 BUG
+     */
+    @Scheduled(cron = "0 0 9 * * ?")
+    public void statSpecial() {
+        ScoreUtil.getMembers(map -> true);
+    }
+
+
+    /**
+     * 10 点,推送特殊任务 10、11
+     */
+    @Scheduled(cron = "0 0 9 * * ?")
+    public void pushSpecial() {
+        ScoreUtil.getMembers(map -> true);
+    }
+
 
     /**
      * 每日 12、15、18 点向倍洽机器人中推送 QP 得分情况

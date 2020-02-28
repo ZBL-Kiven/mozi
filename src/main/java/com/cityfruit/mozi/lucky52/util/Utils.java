@@ -29,7 +29,6 @@ public class Utils {
             return;
         }
 
-
         // 获取该创建人未确认的 BUG 列表
         List<String> openedBugs = member.getOpenedBugs();
 

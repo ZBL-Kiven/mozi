@@ -60,7 +60,14 @@ public class Runner implements CommandLineRunner {
         log.info("[当日 Quality Point 获取情况统计完毕]");
     }
 
-
+    /**
+     * 获取产品数据
+     *
+     * @param memberMap  数据
+     * @param type       类型
+     * @param productId  产品
+     * @param actionType 产品类型
+     */
     private void execZentaoSearch(Map<String, Member> memberMap, Integer type, String productId, String actionType) {
         String searchResult = ZentaoUtil.getSearchResult(type, ZentaoUtil.zentaoCookie, productId);
         execUpdate(memberMap, searchResult, actionType);
@@ -69,8 +76,11 @@ public class Runner implements CommandLineRunner {
     private void execUpdate(Map<String, Member> memberMap, String content, String type) {
         String bugsStr = JSONObject.parseObject(content).getJSONObject("data").getJSONArray("bugs").toJSONString();
         List<Bug> bugs = JSON.parseArray(bugsStr, Bug.class);
+        log.info("##################");
+        log.info("{}", bugs);
+        log.info("##################");
+
         for (Bug bug : bugs) {
-            log.info("{}", bug);
             Utils.updateQualityPointAndSave(memberMap, bug, type, false);
         }
     }

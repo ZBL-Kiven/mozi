@@ -42,7 +42,7 @@ public class TreasureBoxServiceImpl implements TreasureBoxService {
             return BearyChatConst.noOpeningRights(bearyChatName);
         }
 
-        return ScoreUtil.getMembers(memberMap -> {
+        return ScoreUtil.getMembers(true, memberMap -> {
             Member member = null;
             for (Member bean : memberMap.values()) {
                 if (bean.getQualityPoint() >= TreasureBoxUtil.QP_50

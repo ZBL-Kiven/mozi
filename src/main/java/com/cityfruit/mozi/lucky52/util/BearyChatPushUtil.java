@@ -23,7 +23,7 @@ public class BearyChatPushUtil {
      */
     public static void pushQualityPoint(List<Member> members) {
         log.info("[开始向倍洽群组推送 QP 得分情况……]");
-        StringBuilder pushTextStringBuilder = new StringBuilder(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(System.currentTimeMillis()));
+        StringBuilder pushTextStringBuilder = new StringBuilder(new SimpleDateFormat("yyyy-MM-dd HH:mm").format(System.currentTimeMillis()));
         // 获取用户信息
         for (Member member : members) {
             // 构造消息体
@@ -46,6 +46,7 @@ public class BearyChatPushUtil {
         log.info("[开始向倍洽群组推送不满足开宝箱条件的用户……]");
         // 遍历用户，查找分数低于 50 的用户
         for (Member member : members) {
+            log.info("[开始向倍洽群组推送不满足开宝箱条件的用户……]-----用户：{}", member.getName());
             if (member.getQualityPoint() < TreasureBoxUtil.QP_50) {
                 // 构造消息体
                 String text = BearyChatConst.cannotOpenBoxNotice(member.getBearyChatId());
@@ -67,10 +68,11 @@ public class BearyChatPushUtil {
     public static void pushOpenTreasureBoxNotice(List<Member> members) {
         log.info("[开始向倍洽群组推送满足开宝箱条件的用户提醒……]");
         // 遍历用户，查找分数满足开宝箱要求的用户
-        for (Member member :
-                members) {
+        for (Member member : members) {
+            log.info("[开始向倍洽群组推送满足开宝箱条件的用户提醒……]-----「」{}", member.getName());
             // 已开过宝箱，不提醒
             if (member.isOpened()) {
+                log.info("[开始向倍洽群组推送满足开宝箱条件的用户提醒……]-----已开过「」{}", member.getName());
                 continue;
             }
             // 获取概率名称
@@ -83,6 +85,8 @@ public class BearyChatPushUtil {
                 // 推送至 BC 群组
                 HttpUtil.post(UrlConst.BC_QUALITY_POINT_PUSH, body, "", HttpUtil.CONTENT_TYPE_JSON);
                 log.info("[推送满足开宝箱条件的用户提醒……完成]");
+            } else {
+                log.info("[开始向倍洽群组推送满足开宝箱条件的用户提醒……]-----概率失败「」{}", member.getName());
             }
         }
     }

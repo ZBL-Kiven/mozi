@@ -97,9 +97,21 @@ public class BearyChatConst {
         ) {
             addOpen += member.getClose().getOrDefault(severity, 0);
         }
-        return "@" + member.getBearyChatId() + "，您当前的 QP 总得分为 " + member.getQualityPoint() + "（有效创建 " + addOpen + " 个 bug，有效关闭 " + addClose + " 个 bug。\n" +
-                "> 有效创建 S1 级 bug " + member.getOpen().get("1") + " 个 | S2 级 bug " + member.getOpen().get("2") + " 个 | S3 级 bug " + member.getOpen().get("3") + " 个 | S4 级 bug " + member.getOpen().get("4") + " 个\n" +
-                "> 有效创建 S1 级 bug " + member.getClose().get("1") + " 个 | S2 级 bug " + member.getClose().get("2") + " 个 | S3 级 bug " + member.getClose().get("3") + " 个 | S4 级 bug " + member.getClose().get("4") + " 个\n" + PORTAL;
+        String content = "@%s，您当前的 QP 总得分为 %d（有效创建 %d 个 bug，有效关闭 %d 个 bug）\n" +
+                "> 有效创建 S1 级 bug %d 个 | S2 级 %d 个 | S3 级 %d 个 | S4 级 %d 个\n" +
+                "> 有效关闭 S1 级 bug %d 个 | S2 级 %d 个 | S3 级 %d 个 | S4 级 %d 个\n" + PORTAL;
+
+        return String.format(content, member.getBearyChatId(), member.getQualityPoint(),
+                addOpen, addClose,
+                member.getOpen().getOrDefault("1", 0),
+                member.getOpen().getOrDefault("2", 0),
+                member.getOpen().getOrDefault("3", 0),
+                member.getOpen().getOrDefault("4", 0),
+                member.getClose().getOrDefault("1", 0),
+                member.getClose().getOrDefault("2", 0),
+                member.getClose().getOrDefault("3", 0),
+                member.getClose().getOrDefault("4", 0)
+        );
     }
 
     /**
@@ -168,8 +180,7 @@ public class BearyChatConst {
     }
 
     public static String getPushBcByFinishedTask(String bcId, String taskName, int qp, double sumQp) {
-        String content =
-                "@%s，恭喜您完成 `%s`，获得 QP + %d（当前总 QP 总分为 %s）\n" + PORTAL;
+        String content = "@%s，恭喜您完成 `%s`，获得 QP +%d（当前总 QP 总分为 %s）" + PORTAL;
         return String.format(content, bcId, taskName, qp, sumQp);
     }
 }

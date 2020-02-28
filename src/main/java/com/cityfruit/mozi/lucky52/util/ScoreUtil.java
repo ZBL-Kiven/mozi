@@ -11,6 +11,8 @@ import com.cityfruit.mozi.lucky52.constant.FilePathConst;
 import com.cityfruit.mozi.lucky52.constant.JsonKeysConst;
 import com.cityfruit.mozi.lucky52.entity.Bug;
 import com.cityfruit.mozi.lucky52.entity.Member;
+import com.cityfruit.mozi.lucky52.parameter.BearyChatRequestParam;
+import com.cityfruit.mozi.lucky52.service.impl.TreasureBoxServiceImpl;
 import com.cityfruit.mozi.lucky52.tools.MapType;
 import lombok.extern.slf4j.Slf4j;
 

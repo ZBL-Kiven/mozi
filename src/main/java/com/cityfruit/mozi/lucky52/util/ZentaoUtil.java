@@ -5,6 +5,8 @@ import com.cityfruit.mozi.comman.util.HttpUtil;
 import com.cityfruit.mozi.lucky52.constant.UrlConst;
 import lombok.extern.slf4j.Slf4j;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -29,6 +31,11 @@ public class ZentaoUtil {
      * 今日关闭 BUG
      */
     public static final Integer SEARCH_TODAY_CLOSED = 2;
+
+    /**
+     * 僵尸 BUG
+     */
+    public static final Integer SEARCH_ZOMBIE_BUG = 3;
 
     /**
      * 禅道未登录前缀
@@ -226,6 +233,68 @@ public class ZentaoUtil {
             put("field4", "confirmed");
             put("operator4", "=");
             put("value4", "1");
+            put("andOr5", "or");
+            put("field5", "title");
+            put("operator5", "=");
+            put("value5", "");
+            put("andOr6", "or");
+            put("field6", "title");
+            put("operator6", "=");
+            put("value6", "");
+            put("module", "bug");
+            put("actionURL", "");
+            put("groupItems", "3");
+            put("formType", "lite");
+        }});
+        buildSearchQueryParam.put(SEARCH_ZOMBIE_BUG, new HashMap<String, Object>() {{
+            put("fieldtitle", "");
+            put("fieldkeywords", "");
+            put("fieldsteps", "");
+            put("fieldassignedTo", "");
+            put("fieldresolvedBy", "");
+            put("fieldstatus", "");
+            put("fieldconfirmed", "ZERO");
+            put("fieldproduct", "");
+            put("fieldplan", "");
+            put("fieldmodule", "ZERO");
+            put("fieldproject", "");
+            put("fieldseverity", "0");
+            put("fieldpri", "0");
+            put("fieldtype", "");
+            put("fieldos", "");
+            put("fieldbrowser", "");
+            put("fieldresolution", "");
+            put("fieldtoTask", "");
+            put("fieldtoStory", "");
+            put("fieldopenedBy", "");
+            put("fieldclosedBy", "");
+            put("fieldlastEditedBy", "");
+            put("fieldmailto", "");
+            put("fieldopenedBuild", "");
+            put("fieldresolvedBuild", "");
+            put("fieldopenedDate", "");
+            put("fieldassignedDate", "");
+            put("fieldresolvedDate", "");
+            put("fieldclosedDate", "");
+            put("fieldlastEditedDate", "");
+            put("fielddeadline", "");
+            put("fieldid", "");
+            put("andOr1", "AND");
+            put("field1", "status");
+            put("operator1", "notinclude");
+            put("value1", "closed");
+            put("andOr2", "or");
+            put("field2", "title");
+            put("operator2", "=");
+            put("value2", "");
+            put("andOr3", "or");
+            put("field3", "title");
+            put("operator3", "=");
+            put("value3", "");
+            put("andOr4", "AND");
+            put("field4", "openedDate");
+            put("operator4", "<");
+            put("value4", new SimpleDateFormat("yyyy-MM-dd").format(new Date(System.currentTimeMillis() - 1000 * 60 * 60 * 24 * 14)));
             put("andOr5", "or");
             put("field5", "title");
             put("operator5", "=");

@@ -160,6 +160,9 @@ public class ScoreUtil {
 
     public static HashMap<String, Member> createScore(String fileName) {
         HashMap<String, Member> members = new HashMap<>();
+
+        log.error("文件地址：{}", FilePathConst.MEMBERS_JSON_FILE);
+
         //生成今日 members
         String membersStr = JsonUtil.getStringFromFile(FilePathConst.MEMBERS_JSON_FILE);
 

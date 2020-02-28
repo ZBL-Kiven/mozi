@@ -169,9 +169,7 @@ public class BearyChatConst {
 
     public static String getPushBcByFinishedTask(String bcId, String taskName, int qp, double sumQp) {
         String content =
-                "@%s，恭喜您完成 `%s`，获得 QP + %d（当前总 QP 总分为 %s）\n" +
-                        "---\n" +
-                        "[传送门：我有建议提给「斯巴达幸运 52」](http://cityfruit-doc.i-mocca.com/web/#/27?page_id=751)";
+                "@%s，恭喜您完成 `%s`，获得 QP + %d（当前总 QP 总分为 %s）\n" + PORTAL;
         return String.format(content, bcId, taskName, qp, sumQp);
     }
 }

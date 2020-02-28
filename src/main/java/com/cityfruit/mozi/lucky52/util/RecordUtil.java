@@ -13,6 +13,9 @@ public class RecordUtil {
 
     public static <R> R listRecord(boolean saved, Fun<List<RecordInfo>, R> callback) {
         List<RecordInfo> infos = listRecord();
+        if(infos==null){
+            infos = new ArrayList<>();
+        }
         R r = callback.exec(infos);
         if (saved) {
             save(infos);

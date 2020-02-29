@@ -59,7 +59,7 @@ public class ScoreUtil {
                 memberMap.get(member.getZentaoId()).getStatus().setTaskSuccess11(true);
             }
 
-            Utils.pushTask10or11(memberMap);
+            // Utils.pushTask10or11(memberMap);
         }
         R r = callBack.exec(memberMap);
         //保存数据

@@ -97,9 +97,9 @@ public class BearyChatConst {
         ) {
             addOpen += member.getClose().getOrDefault(severity, 0);
         }
-        String content = "@%s，您当前的 QP 总得分为 %s（有效创建 %d 个 bug，有效关闭 %d 个 bug）\n" +
+        String content = "@%s，您当前的 QP 总得分为 %.1f（有效创建 %d 个 bug，有效关闭 %d 个 bug）\n" +
                 "> 有效创建 S1 级 bug %d 个 | S2 级 %d 个 | S3 级 %d 个 | S4 级 %d 个\n" +
-                "> 有效关闭 S1 级 bug %d 个 | S2 级 %d 个 | S3 级 %d 个 | S4 级 %d 个\n" + PORTAL;
+                "> 有效关闭 S1 级 bug %d 个 | S2 级 %d 个 | S3 级 %d 个 | S4 级 %d 个" + PORTAL;
 
         return String.format(content, member.getBearyChatId(), member.getQualityPoint(),
                 addOpen, addClose,
@@ -180,7 +180,7 @@ public class BearyChatConst {
     }
 
     public static String getPushBcByFinishedTask(String bcId, String taskName, int qp, double sumQp) {
-        String content = "@%s，恭喜您完成 `%s`，获得 QP +%d（当前总 QP 总分为 %s）" + PORTAL;
+        String content = "@%s，恭喜您完成 `%s`，获得 QP +%d（当前总 QP 总分为 %.1f）" + PORTAL;
         return String.format(content, bcId, taskName, qp, sumQp);
     }
 }

@@ -95,18 +95,21 @@ public class BearyChatConst {
         int addClose = 0;
         for (String severity : member.getClose().keySet()
         ) {
-            addOpen += member.getClose().getOrDefault(severity, 0);
+            addClose += member.getClose().getOrDefault(severity, 0);
         }
         String content = "@%s，您当前的 QP 总得分为 %.1f（有效创建 %d 个 bug，有效关闭 %d 个 bug）\n" +
                 "> 有效创建 S1 级 bug %d 个 | S2 级 %d 个 | S3 级 %d 个 | S4 级 %d 个\n" +
                 "> 有效关闭 S1 级 bug %d 个 | S2 级 %d 个 | S3 级 %d 个 | S4 级 %d 个" + PORTAL;
 
-        return String.format(content, member.getBearyChatId(), member.getQualityPoint(),
+        return String.format(content,
+                member.getBearyChatId(),
+                member.getQualityPoint(),
                 addOpen, addClose,
                 member.getOpen().getOrDefault("1", 0),
                 member.getOpen().getOrDefault("2", 0),
                 member.getOpen().getOrDefault("3", 0),
                 member.getOpen().getOrDefault("4", 0),
+
                 member.getClose().getOrDefault("1", 0),
                 member.getClose().getOrDefault("2", 0),
                 member.getClose().getOrDefault("3", 0),

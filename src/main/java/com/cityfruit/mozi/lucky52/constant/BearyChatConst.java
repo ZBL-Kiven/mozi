@@ -175,7 +175,7 @@ public class BearyChatConst {
             String userName = member.getName();
             for (UserInfo userInfo : userInfos) {
                 if (userName.equals(userInfo.getName())) {
-                    return "@" + member.getBearyChatId() + "，您的碎片数还有 " + userInfo.getQualityFragment() + " 个（每 20 个碎片可兑换 1 颗品值星）" + PORTAL;
+                    return "@" + member.getBearyChatId() + "，您的碎片数还有 " + userInfo.getQualityFragment() + " 个（每 20 个碎片可兑换 1 颗品质星）" + PORTAL;
                 }
             }
             return "";

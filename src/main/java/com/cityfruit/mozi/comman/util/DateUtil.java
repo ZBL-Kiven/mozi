@@ -12,16 +12,35 @@ import java.util.TimeZone;
  */
 public class DateUtil {
 
+
+    public static String getCurrentDateTimes() {
+        long currentTs = System.currentTimeMillis();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        sdf.setTimeZone(TimeZone.getTimeZone("GMT+8"));
+        return sdf.format(new Date(currentTs));
+    }
+
+
+    public static String getCurrentDateTime() {
+        long currentTs = System.currentTimeMillis();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        sdf.setTimeZone(TimeZone.getTimeZone("GMT+8"));
+        return sdf.format(new Date(currentTs));
+    }
+
     public static String getCurrentDay() {
         long currentTs = System.currentTimeMillis();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        sdf.setTimeZone(TimeZone.getTimeZone("GMT+8"));
         return sdf.format(new Date(currentTs));
+
     }
 
     public static String getYesterday() {
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.DAY_OF_MONTH, -1);
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        sdf.setTimeZone(TimeZone.getTimeZone("GMT+8"));
         return sdf.format(calendar.getTime());
     }
 
@@ -35,14 +54,8 @@ public class DateUtil {
         calendar.set(Calendar.DAY_OF_WEEK, 2);
         calendar.add(Calendar.DAY_OF_MONTH, -14);
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        sdf.setTimeZone(TimeZone.getTimeZone("GMT+8"));
         return sdf.format(calendar.getTime());
-    }
-
-    /**
-     * @return 当日零点时间戳
-     */
-    public static long getTodayTimeMillis() {
-        return System.currentTimeMillis() / (1000 * 3600 * 24) * (1000 * 3600 * 24) - TimeZone.getDefault().getRawOffset();
     }
 
     /**
@@ -53,6 +66,7 @@ public class DateUtil {
      */
     public static long getTimeMillisFromBug(String timeString) {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        simpleDateFormat.setTimeZone(TimeZone.getTimeZone("GMT+8"));
         Date date = null;
         try {
             date = simpleDateFormat.parse(timeString);

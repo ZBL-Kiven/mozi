@@ -1,12 +1,12 @@
 package com.cityfruit.mozi.lucky52.util;
 
+import com.cityfruit.mozi.comman.util.DateUtil;
 import com.cityfruit.mozi.comman.util.HttpUtil;
 import com.cityfruit.mozi.lucky52.constant.BearyChatConst;
 import com.cityfruit.mozi.lucky52.constant.UrlConst;
 import com.cityfruit.mozi.lucky52.entity.Member;
 import lombok.extern.slf4j.Slf4j;
 
-import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,7 +23,7 @@ public class BearyChatPushUtil {
      */
     public static void pushQualityPoint(List<Member> members) {
         log.info("[开始向倍洽群组推送 QP 得分情况……]");
-        StringBuilder pushTextStringBuilder = new StringBuilder(new SimpleDateFormat("yyyy-MM-dd HH:mm").format(System.currentTimeMillis()));
+        StringBuilder pushTextStringBuilder = new StringBuilder(DateUtil.getCurrentDateTime());
         // 获取用户信息
         for (Member member : members) {
             // 构造消息体

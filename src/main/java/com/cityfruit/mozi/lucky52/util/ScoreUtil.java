@@ -74,13 +74,10 @@ public class ScoreUtil {
     private static void syncBug(Map<String, Member> memberMap) {
 
         Set<String> products;
-        if (false) {
-            // 获取产品列表
-            products = ZentaoUtil.getProducts().keySet();
-        } else {
-            products = new HashSet<>();
-            products.add("26");
-        }
+        // 获取产品列表
+        products = ZentaoUtil.getProducts().keySet();
+        // products = new HashSet<>();
+        // products.add("26");
 
         log.info("[产品Id 列表]{} 总数 {}", products, products.size());
         // 遍历产品列表，获取当日创建

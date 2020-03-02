@@ -11,8 +11,6 @@ import com.cityfruit.mozi.lucky52.constant.FilePathConst;
 import com.cityfruit.mozi.lucky52.constant.JsonKeysConst;
 import com.cityfruit.mozi.lucky52.entity.Bug;
 import com.cityfruit.mozi.lucky52.entity.Member;
-import com.cityfruit.mozi.lucky52.parameter.BearyChatRequestParam;
-import com.cityfruit.mozi.lucky52.service.impl.TreasureBoxServiceImpl;
 import com.cityfruit.mozi.lucky52.tools.MapType;
 import lombok.extern.slf4j.Slf4j;
 
@@ -76,8 +74,8 @@ public class ScoreUtil {
         Set<String> products;
         // 获取产品列表
         products = ZentaoUtil.getProducts().keySet();
-        // products = new HashSet<>();
-        // products.add("26");
+//         products = new HashSet<>();
+//         products.add("9");
 
         log.info("[产品Id 列表]{} 总数 {}", products, products.size());
         // 遍历产品列表，获取当日创建

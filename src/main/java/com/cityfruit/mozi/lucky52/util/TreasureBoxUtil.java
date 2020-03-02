@@ -62,7 +62,7 @@ public class TreasureBoxUtil {
             put(5, 1);
             put(6, 1);
             put(7, 1);
-            put(8, 1);
+            put(8, 2);
             put(9, 2);
         }});
         QUALITY_FRAGMENT_MAP.put(QP_80, new HashMap<Integer, Integer>() {{
@@ -81,8 +81,8 @@ public class TreasureBoxUtil {
             put(0, 1);
             put(1, 1);
             put(2, 1);
-            put(3, 1);
-            put(4, 1);
+            put(3, 2);
+            put(4, 2);
             put(5, 2);
             put(6, 2);
             put(7, 2);

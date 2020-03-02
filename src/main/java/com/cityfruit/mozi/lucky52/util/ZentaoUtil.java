@@ -358,7 +358,7 @@ public class ZentaoUtil {
         
         // 请求搜索条件
         HttpUtil.post(UrlConst.ZENTAO_BUILD_SEARCH_QUERY, body, zentaoCookie, HttpUtil.CONTENT_TYPE_FORM_URLENCODED);
-        result = HttpUtil.get("http://cf-issue.i-mocca.com/bug-browse-" + productId + "-0-bySearch-myQueryID.json", zentaoCookie);
+        result = HttpUtil.get("http://cf-issue.i-mocca.com/bug-browse-" + productId + "-0-bySearch-myQueryID--0-2000-1.json", zentaoCookie);
         return result;
     }
 

@@ -21,9 +21,15 @@ import java.util.Map;
 public class Utils {
 
     public static void updateQualityPointAndSave(Map<String, Member> memberMap, Bug bug, String actionType, boolean pushOpenTreasureBoxNotice) {
+        Member member = null;
 
-        //获取当前 BUG 创建人
-        Member member = memberMap.get(bug.getOpenedBy());
+        if (actionType.equals(BugConst.ACTION_TYPE_CLOSE)) {
+            member = memberMap.get(bug.getClosedBy());
+        } else {
+            //获取当前 BUG 创建人
+            member = memberMap.get(bug.getOpenedBy());
+        }
+
         if (member == null) {
             log.info("本地数据 没有该创建人" + bug.getOpenedBy());
             return;

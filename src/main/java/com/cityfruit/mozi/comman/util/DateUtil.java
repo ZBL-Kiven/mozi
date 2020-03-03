@@ -12,6 +12,12 @@ import java.util.TimeZone;
  */
 public class DateUtil {
 
+    public static int getHours() {
+        long currentTs = System.currentTimeMillis();
+        SimpleDateFormat sdf = new SimpleDateFormat("HH");
+        sdf.setTimeZone(TimeZone.getTimeZone("GMT+8"));
+        return Integer.parseInt(sdf.format(new Date(currentTs)));
+    }
 
     public static String getCurrentDateTimes() {
         long currentTs = System.currentTimeMillis();

@@ -51,19 +51,19 @@ public class ScoreUtil {
             ScoreUtil.clearCurrentDayCache(memberMap);
             //同步禅道BUG
             syncBug(memberMap);
-            //更新昨日数据 判断今日排行第一的人
-            Member member = ScoreUtil.getYesterdayMember();
-            if (member != null) {
-                memberMap.get(member.getZentaoId()).getStatus().setTaskSuccess11(true);
-            }
-
-            // Utils.pushTask10or11(memberMap);
         }
         R r = callBack.exec(memberMap);
         //保存数据
         JsonUtil.saveJsonFile(memberMap, fileName);
         return r;
     }
+
+    private static void calculateZombie(Map<String, Member> members) {
+        for (Member value : members.values()) {
+            value.getStatus().setTaskSuccess10(value.getZombieCount() == 0);
+        }
+    }
+
 
     public static <R> R getMembers(Fun<Map<String, Member>, R> callBack) {
         return getMembers(false, callBack);
@@ -95,9 +95,28 @@ public class ScoreUtil {
 
             log.info("[统计僵尸BUG……] Product ID: {}", productId);
             execZentaoSearch(memberMap, ZentaoUtil.SEARCH_ZOMBIE_BUG, productId, BugConst.ACTION_TYPE_ZOMBIE);
+
         }
 
+
+        log.info("[统计僵尸BUG……] 完成情况");
+        calculateZombie(memberMap);
+
+        log.info("[统计昨日排名第一……] ");
+        //更新昨日数据 判断今日排行第一的人
+        Member member = ScoreUtil.getYesterdayMember();
+        if (member != null) {
+            memberMap.get(member.getZentaoId()).getStatus().setTaskSuccess11(true);
+        }
+
+//        log.info("[统计僵尸BUG  和 排名第一 ……] 完成情况，并判断是否已经过了10点，如果过了就补发");
+
+//        if (DateUtil.getHours() >= 10) {
+//            Utils.pushTask10or11(memberMap);
+//        }
+
         log.info("[当日 Quality Point 获取情况统计完毕]");
+
     }
 
     /**

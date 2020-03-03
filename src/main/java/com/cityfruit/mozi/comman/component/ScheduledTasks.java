@@ -16,9 +16,6 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
 import java.util.List;
-import java.util.Map;
-
-import static com.cityfruit.mozi.lucky52.constant.TaskConst.TASK_NAME_11;
 
 /**
  * 定时任务

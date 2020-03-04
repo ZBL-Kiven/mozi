@@ -74,8 +74,9 @@ public class ScoreUtil {
         Set<String> products;
         // 获取产品列表
         products = ZentaoUtil.getProducts().keySet();
-//         products = new HashSet<>();
-//         products.add("9");
+//        products = new HashSet<>();
+//        products.add("9");
+
 
         log.info("[产品Id 列表]{} 总数 {}", products, products.size());
         // 遍历产品列表，获取当日创建
@@ -213,6 +214,7 @@ public class ScoreUtil {
         member.getClose().put(JsonKeysConst.S2, 0);
         member.getClose().put(JsonKeysConst.S3, 0);
         member.getClose().put(JsonKeysConst.S4, 0);
+        member.setZombieCount(0);
     }
 
 

@@ -1,10 +1,6 @@
 package com.cityfruit.mozi.comman.component;
 
-import com.cityfruit.mozi.comman.util.DateUtil;
-import com.cityfruit.mozi.lucky52.constant.BearyChatConst;
-import com.cityfruit.mozi.lucky52.constant.TaskConst;
 import com.cityfruit.mozi.lucky52.entity.Member;
-import com.cityfruit.mozi.lucky52.entity.TaskStatus;
 import com.cityfruit.mozi.lucky52.service.MemberService;
 import com.cityfruit.mozi.lucky52.util.BearyChatPushUtil;
 import com.cityfruit.mozi.lucky52.util.ScoreUtil;
@@ -33,12 +29,12 @@ public class ScheduledTasks {
 
     /**
      * 将时间戳更新为今日零点时间戳，清零 QP 统计，重置开宝箱次数
+     * 晚上1点 同步一下数据
      */
-    @Scheduled(cron = "0 0 0 * * ?", zone = "Asia/Shanghai")
+    @Scheduled(cron = "0 0 0,1 * * ?", zone = "Asia/Shanghai")
     public void clearData() {
         ScoreUtil.getMembers(true, memberMap -> true);
     }
-
 
     /**
      * 10 点,推送特殊任务 10、11

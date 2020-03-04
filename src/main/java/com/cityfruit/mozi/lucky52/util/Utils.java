@@ -1,5 +1,6 @@
 package com.cityfruit.mozi.lucky52.util;
 
+import com.cityfruit.mozi.comman.util.DateUtil;
 import com.cityfruit.mozi.lucky52.constant.*;
 import com.cityfruit.mozi.lucky52.entity.Bug;
 import com.cityfruit.mozi.lucky52.entity.Member;
@@ -17,6 +18,19 @@ import java.util.Map;
 public class Utils {
 
     public static void updateQualityPointAndSave(Map<String, Member> memberMap, Bug bug, String actionType, boolean pushOpenTreasureBoxNotice) {
+
+        if (actionType.equals(BugConst.ACTION_TYPE_CLOSE)) {
+            if (!DateUtil.getCurrentDay().equals(DateUtil.getDayFromStr(bug.getClosedDate()))) {
+                return;
+            }
+        } else if (actionType.equals(BugConst.ACTION_TYPE_ZOMBIE)) {
+
+        } else {
+            if (!DateUtil.getCurrentDay().equals(DateUtil.getDayFromStr(bug.getOpenedDate()))) {
+                return;
+            }
+        }
+
         Member member = null;
 
         if (actionType.equals(BugConst.ACTION_TYPE_CLOSE)) {

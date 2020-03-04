@@ -82,4 +82,11 @@ public class DateUtil {
         assert date != null;
         return date.getTime();
     }
+
+    public static String getDayFromStr(String time){
+        SimpleDateFormat sdf  = new SimpleDateFormat("yyyy-MM-dd");
+        sdf.setTimeZone(TimeZone.getTimeZone("GMT+8"));
+        return sdf.format(new Date(DateUtil.getTimeMillisFromBug(time)));
+    }
+
 }

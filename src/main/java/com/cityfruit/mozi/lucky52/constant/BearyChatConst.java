@@ -32,14 +32,15 @@ public class BearyChatConst {
 
     public static String scheduleQualityPoint(Member member) {
         int addOpen = 0;
-        int addClose = 0;
         for (String severity : member.getOpen().keySet()
         ) {
-            addOpen += member.getOpen().get(severity);
+            addOpen += member.getOpen().getOrDefault(severity, 0);
         }
+
+        int addClose = 0;
         for (String severity : member.getClose().keySet()
         ) {
-            addOpen += member.getClose().get(severity);
+            addClose += member.getClose().getOrDefault(severity, 0);
         }
         return member.getName() + "的 QP 得分为 " + member.getQualityPoint() + "（有效创建 " + addOpen + " 个 bug，有效关闭 " + addClose + " 个 bug）";
     }

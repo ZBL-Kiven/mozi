@@ -4,6 +4,7 @@ import com.cityfruit.mozi.lucky52.constant.BearyChatConst;
 import com.cityfruit.mozi.lucky52.entity.Member;
 import com.cityfruit.mozi.lucky52.parameter.BearyChatRequestParam;
 import com.cityfruit.mozi.lucky52.service.MemberService;
+import com.cityfruit.mozi.lucky52.util.BearyChatPushUtil;
 import com.cityfruit.mozi.lucky52.util.ScoreUtil;
 import org.springframework.stereotype.Service;
 
@@ -29,6 +30,11 @@ public class MemberServiceImpl implements MemberService {
         members = members.stream().sorted(Comparator.comparing(Member::getQualityPoint)).collect(Collectors.toList());
         Collections.reverse(members);
         return members;
+    }
+
+    @Override
+    public String getPushQualityPoint() {
+        return BearyChatPushUtil.getPushQualityPoint(getMembers());
     }
 
     /**

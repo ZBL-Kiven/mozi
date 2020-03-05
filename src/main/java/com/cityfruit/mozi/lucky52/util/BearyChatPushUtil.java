@@ -18,18 +18,24 @@ import java.util.Map;
 @Slf4j
 public class BearyChatPushUtil {
 
-    /**
-     * 向倍洽机器人中推送 QP 得分情况
-     */
-    public static void pushQualityPoint(List<Member> members) {
-        log.info("[开始向倍洽群组推送 QP 得分情况……]");
+
+    public static String getPushQualityPoint(List<Member> members) {
         StringBuilder pushTextStringBuilder = new StringBuilder(DateUtil.getCurrentDateTime());
         // 获取用户信息
         for (Member member : members) {
             // 构造消息体
             pushTextStringBuilder.append("\n").append(BearyChatConst.scheduleQualityPoint(member));
         }
-        String pushText = pushTextStringBuilder.toString();
+        return pushTextStringBuilder.toString();
+    }
+
+    /**
+     * 向倍洽机器人中推送 QP 得分情况
+     */
+    public static void pushQualityPoint(List<Member> members) {
+        log.info("[开始向倍洽群组推送 QP 得分情况……]");
+
+        String pushText = getPushQualityPoint(members);
         // 构造请求体
         Map<String, Object> body = new HashMap<String, Object>(1) {{
             put("text", pushText);

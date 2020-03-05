@@ -30,6 +30,13 @@ public class MemberController {
     }
 
     @ResponseBody
+    @RequestMapping(value = RequestPathConst.GET_PUSH_QUALITY_POINT, method = RequestMethod.GET)
+    public String getPushQuality_point() {
+        log.info("[RequestPathConst: {}]", RequestPathConst.GET_PUSH_QUALITY_POINT);
+        return memberService.getPushQualityPoint();
+    }
+
+    @ResponseBody
     @RequestMapping(value = RequestPathConst.GET_QUALITY_POINT, method = RequestMethod.POST)
     public BearyChatResponseParam getQualityPoint(@RequestBody BearyChatRequestParam bearyChatRequestParam) {
         BearyChatResponseParam bearyChatResponseParam = new BearyChatResponseParam();

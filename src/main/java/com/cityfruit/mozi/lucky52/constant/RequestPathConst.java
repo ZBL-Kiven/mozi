@@ -22,6 +22,11 @@ public final class RequestPathConst {
     public static final String GET_MEMBERS = "/mozi/v1/lucky-52/get-members";
 
     /**
+     * 获取所有人的评分
+     */
+    public static final String GET_PUSH_QUALITY_POINT = "/mozi/v1/lucky-52/get-push-quality-point";
+
+    /**
      * 获取个人得分
      */
     public static final String GET_QUALITY_POINT = "/mozi/v1/lucky-52/get-quality-point";

@@ -18,6 +18,13 @@ public interface MemberService {
     List<Member> getMembers();
 
     /**
+     * 获取推送所有人 QP
+     *
+     * @return 所有人 QP
+     */
+    String getPushQualityPoint();
+
+    /**
      * 获取个人得分 QP 推送
      *
      * @param bearyChatRequestParam BC 请求参数

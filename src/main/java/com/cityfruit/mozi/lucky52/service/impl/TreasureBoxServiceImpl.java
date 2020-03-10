@@ -46,10 +46,13 @@ public class TreasureBoxServiceImpl implements TreasureBoxService {
         return ScoreUtil.getMembers(false, memberMap -> {
             Member member = null;
             for (Member bean : memberMap.values()) {
-                if (bean.getQualityPoint() >= TreasureBoxUtil.QP_50
-                        && bean.getBearyChatId().equals(bearyChatName)) {
-                    member = bean;
-                    break;
+                if (bean.getBearyChatId().equals(bearyChatName)) {
+                    // 添加操作记录
+                    OperationsUtil.addOperation(bean.getName(), OperationsUtil.OPERATION_OPEN_TREASURE_BOX);
+                    if (bean.getQualityPoint() >= TreasureBoxUtil.QP_50) {
+                        member = bean;
+                        break;
+                    }
                 }
             }
 

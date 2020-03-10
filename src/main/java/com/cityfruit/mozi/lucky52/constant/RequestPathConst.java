@@ -41,4 +41,9 @@ public final class RequestPathConst {
      */
     public static final String OPEN_TREASURE_BOX = "/mozi/v1/lucky-52/open-treasure-box";
 
+    /**
+     * 获取成员操作数量统计
+     */
+    public static final String GET_OPERATIONS = "/mozi/v1/lucky-52/get-operations";
+
 }

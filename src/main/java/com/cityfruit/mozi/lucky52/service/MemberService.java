@@ -1,6 +1,7 @@
 package com.cityfruit.mozi.lucky52.service;
 
 import com.cityfruit.mozi.lucky52.entity.Member;
+import com.cityfruit.mozi.lucky52.entity.MemberOperation;
 import com.cityfruit.mozi.lucky52.parameter.BearyChatRequestParam;
 
 import java.util.List;
@@ -39,5 +40,12 @@ public interface MemberService {
      * @return 个人品质碎片数量
      */
     String getQualityFragment(BearyChatRequestParam bearyChatRequestParam);
+
+    /**
+     * 查看每个用户使用 @eva 三个命令的次数
+     *
+     * @return 每个用户使用 @eva 三个命令的次数的列表
+     */
+    List<MemberOperation> getOperations();
 
 }

@@ -21,4 +21,5 @@ public final class JsonKeysConst {
     public static final String OPENED = "opened";
     public static final String QUALITY_FRAGMENT = "qualityFragment";
     public static final String EXCHANGED = "exchanged";
+    public static final String OPERATION = "operation";
 }

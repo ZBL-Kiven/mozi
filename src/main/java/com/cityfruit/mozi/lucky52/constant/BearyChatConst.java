@@ -74,7 +74,7 @@ public class BearyChatConst {
         return (qualityFragment == 0)
                 ?
                 ("@" + bearyChatId + "，很遗憾没有抽中，明天再来～" + PORTAL)
-                : ("@" + bearyChatId + "，恭喜您，您已获得 " + qualityFragment + " 个 `品质碎片`" + PORTAL);
+                : ("@" + bearyChatId + "，恭喜您，您已获得 " + qualityFragment + " 个 `品质星碎片`" + PORTAL);
     }
 
     public static String noRights(String bearyChatId) {

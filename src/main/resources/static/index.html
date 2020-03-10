@@ -84,6 +84,9 @@
       },
     })
     var operationStr = "";
+    function checkIfOver9999(num) {
+      return (num > 9999) ? "9999+" : num;
+    }
     $.ajax({
       type: "GET",
       url: "/mozi/v1/lucky-52/get-operations",
@@ -92,7 +95,13 @@
         window.console.log(data)
         data.forEach(memberOperation => {
           console.log(memberOperation);
-          operationStr += `<tr><td>${memberOperation.name}</td><td>${memberOperation.dailyOpenTreasureBox}</td><td>${memberOperation.totalOpenTreasureBox}</td><td>${memberOperation.dailyGetQualityPoint}</td><td>${memberOperation.totalGetQualityPoint}</td><td>${memberOperation.dailyGetQualityFragment}</td><td>${memberOperation.totalGetQualityFragment}</td></tr>`
+          operationStr += `<tr><td>${checkIfOver9999(memberOperation.name)}</td>
+                               <td>${checkIfOver9999(memberOperation.dailyOpenTreasureBox)}</td>
+                               <td>${checkIfOver9999(memberOperation.totalOpenTreasureBox)}</td>
+                               <td>${checkIfOver9999(memberOperation.dailyGetQualityPoint)}</td>
+                               <td>${checkIfOver9999(memberOperation.totalGetQualityPoint)}</td>
+                               <td>${checkIfOver9999(memberOperation.dailyGetQualityFragment)}</td>
+                               <td>${checkIfOver9999(memberOperation.totalGetQualityFragment)}</td></tr>`
         });
         $('.Operations').empty().append(operationStr);
       },

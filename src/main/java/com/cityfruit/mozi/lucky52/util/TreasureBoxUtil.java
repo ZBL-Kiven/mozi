@@ -10,14 +10,19 @@ import java.util.Random;
  */
 public class TreasureBoxUtil {
 
+    //50 - 59
     public static final Float QP_50 = 50f;
-
+    //60 - 69
     public static final Float QP_60 = 60f;
-
+    //70 - 79
+    public static final Float QP_70 = 70f;
+    //80 - 89
     public static final Float QP_80 = 80f;
-
+    //90 - 99
+    public static final Float QP_90 = 90f;
+    //100 - 119
     public static final Float QP_100 = 100f;
-
+    //120
     public static final Float QP_120 = 120f;
 
     /**
@@ -65,7 +70,7 @@ public class TreasureBoxUtil {
             put(8, 2);
             put(9, 2);
         }});
-        QUALITY_FRAGMENT_MAP.put(QP_80, new HashMap<Integer, Integer>() {{
+        QUALITY_FRAGMENT_MAP.put(QP_70, new HashMap<Integer, Integer>() {{
             put(0, 1);
             put(1, 1);
             put(2, 1);
@@ -77,10 +82,34 @@ public class TreasureBoxUtil {
             put(8, 2);
             put(9, 2);
         }});
-        QUALITY_FRAGMENT_MAP.put(QP_100, new HashMap<Integer, Integer>() {{
+        QUALITY_FRAGMENT_MAP.put(QP_80, new HashMap<Integer, Integer>() {{
             put(0, 1);
             put(1, 1);
             put(2, 1);
+            put(3, 1);
+            put(4, 1);
+            put(5, 2);
+            put(6, 2);
+            put(7, 2);
+            put(8, 2);
+            put(9, 2);
+        }});
+        QUALITY_FRAGMENT_MAP.put(QP_90, new HashMap<Integer, Integer>() {{
+            put(0, 1);
+            put(1, 1);
+            put(2, 1);
+            put(3, 2);
+            put(4, 2);
+            put(5, 2);
+            put(6, 2);
+            put(7, 2);
+            put(8, 2);
+            put(9, 2);
+        }});
+        QUALITY_FRAGMENT_MAP.put(QP_100, new HashMap<Integer, Integer>() {{
+            put(0, 1);
+            put(1, 1);
+            put(2, 2);
             put(3, 2);
             put(4, 2);
             put(5, 2);
@@ -156,12 +185,17 @@ public class TreasureBoxUtil {
      */
     public static int getQualityFragmentsByQualityPoint(float qualityPoint) {
         int random = new Random().nextInt(10);
+
         if ((qualityPoint >= QP_50) && (qualityPoint < QP_60)) {
             return QUALITY_FRAGMENT_MAP.get(QP_50).get(random);
-        } else if ((qualityPoint >= QP_60) && (qualityPoint < QP_80)) {
+        } else if ((qualityPoint >= QP_60) && (qualityPoint < QP_70)) {
             return QUALITY_FRAGMENT_MAP.get(QP_60).get(random);
-        } else if ((qualityPoint >= QP_80) && (qualityPoint < QP_100)) {
+        } else if ((qualityPoint >= QP_70) && (qualityPoint < QP_80)) {
+            return QUALITY_FRAGMENT_MAP.get(QP_70).get(random);
+        } else if ((qualityPoint >= QP_80) && (qualityPoint < QP_90)) {
             return QUALITY_FRAGMENT_MAP.get(QP_80).get(random);
+        } else if ((qualityPoint >= QP_90) && (qualityPoint < QP_100)) {
+            return QUALITY_FRAGMENT_MAP.get(QP_90).get(random);
         } else if ((qualityPoint >= QP_100) && (qualityPoint < QP_120)) {
             return QUALITY_FRAGMENT_MAP.get(QP_100).get(random);
         } else if (qualityPoint >= QP_120) {

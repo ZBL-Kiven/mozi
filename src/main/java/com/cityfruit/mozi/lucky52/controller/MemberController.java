@@ -2,6 +2,7 @@ package com.cityfruit.mozi.lucky52.controller;
 
 import com.cityfruit.mozi.lucky52.constant.RequestPathConst;
 import com.cityfruit.mozi.lucky52.entity.Member;
+import com.cityfruit.mozi.lucky52.entity.MemberOperation;
 import com.cityfruit.mozi.lucky52.parameter.BearyChatRequestParam;
 import com.cityfruit.mozi.lucky52.parameter.BearyChatResponseParam;
 import com.cityfruit.mozi.lucky52.service.MemberService;
@@ -52,6 +53,18 @@ public class MemberController {
         log.info("[RequestPathConst: {}] Param: {}", RequestPathConst.GET_QUALITY_FRAGMENT, bearyChatRequestParam);
         bearyChatResponseParam.setText(memberService.getQualityFragment(bearyChatRequestParam));
         return bearyChatResponseParam;
+    }
+
+    /**
+     * 查看每个用户使用 @eva 三个命令的次数
+     *
+     * @return 每个用户使用 @eva 三个命令的次数的列表
+     */
+    @ResponseBody
+    @RequestMapping(value = RequestPathConst.GET_OPERATIONS, method = RequestMethod.GET)
+    public List<MemberOperation> getOperations() {
+        log.info("[RequestPathConst: {}]", RequestPathConst.GET_OPERATIONS);
+        return memberService.getOperations();
     }
 
 }

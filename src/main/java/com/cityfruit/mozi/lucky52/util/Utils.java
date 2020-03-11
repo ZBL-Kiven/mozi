@@ -270,7 +270,7 @@ public class Utils {
             if (task.isTaskSuccess11() && !task.isTaskPush11()) {
                 log.info("[开始向倍洽群组推送 {} {} 特殊任务 完成情况]", member.getName(), 11);
                 task.setTaskPush11(true);
-                BearyChatPushUtil.pushBcByFinishedTask(member.getBearyChatId(), TaskConst.TASK_NAME_11, 5, member.getQualityPoint());
+                BearyChatPushUtil.pushBcByFinishedTask(member.getBearyChatId(), TaskConst.TASK_NAME_11, TaskConst.TASK_NAME_11_EXTRA_SCORE, member.getQualityPoint());
             }
             if (task.isTaskSuccess10() && !task.isTaskPush10()) {
                 log.info("[开始向倍洽群组推送 {} {} 特殊任务 完成情况]", member.getName(), 10);

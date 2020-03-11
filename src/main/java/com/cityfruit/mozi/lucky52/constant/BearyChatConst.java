@@ -167,7 +167,7 @@ public class BearyChatConst {
         sum += tasks.isTaskSuccess8() ? 5 : 0;
         sum += tasks.isTaskSuccess9() ? 5 : 0;
         sum += tasks.isTaskSuccess10() ? 2 : 0;
-        sum += tasks.isTaskSuccess11() ? 5 : 0;
+        sum += tasks.isTaskSuccess11() ? TaskConst.TASK_NAME_11_EXTRA_SCORE : 0;
         return sum;
     }
 

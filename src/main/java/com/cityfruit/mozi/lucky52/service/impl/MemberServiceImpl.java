@@ -70,23 +70,24 @@ public class MemberServiceImpl implements MemberService {
                 contentType = BearyChatConst.TYPE_QP_SCROE_EQUEALS;
             }
             for (Member member : members) {
-                float currentScore = member.getQualityPoint();
-                int firstIndex = allScores.indexOf(currentScore);
-                if (contentType == -1) {
-                    //第一名
-                    if (firstIndex == 0) {
-                        int lastIndex = allScores.lastIndexOf(currentScore);
-                        contentType = BearyChatConst.TYPE_QP_SCORE_FIRST;
-                        perOfWins = Utils.getPercentOfWins(lastIndex + 1, memberSize);
-                    } else {
-                        contentType = BearyChatConst.TYPE_QP_SCORE_NOT_FIRST;
-                        scoreDiff = firstMemberScore - currentScore;
-                    }
-                }
+
                 if (member.getBearyChatId().equals(bearyChatRequestParam.getUser_name())) {
+                    float currentScore = member.getQualityPoint();
+                    int firstIndex = allScores.indexOf(currentScore);
+                    if (contentType == -1) {
+                        //第一名
+                        if (firstIndex == 0) {
+                            int lastIndex = allScores.lastIndexOf(currentScore);
+                            contentType = BearyChatConst.TYPE_QP_SCORE_FIRST;
+                            perOfWins = Utils.getPercentOfWins(lastIndex + 1, memberSize);
+                        } else {
+                            contentType = BearyChatConst.TYPE_QP_SCORE_NOT_FIRST;
+                            scoreDiff = firstMemberScore - currentScore;
+                        }
+                    }
                     // 添加操作记录
                     OperationsUtil.addOperation(member.getName(), OperationsUtil.OPERATION_GET_QUALITY_POINT);
-                    return BearyChatConst.getQualityPoint(member,firstScoreMember, currentScore, contentType, perOfWins, scoreDiff);
+                    return BearyChatConst.getQualityPoint(member, firstScoreMember, currentScore, contentType, perOfWins, scoreDiff);
                 }
             }
         }

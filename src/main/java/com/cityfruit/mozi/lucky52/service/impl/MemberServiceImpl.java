@@ -6,6 +6,7 @@ import com.cityfruit.mozi.lucky52.parameter.BearyChatRequestParam;
 import com.cityfruit.mozi.lucky52.service.MemberService;
 import com.cityfruit.mozi.lucky52.util.BearyChatPushUtil;
 import com.cityfruit.mozi.lucky52.util.ScoreUtil;
+import com.cityfruit.mozi.lucky52.util.Utils;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -46,12 +47,41 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public String getQualityPoint(BearyChatRequestParam bearyChatRequestParam) {
         List<Member> members = getMembers();
-        for (Member member :
-                members) {
-            if (member.getBearyChatId().equals(bearyChatRequestParam.getUser_name())) {
-                return BearyChatConst.getQualityPoint(member);
+        int memberSize = members.size();
+        //formart 所需的内容
+        int contentType = -1;
+        //击败的百分比
+        String perOfWins = "";
+        float scoreDiff = 0.0f;
+        if (memberSize > 0) {
+            Member firstScoreMember = members.get(0);
+            Member lastScoreMember = members.get(memberSize - 1);
+            float firstMemberScore = firstScoreMember.getQualityPoint();
+            float lastMemberScore = lastScoreMember.getQualityPoint();
+            ArrayList<Float> allScores = getQualityPoints(members);
+            if (firstMemberScore == lastMemberScore) {
+                contentType = BearyChatConst.TYPE_QP_SCROE_EQUEALS;
+            }
+            for (Member member : members) {
+                float currentScore = member.getQualityPoint();
+                int firstIndex = allScores.indexOf(currentScore);
+                if (contentType == -1) {
+                    //第一名
+                    if (firstIndex == 0) {
+                        int lastIndex = allScores.lastIndexOf(currentScore);
+                        contentType = BearyChatConst.TYPE_QP_SCORE_FIRST;
+                        perOfWins = Utils.getPercentOfWins(lastIndex + 1, memberSize);
+                    } else {
+                        contentType = BearyChatConst.TYPE_QP_SCORE_NOT_FIRST;
+                        scoreDiff = firstMemberScore - currentScore;
+                    }
+                }
+                if (member.getBearyChatId().equals(bearyChatRequestParam.getUser_name())) {
+                    return BearyChatConst.getQualityPoint(member,firstScoreMember, currentScore, contentType, perOfWins, scoreDiff);
+                }
             }
         }
+
         return BearyChatConst.noRights(bearyChatRequestParam.getUser_name());
     }
 
@@ -73,4 +103,22 @@ public class MemberServiceImpl implements MemberService {
         return BearyChatConst.noRights(bearyChatRequestParam.getUser_name());
     }
 
+    /**
+     * 获取所有人员的 qp 分数集合
+     *
+     * @return
+     */
+    private ArrayList<Float> getQualityPoints(List<Member> members) {
+        ArrayList<Float> qpScores = new ArrayList<>();
+        if (members.size() > 0) {
+            for (Member member : members) {
+                float currentQpScore = member.getQualityPoint();
+                qpScores.add(currentQpScore);
+            }
+            return qpScores;
+        } else {
+            return qpScores;
+        }
+
+    }
 }

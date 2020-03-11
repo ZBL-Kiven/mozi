@@ -7,6 +7,7 @@ import com.cityfruit.mozi.lucky52.entity.Member;
 import com.cityfruit.mozi.lucky52.entity.TaskStatus;
 import lombok.extern.slf4j.Slf4j;
 
+import java.text.DecimalFormat;
 import java.util.List;
 import java.util.Map;
 
@@ -278,6 +279,27 @@ public class Utils {
                 BearyChatPushUtil.pushBcByFinishedTask(member.getBearyChatId(), TaskConst.TASK_NAME_10, 2, member.getQualityPoint());
             }
         }
+    }
+
+    /**
+     * 获取第一名击败的百分比
+     *
+     * @param firstCount 第一的用户数
+     * @param memberSize 所有用户数
+     * @return
+     */
+    public static String getPercentOfWins(float firstCount, float memberSize) {
+
+        try {
+            DecimalFormat df1 = new DecimalFormat("0.00");
+            String m = df1.format(firstCount / memberSize);
+            double percent = 1 - Double.valueOf(m);
+            DecimalFormat df = new DecimalFormat("0%");
+            return (df.format(percent));
+        } catch (Exception e) {
+            return "";
+        }
+
     }
 
 }

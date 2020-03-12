@@ -221,10 +221,10 @@ public class BearyChatConst {
     private static int calculateSpecialQualityPoint(TaskStatus tasks) {
         int sum = 0;
         sum += tasks.isTaskSuccess1() ? 1 : 0;
-        sum += tasks.isTaskSuccess2() ? 1 : 0;
-        sum += tasks.isTaskSuccess3() ? 3 : 0;
-        sum += tasks.isTaskSuccess4() ? 5 : 0;
-        sum += tasks.isTaskSuccess5() ? 5 : 0;
+        sum += tasks.isTaskSuccess2() ? TaskConst.TASK_NAME_2_EXTRA_SCORE : 0;
+        sum += tasks.isTaskSuccess3() ? TaskConst.TASK_NAME_3_EXTRA_SCORE : 0;
+        sum += tasks.isTaskSuccess4() ? TaskConst.TASK_NAME_4_EXTRA_SCORE : 0;
+        sum += tasks.isTaskSuccess5() ? TaskConst.TASK_NAME_5_EXTRA_SCORE : 0;
         sum += tasks.isTaskSuccess6() ? 2 : 0;
         sum += tasks.isTaskSuccess7() ? 2 : 0;
         sum += tasks.isTaskSuccess8() ? 5 : 0;

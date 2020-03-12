@@ -175,24 +175,24 @@ public class Utils {
         if (status.isTaskSuccess2() && !status.isTaskPush2()) {
             status.setTaskPush2(true);
             //需要推送
-            pushTask(member, TaskConst.TASK_NAME_2, 1);
+            pushTask(member, TaskConst.TASK_NAME_2, TaskConst.TASK_NAME_2_EXTRA_SCORE);
         }
 
         if (status.isTaskSuccess3() && !status.isTaskPush3()) {
             status.setTaskPush3(true);
             //需要推送
-            pushTask(member, TaskConst.TASK_NAME_3, 3);
+            pushTask(member, TaskConst.TASK_NAME_3, TaskConst.TASK_NAME_3_EXTRA_SCORE);
         }
 
         if (status.isTaskSuccess4() && !status.isTaskPush4()) {
             status.setTaskPush4(true);
             //需要推送
-            pushTask(member, TaskConst.TASK_NAME_4, 5);
+            pushTask(member, TaskConst.TASK_NAME_4, TaskConst.TASK_NAME_4_EXTRA_SCORE);
         }
         if (status.isTaskSuccess5() && !status.isTaskPush5()) {
             status.setTaskPush5(true);
             //需要推送
-            pushTask(member, TaskConst.TASK_NAME_5, 5);
+            pushTask(member, TaskConst.TASK_NAME_5, TaskConst.TASK_NAME_5_EXTRA_SCORE);
         }
 
         // 6、判断今日 S1 BUG 总数 > 0

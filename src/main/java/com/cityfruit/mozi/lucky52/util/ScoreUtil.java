@@ -76,7 +76,9 @@ public class ScoreUtil {
         products = ZentaoUtil.getProducts().keySet();
 //        products = new HashSet<>();
 //        products.add("9");
-
+        products.remove("2");
+        products.remove("3");
+        products.remove("4");
 
         log.info("[产品Id 列表]{} 总数 {}", products, products.size());
         // 遍历产品列表，获取当日创建

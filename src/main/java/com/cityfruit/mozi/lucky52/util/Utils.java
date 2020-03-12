@@ -36,6 +36,8 @@ public class Utils {
 
         if (actionType.equals(BugConst.ACTION_TYPE_CLOSE)) {
             member = memberMap.get(bug.getClosedBy());
+        } else if (BugConst.ACTION_TYPE_ZOMBIE.equals(actionType)) {
+            member = memberMap.get(bug.getAssignedTo());
         } else {
             //获取当前 BUG 创建人
             member = memberMap.get(bug.getOpenedBy());
@@ -112,6 +114,9 @@ public class Utils {
                 break;
             }
             case BugConst.ACTION_TYPE_ZOMBIE: {
+                if (member.getName().equals("何情")) {
+                    log.info("何情 僵尸bug name = {} status = {}  ID ： {}", bug.getAssignedTo(), bug.getStatus(), bug.getId());
+                }
                 member.setZombieCount(member.getZombieCount() + 1);
             }
 

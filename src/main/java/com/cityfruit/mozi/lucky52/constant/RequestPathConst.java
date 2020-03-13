@@ -46,4 +46,9 @@ public final class RequestPathConst {
      */
     public static final String GET_OPERATIONS = "/mozi/v1/lucky-52/get-operations";
 
+    /**
+     * trello 拖動卡片的 WebHook
+     */
+    public static final String TRELLO_ACTION_WEB_HOOK = "/mozi/v1/lucky-52/trello-action";
+
 }

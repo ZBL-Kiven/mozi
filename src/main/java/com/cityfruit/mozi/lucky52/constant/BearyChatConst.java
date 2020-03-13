@@ -1,8 +1,8 @@
 package com.cityfruit.mozi.lucky52.constant;
 
-import com.cityfruit.mozi.lucky52.entity.UserInfo;
 import com.cityfruit.mozi.lucky52.entity.Member;
 import com.cityfruit.mozi.lucky52.entity.TaskStatus;
+import com.cityfruit.mozi.lucky52.entity.UserInfo;
 import com.cityfruit.mozi.lucky52.util.UserUtil;
 
 
@@ -209,7 +209,7 @@ public class BearyChatConst {
                         member.getClose().getOrDefault("4", 0) * 2);
 
 
-        return calculateSpecialQualityPoint(member.getStatus()) + qp;
+        return calculateSpecialQualityPoint(member.getStatus()) + qp + getTrelloMoveCount(member);
     }
 
     /**
@@ -234,6 +234,11 @@ public class BearyChatConst {
         return sum;
     }
 
+    private static int getTrelloMoveCount(Member member) {
+        return member.getTrelloMove().size();
+    }
+
+
     public static String getQualityFragment(Member member) {
         return UserUtil.listUer(false, userInfos -> {
             String userName = member.getName();
@@ -249,5 +254,10 @@ public class BearyChatConst {
     public static String getPushBcByFinishedTask(String bcId, String taskName, int qp, double sumQp) {
         String content = "@%s，恭喜您完成 `%s`，获得 QP +%d（当前总 QP 总分为 %.1f）" + PORTAL;
         return String.format(content, bcId, taskName, qp, sumQp);
+    }
+
+    public static String getPushBcByTrelloMove(String bcId, double sumQp) {
+        String content = "@%s用户，恭喜您完成 `验收 1 个 Trello 任务`，获得 QP +1（当前总 QP 总分为 %.1f）";
+        return String.format(content, bcId, sumQp);
     }
 }

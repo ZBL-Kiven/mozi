@@ -32,6 +32,11 @@ public class Member {
     private String bearyChatId;
 
     /**
+     * Trello ID
+     */
+    private String trelloId;
+
+    /**
      * 有效创建不同级别的 BUG 数量
      */
     private Map<String, Integer> open = new HashMap<>(4);
@@ -45,6 +50,11 @@ public class Member {
      * 今日创建的未确认的 BUG
      */
     private List<String> openedBugs = new ArrayList<>(4);
+
+    /**
+     * trello 所有移動的信息
+     */
+    private List<TrelloMoveInfo> trelloMove = new ArrayList<>();
 
     /**
      * 当日是否开过宝箱

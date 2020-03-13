@@ -29,6 +29,7 @@ public final class UrlConst {
     /**
      * 倍洽机器人：斯巴达幸运52
      */
-    public static final String BC_QUALITY_POINT_PUSH = "https://hook.bearychat.com/=bwD9B/incoming/d9571a4426967225a1cf34acaafcbe5f";
+//    public static final String BC_QUALITY_POINT_PUSH = "https://hook.bearychat.com/=bwD9B/incoming/d9571a4426967225a1cf34acaafcbe5f";
+    public static final String BC_QUALITY_POINT_PUSH = "https://hook.bearychat.com/=bwD9B/incoming/3fb65707d8f53a388ca0b7043ce66312";
 
 }

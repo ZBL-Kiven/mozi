@@ -133,5 +133,16 @@ public class BearyChatPushUtil {
         HttpUtil.post(UrlConst.BC_QUALITY_POINT_PUSH, body, "", HttpUtil.CONTENT_TYPE_JSON);
         log.info("[推送完成]{}", text);
     }
+
+    public static void pushBcTrelloMove(String bearyChatId, double sumQp) {
+        String text = BearyChatConst.getPushBcByTrelloMove(bearyChatId, sumQp);
+        // 构造推送请求体
+        Map<String, Object> body = new HashMap<String, Object>(1) {{
+            put("text", text);
+        }};
+        // 推送至 BC 群组
+        HttpUtil.post(UrlConst.BC_QUALITY_POINT_PUSH, body, "", HttpUtil.CONTENT_TYPE_JSON);
+        log.info("[推送完成]{}", text);
+    }
 }
 

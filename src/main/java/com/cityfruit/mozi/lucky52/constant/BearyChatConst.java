@@ -32,7 +32,7 @@ public class BearyChatConst {
     // 当自己的 QP 总分是发送请求时所有用户第一名时
     private static final String QP_SCORE_FIRST = "@%s , 您当前的 QP 总得分为 %.1f , 已击败 %s 的幸运 52 用户 , 是今日第一名 ! \n" + Bug_Formart_Mark;
     // 当自己的 QP 总分不是发送请求时所有用户第一名时
-    private static final String QP_SCORE_NOT_FIRST = "@%s , 您当前的 QP 总得分为 %.1f , 距第一名还差 %.1f 分 。 再创建 %d 个、关闭 %d 个 bug 第一名就是你了 ！ \n" + Bug_Formart_Mark;
+    private static final String QP_SCORE_NOT_FIRST = "@%s , 您当前的 QP 总得分为 %.1f , 距第一名还差 %.1f 分 ！ \n" + Bug_Formart_Mark;
     // 当所有用户的 QP 得分都是 0；或所有用户的 QP 得分不是 0，且分数相等
     private static final String QP_SCROE_EQUEALS = "@%s , 您当前的 QP 总得分为 %.1f , 和其他用户在同一起跑线 ! \n" + Bug_Formart_Mark;
 
@@ -144,7 +144,7 @@ public class BearyChatConst {
                     closeS1Count, closeS2Count, closeS3Count, closeS4Count);
         } else if (contentType == TYPE_QP_SCORE_NOT_FIRST) { //非第一名
             content = QP_SCORE_NOT_FIRST;
-            int firstOpenS1Count = firstScoreMember.getOpen().getOrDefault("1", 0);
+            /*int firstOpenS1Count = firstScoreMember.getOpen().getOrDefault("1", 0);
             int firstOpenS2Count = firstScoreMember.getOpen().getOrDefault("2", 0);
             int firstOpenS3Count = firstScoreMember.getOpen().getOrDefault("3", 0);
             int firstOpenS4Count = firstScoreMember.getOpen().getOrDefault("4", 0);
@@ -160,9 +160,8 @@ public class BearyChatConst {
             }
             if (diffCloseCount < 0) {
                 diffCloseCount = 0;
-            }
-            return String.format(content, bearyChatId, memberQualityPoint, scoreDiff, diffOpenCount, diffCloseCount
-                    , openS1Count, openS2Count, openS3Count, openS4Count,
+            }*/
+            return String.format(content, bearyChatId, memberQualityPoint, scoreDiff, openS1Count, openS2Count, openS3Count, openS4Count,
                     closeS1Count, closeS2Count, closeS3Count, closeS4Count);
         } else if (contentType == TYPE_QP_SCROE_EQUEALS) {  //同一起跑线
             content = QP_SCROE_EQUEALS;

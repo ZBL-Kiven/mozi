@@ -7,6 +7,7 @@ import com.cityfruit.mozi.lucky52.entity.Member;
 import com.cityfruit.mozi.lucky52.entity.TaskStatus;
 import lombok.extern.slf4j.Slf4j;
 
+import java.text.DecimalFormat;
 import java.util.List;
 import java.util.Map;
 
@@ -35,6 +36,8 @@ public class Utils {
 
         if (actionType.equals(BugConst.ACTION_TYPE_CLOSE)) {
             member = memberMap.get(bug.getClosedBy());
+        } else if (BugConst.ACTION_TYPE_ZOMBIE.equals(actionType)) {
+            member = memberMap.get(bug.getAssignedTo());
         } else {
             //获取当前 BUG 创建人
             member = memberMap.get(bug.getOpenedBy());
@@ -111,6 +114,9 @@ public class Utils {
                 break;
             }
             case BugConst.ACTION_TYPE_ZOMBIE: {
+                if (member.getName().equals("何情")) {
+                    log.info("何情 僵尸bug name = {} status = {}  ID ： {}", bug.getAssignedTo(), bug.getStatus(), bug.getId());
+                }
                 member.setZombieCount(member.getZombieCount() + 1);
             }
 
@@ -174,24 +180,24 @@ public class Utils {
         if (status.isTaskSuccess2() && !status.isTaskPush2()) {
             status.setTaskPush2(true);
             //需要推送
-            pushTask(member, TaskConst.TASK_NAME_2, 1);
+            pushTask(member, TaskConst.TASK_NAME_2, TaskConst.TASK_NAME_2_EXTRA_SCORE);
         }
 
         if (status.isTaskSuccess3() && !status.isTaskPush3()) {
             status.setTaskPush3(true);
             //需要推送
-            pushTask(member, TaskConst.TASK_NAME_3, 3);
+            pushTask(member, TaskConst.TASK_NAME_3, TaskConst.TASK_NAME_3_EXTRA_SCORE);
         }
 
         if (status.isTaskSuccess4() && !status.isTaskPush4()) {
             status.setTaskPush4(true);
             //需要推送
-            pushTask(member, TaskConst.TASK_NAME_4, 5);
+            pushTask(member, TaskConst.TASK_NAME_4, TaskConst.TASK_NAME_4_EXTRA_SCORE);
         }
         if (status.isTaskSuccess5() && !status.isTaskPush5()) {
             status.setTaskPush5(true);
             //需要推送
-            pushTask(member, TaskConst.TASK_NAME_5, 5);
+            pushTask(member, TaskConst.TASK_NAME_5, TaskConst.TASK_NAME_5_EXTRA_SCORE);
         }
 
         // 6、判断今日 S1 BUG 总数 > 0
@@ -270,7 +276,7 @@ public class Utils {
             if (task.isTaskSuccess11() && !task.isTaskPush11()) {
                 log.info("[开始向倍洽群组推送 {} {} 特殊任务 完成情况]", member.getName(), 11);
                 task.setTaskPush11(true);
-                BearyChatPushUtil.pushBcByFinishedTask(member.getBearyChatId(), TaskConst.TASK_NAME_11, 5, member.getQualityPoint());
+                BearyChatPushUtil.pushBcByFinishedTask(member.getBearyChatId(), TaskConst.TASK_NAME_11, TaskConst.TASK_NAME_11_EXTRA_SCORE, member.getQualityPoint());
             }
             if (task.isTaskSuccess10() && !task.isTaskPush10()) {
                 log.info("[开始向倍洽群组推送 {} {} 特殊任务 完成情况]", member.getName(), 10);
@@ -278,6 +284,27 @@ public class Utils {
                 BearyChatPushUtil.pushBcByFinishedTask(member.getBearyChatId(), TaskConst.TASK_NAME_10, 2, member.getQualityPoint());
             }
         }
+    }
+
+    /**
+     * 获取第一名击败的百分比
+     *
+     * @param firstCount 第一的用户数
+     * @param memberSize 所有用户数
+     * @return
+     */
+    public static String getPercentOfWins(float firstCount, float memberSize) {
+
+        try {
+            DecimalFormat df1 = new DecimalFormat("0.00");
+            String m = df1.format(firstCount / memberSize);
+            double percent = 1 - Double.valueOf(m);
+            DecimalFormat df = new DecimalFormat("0%");
+            return (df.format(percent));
+        } catch (Exception e) {
+            return "";
+        }
+
     }
 
 }

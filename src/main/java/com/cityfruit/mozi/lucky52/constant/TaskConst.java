@@ -13,4 +13,15 @@ public class TaskConst {
     public static final String TASK_NAME_9 = "当天关闭 S3+S4 Bug 总数为 30";
     public static final String TASK_NAME_10 = "前一天手上僵尸 Bug = 0";
     public static final String TASK_NAME_11 = "前一天 QP 得分第一名";
+
+    //完成任务 2 获取的额外附加得分 3 分
+    public static final int TASK_NAME_2_EXTRA_SCORE = 3;
+    //完成任务 3 获取的额外附加得分 5 分
+    public static final int TASK_NAME_3_EXTRA_SCORE = 5;
+    //完成任务 4 获取的额外附加得分 10 分
+    public static final int TASK_NAME_4_EXTRA_SCORE = 10;
+    //完成任务 5 获取的额外附加得分 20 分
+    public static final int TASK_NAME_5_EXTRA_SCORE = 20;
+    //完成任务 11 获取的额外附加得分 10 分
+    public static final int TASK_NAME_11_EXTRA_SCORE = 10;
 }

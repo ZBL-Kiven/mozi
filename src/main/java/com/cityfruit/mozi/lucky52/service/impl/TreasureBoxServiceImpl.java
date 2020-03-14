@@ -33,10 +33,6 @@ public class TreasureBoxServiceImpl implements TreasureBoxService {
      */
     @Override
     public String openTreasureBox(BearyChatRequestParam bearyChatRequestParam) {
-        // 群组判断
-        if (!bearyChatRequestParam.checkChannel(BearyChatConst.OPEN_TREASURE_BOX_GROUP)) {
-            return BearyChatConst.INVALID_GROUP;
-        }
 
         String bearyChatName = bearyChatRequestParam.getUser_name();
         if (StringUtil.isEmpty(bearyChatName)) {
@@ -46,10 +42,17 @@ public class TreasureBoxServiceImpl implements TreasureBoxService {
         return ScoreUtil.getMembers(false, memberMap -> {
             Member member = null;
             for (Member bean : memberMap.values()) {
-                if (bean.getQualityPoint() >= TreasureBoxUtil.QP_50
-                        && bean.getBearyChatId().equals(bearyChatName)) {
-                    member = bean;
-                    break;
+                if (bean.getBearyChatId().equals(bearyChatName)) {
+                    // 添加操作记录
+                    OperationsUtil.addOperation(bean.getName(), OperationsUtil.OPERATION_OPEN_TREASURE_BOX);
+                    // 群组判断
+                    if (!bearyChatRequestParam.checkChannel(BearyChatConst.OPEN_TREASURE_BOX_GROUP)) {
+                        return BearyChatConst.INVALID_GROUP;
+                    }
+                    if (bean.getQualityPoint() >= TreasureBoxUtil.QP_50) {
+                        member = bean;
+                        break;
+                    }
                 }
             }
 

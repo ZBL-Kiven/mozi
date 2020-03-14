@@ -17,5 +17,6 @@ public final class FilePathConst {
 
     public static final String MEMBERS_JSON_FILE = JSON_FILE_PATH + "/members.json";
 
+    public static final String OPERATIONS_JSON_FILE = JSON_FILE_PATH + "/operations.json";
 
 }

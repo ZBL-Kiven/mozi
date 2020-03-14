@@ -45,11 +45,28 @@
 
     </tbody>
 </table>
+<br>
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th>用户名</th>
+        <th style="width: 8em">@eva 我要中奖【当天】</th>
+        <th style="width: 8em">@eva 我要中奖【总共】</th>
+        <th style="width: 10em">@eva 我的 QP 得分【当天】</th>
+        <th style="width: 10em">@eva 我的 QP 得分【总共】</th>
+        <th style="width: 9em">@eva 我的碎片数【当天】</th>
+        <th style="width: 9em">@eva 我的碎片数【总共】</th>
+    </tr>
+    </thead>
+    <tbody class="Operations">
+
+    </tbody>
+</table>
 </body>
 </html>
 <script>
   $(document).ready(function () {
-    var str = "";
+    var memberStr = "";
     $.ajax({
       type: "GET",
       url: "/mozi/v1/lucky-52/get-members",
@@ -58,9 +75,35 @@
         window.console.log(data)
         data.forEach(member => {
           console.log(member);
-          str += `<tr><td>${member.name}</td><td>${member.qualityPoint}</td></tr>`
+          memberStr += `<tr><td>${member.name}</td><td>${member.qualityPoint}</td></tr>`
         });
-        $('.Members').empty().append(str);
+        $('.Members').empty().append(memberStr);
+      },
+      error: function (data) {
+        window.console.log(data);
+      },
+    })
+    var operationStr = "";
+    function checkIfOver9999(num) {
+      return (num > 9999) ? "9999+" : num;
+    }
+    $.ajax({
+      type: "GET",
+      url: "/mozi/v1/lucky-52/get-operations",
+      async: true,
+      success: function (data) {
+        window.console.log(data)
+        data.forEach(memberOperation => {
+          console.log(memberOperation);
+          operationStr += `<tr><td>${checkIfOver9999(memberOperation.name)}</td>
+                               <td>${checkIfOver9999(memberOperation.dailyOpenTreasureBox)}</td>
+                               <td>${checkIfOver9999(memberOperation.totalOpenTreasureBox)}</td>
+                               <td>${checkIfOver9999(memberOperation.dailyGetQualityPoint)}</td>
+                               <td>${checkIfOver9999(memberOperation.totalGetQualityPoint)}</td>
+                               <td>${checkIfOver9999(memberOperation.dailyGetQualityFragment)}</td>
+                               <td>${checkIfOver9999(memberOperation.totalGetQualityFragment)}</td></tr>`
+        });
+        $('.Operations').empty().append(operationStr);
       },
       error: function (data) {
         window.console.log(data);

@@ -23,7 +23,7 @@ public class HelloController {
         log.info("[{} RequestPathConst: {}]",
                 DateUtil.getCurrentDateTimes(),
                 RequestPathConst.HELLO);
-        return "Hello!";
+        return "Fine, thank you. And you?";
     }
 
 }

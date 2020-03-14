@@ -1,8 +1,5 @@
 package com.cityfruit.mozi.lucky52.entity;
 
-import com.alibaba.fastjson.JSONObject;
-import com.cityfruit.mozi.comman.util.DateUtil;
-import com.cityfruit.mozi.lucky52.constant.BugConst;
 import lombok.Data;
 
 /**
@@ -56,5 +53,12 @@ public class Bug {
      * 关闭日期
      */
     private String closedDate;
+
+    /**
+     * 指派人 用于统计 僵尸bug
+     */
+    private String assignedTo;
+
+    private String status;
 
 }

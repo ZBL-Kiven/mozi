@@ -42,8 +42,7 @@ public class UserUtil {
 
     private static List<UserInfo> listUser() {
         String membersStr = JsonUtil.getStringFromFile(FilePathConst.MEMBERS_JSON_FILE);
-        List<UserInfo> userInfoList = JSON.parseArray(membersStr, UserInfo.class);
-        return userInfoList;
+        return JSON.parseArray(membersStr, UserInfo.class);
     }
 
     public static void save(List<UserInfo> userInfos) {

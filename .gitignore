@@ -2,3 +2,5 @@
 target
 log.txt
 *_score.json
+operations.json
+records.json

@@ -1,5 +1,7 @@
 package com.cityfruit.mozi.lucky52.controller;
 
+import com.cityfruit.mozi.comman.util.DateUtil;
+import com.cityfruit.mozi.comman.util.JsonUtil;
 import com.cityfruit.mozi.lucky52.constant.RequestPathConst;
 import com.cityfruit.mozi.lucky52.parameter.ZentaoNoticeRequestParam;
 import com.cityfruit.mozi.lucky52.service.ScoreService;
@@ -22,6 +24,7 @@ public class ScoreController {
     @ResponseBody
     @RequestMapping(value = RequestPathConst.ZENTAO_NOTICE_WEB_HOOK, method = RequestMethod.POST)
     public void score(@RequestBody ZentaoNoticeRequestParam zentaoNoticeRequestParam) {
+        JsonUtil.saveJsonFile(zentaoNoticeRequestParam, DateUtil.getCurrentDateTimes() + ".json");
         log.info("[RequestPathConst: {}] text: {}", RequestPathConst.ZENTAO_NOTICE_WEB_HOOK, zentaoNoticeRequestParam.getText());
         scoreService.score(zentaoNoticeRequestParam);
     }

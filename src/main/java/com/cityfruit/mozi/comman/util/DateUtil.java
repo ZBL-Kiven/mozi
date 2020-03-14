@@ -26,6 +26,12 @@ public class DateUtil {
         return sdf.format(new Date(currentTs));
     }
 
+    public static String getCurrentDateTimes2() {
+        long currentTs = System.currentTimeMillis();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
+        sdf.setTimeZone(TimeZone.getTimeZone("GMT+8"));
+        return sdf.format(new Date(currentTs));
+    }
 
     public static String getCurrentDateTime() {
         long currentTs = System.currentTimeMillis();

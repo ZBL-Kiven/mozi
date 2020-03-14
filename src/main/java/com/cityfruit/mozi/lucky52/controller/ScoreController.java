@@ -24,7 +24,7 @@ public class ScoreController {
     @ResponseBody
     @RequestMapping(value = RequestPathConst.ZENTAO_NOTICE_WEB_HOOK, method = RequestMethod.POST)
     public void score(@RequestBody ZentaoNoticeRequestParam zentaoNoticeRequestParam) {
-        JsonUtil.saveJsonFile(zentaoNoticeRequestParam, DateUtil.getCurrentDateTimes() + ".json");
+        JsonUtil.saveJsonFile(zentaoNoticeRequestParam, DateUtil.getCurrentDateTimes2() + ".json");
         log.info("[RequestPathConst: {}] text: {}", RequestPathConst.ZENTAO_NOTICE_WEB_HOOK, zentaoNoticeRequestParam.getText());
         scoreService.score(zentaoNoticeRequestParam);
     }

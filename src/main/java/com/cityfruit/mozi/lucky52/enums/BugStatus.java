@@ -1,4 +1,4 @@
-package com.cityfruit.mozi.lucky52.entity;
+package com.cityfruit.mozi.lucky52.enums;
 
 public enum BugStatus {
     opened,

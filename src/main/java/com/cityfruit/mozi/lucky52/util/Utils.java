@@ -11,6 +11,8 @@ import java.text.DecimalFormat;
 import java.util.List;
 import java.util.Map;
 
+import static com.cityfruit.mozi.lucky52.constant.BugConst.ACTION_TYPE_CONFIRM;
+
 /**
  * @author tianyuheng
  * @date 2020/02/10
@@ -62,7 +64,7 @@ public class Utils {
             }
 
             // 确认 BUG，将 BUG ID 从 json 文件中移除
-            case BugConst.ACTION_TYPE_CONFIRM: {
+            case ACTION_TYPE_CONFIRM: {
                 // 当天创建的 BUG、创建人属于 QA
                 // 获取该创建人未确认的 BUG 列表
                 // 逆向遍历列表，移除 bugId 相等的元素
@@ -138,7 +140,12 @@ public class Utils {
         float qualityPoint = member.getQualityPoint();
 
         // 增加相应 QP 值
-        float qualityPointAdd = BugConst.QUALITY_POINTS.get(actionType).get(bug.getSeverity());
+        String serverity = bug.getSeverity();
+        switch (actionType) {
+            case ACTION_TYPE_CONFIRM:
+                serverity = "P" + serverity;
+        }
+        float qualityPointAdd = BugConst.QUALITY_POINTS.get(actionType).get(serverity);
 
         // 分数超过 50 推送
         if (pushOpenTreasureBoxNotice) {

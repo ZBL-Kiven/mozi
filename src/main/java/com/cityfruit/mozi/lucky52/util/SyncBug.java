@@ -8,6 +8,7 @@ import com.cityfruit.mozi.comman.util.StringUtil;
 import com.cityfruit.mozi.lucky52.constant.TaskConst;
 import com.cityfruit.mozi.lucky52.constant.UrlConst;
 import com.cityfruit.mozi.lucky52.entity.*;
+import com.cityfruit.mozi.lucky52.enums.BugStatus;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.*;

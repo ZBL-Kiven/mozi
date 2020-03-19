@@ -3,6 +3,7 @@ package com.cityfruit.mozi.lucky52.constant;
 import com.cityfruit.mozi.lucky52.entity.UserInfo;
 import com.cityfruit.mozi.lucky52.entity.Member;
 import com.cityfruit.mozi.lucky52.entity.TaskStatus;
+import com.cityfruit.mozi.lucky52.enums.Role;
 import com.cityfruit.mozi.lucky52.util.UserUtil;
 
 
@@ -196,16 +197,15 @@ public class BearyChatConst {
         // (关闭 S2 级 Bug 数)x8 +
         // (关闭 S3 级 Bug 数)x1.5 +
         // (关闭 S4 级 Bug 数)x2
-
-        float qp = (float) (
-                member.getOpen().getOrDefault("1", 0) * 16 +
-                        member.getOpen().getOrDefault("2", 0) * 8 +
-                        member.getOpen().getOrDefault("3", 0) +
-                        member.getOpen().getOrDefault("4", 0) * 0.5 +
-                        member.getClose().getOrDefault("1", 0) * 20 +
-                        member.getClose().getOrDefault("2", 0) * 8 +
-                        member.getClose().getOrDefault("3", 0) * 1.5 +
-                        member.getClose().getOrDefault("4", 0) * 2);
+        boolean isPO = member.getRole() == Role.PO;
+        float qp = (float) (member.getOpen().getOrDefault("1", 0) * isPO ? 21 : 16 +
+                member.getOpen().getOrDefault("2", 0) * isPO ? 13 : 8 +
+                member.getOpen().getOrDefault("3", 0) * isPO ? 4 : 1 +
+                member.getOpen().getOrDefault("4", 0) * isPO ? 0 : 0.5 +
+                member.getClose().getOrDefault("1", 0) * isPO ? 22 : 20 +
+                member.getClose().getOrDefault("2", 0) * isPO ? 10 : 8 +
+                member.getClose().getOrDefault("3", 0) * isPO ? 3.5 : 1.5 +
+                member.getClose().getOrDefault("4", 0) * isPO ? 4 : 2);
 
 
         return calculateSpecialQualityPoint(member.getStatus()) + qp;

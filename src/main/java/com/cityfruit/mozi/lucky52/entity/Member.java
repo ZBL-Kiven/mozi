@@ -2,6 +2,7 @@ package com.cityfruit.mozi.lucky52.entity;
 
 import com.alibaba.fastjson.annotation.JSONField;
 import com.cityfruit.mozi.lucky52.constant.BearyChatConst;
+import com.cityfruit.mozi.lucky52.enums.Role;
 import lombok.Data;
 
 import java.util.ArrayList;
@@ -15,6 +16,86 @@ import java.util.Map;
  */
 @Data
 public class Member {
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getZentaoId() {
+        return zentaoId;
+    }
+
+    public void setZentaoId(String zentaoId) {
+        this.zentaoId = zentaoId;
+    }
+
+    public String getBearyChatId() {
+        return bearyChatId;
+    }
+
+    public void setBearyChatId(String bearyChatId) {
+        this.bearyChatId = bearyChatId;
+    }
+
+    public Role getUserRole() {
+        return userRole;
+    }
+
+    public void setUserRole(Role userRole) {
+        this.userRole = userRole;
+    }
+
+    public Map<String, Integer> getOpen() {
+        return open;
+    }
+
+    public void setOpen(Map<String, Integer> open) {
+        this.open = open;
+    }
+
+    public Map<String, Integer> getClose() {
+        return close;
+    }
+
+    public void setClose(Map<String, Integer> close) {
+        this.close = close;
+    }
+
+    public List<String> getOpenedBugs() {
+        return openedBugs;
+    }
+
+    public void setOpenedBugs(List<String> openedBugs) {
+        this.openedBugs = openedBugs;
+    }
+
+    public boolean isOpened() {
+        return opened;
+    }
+
+    public void setOpened(boolean opened) {
+        this.opened = opened;
+    }
+
+    public int getZombieCount() {
+        return zombieCount;
+    }
+
+    public void setZombieCount(int zombieCount) {
+        this.zombieCount = zombieCount;
+    }
+
+    public TaskStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(TaskStatus status) {
+        this.status = status;
+    }
 
     /**
      * 姓名
@@ -30,6 +111,11 @@ public class Member {
      * 倍洽 ID
      */
     private String bearyChatId;
+
+    /**
+     * 用户类型
+     */
+    private Role userRole;
 
     /**
      * 有效创建不同级别的 BUG 数量
@@ -62,6 +148,7 @@ public class Member {
         member.setBearyChatId(memberBean.getBearyChatId());
         member.setZentaoId(memberBean.getZentaoId());
         member.setName(memberBean.getName());
+        member.setUserRole(memberBean.getUserRole());
         return member;
     }
 

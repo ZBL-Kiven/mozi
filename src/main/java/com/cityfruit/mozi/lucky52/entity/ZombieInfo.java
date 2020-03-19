@@ -23,4 +23,36 @@ public class ZombieInfo {
 
     public ZombieInfo() {
     }
+
+    public String getBcName() {
+        return bcName;
+    }
+
+    public void setBcName(String bcName) {
+        this.bcName = bcName;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getZombieCount() {
+        return zombieCount;
+    }
+
+    public void setZombieCount(int zombieCount) {
+        this.zombieCount = zombieCount;
+    }
+
+    public List<String> getZombieList() {
+        return zombieList;
+    }
+
+    public void setZombieList(List<String> zombieList) {
+        this.zombieList = zombieList;
+    }
 }

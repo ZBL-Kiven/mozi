@@ -10,6 +10,7 @@ import com.cityfruit.mozi.lucky52.constant.JsonKeysConst;
 import com.cityfruit.mozi.lucky52.entity.Member;
 import com.cityfruit.mozi.lucky52.tools.MapType;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.ILoggerFactory;
 
 import java.lang.reflect.Type;
 import java.util.*;

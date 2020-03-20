@@ -3,6 +3,7 @@ package com.cityfruit.mozi.lucky52.constant;
 import com.cityfruit.mozi.lucky52.entity.Member;
 import com.cityfruit.mozi.lucky52.entity.TaskStatus;
 import com.cityfruit.mozi.lucky52.entity.UserInfo;
+import com.cityfruit.mozi.lucky52.enums.Role;
 import com.cityfruit.mozi.lucky52.util.UserUtil;
 
 
@@ -32,7 +33,7 @@ public class BearyChatConst {
     // 当自己的 QP 总分是发送请求时所有用户第一名时
     private static final String QP_SCORE_FIRST = "@%s , 您当前的 QP 总得分为 %.1f , 已击败 %s 的幸运 52 用户 , 是今日第一名 ! \n" + Bug_Formart_Mark;
     // 当自己的 QP 总分不是发送请求时所有用户第一名时
-    private static final String QP_SCORE_NOT_FIRST = "@%s , 您当前的 QP 总得分为 %.1f , 距第一名还差 %.1f 分 。 再创建 %d 个、关闭 %d 个 bug 第一名就是你了 ！ \n" + Bug_Formart_Mark;
+    private static final String QP_SCORE_NOT_FIRST = "@%s , 您当前的 QP 总得分为 %.1f , 距第一名还差 %.1f 分 ！ \n" + Bug_Formart_Mark;
     // 当所有用户的 QP 得分都是 0；或所有用户的 QP 得分不是 0，且分数相等
     private static final String QP_SCROE_EQUEALS = "@%s , 您当前的 QP 总得分为 %.1f , 和其他用户在同一起跑线 ! \n" + Bug_Formart_Mark;
 
@@ -144,7 +145,7 @@ public class BearyChatConst {
                     closeS1Count, closeS2Count, closeS3Count, closeS4Count);
         } else if (contentType == TYPE_QP_SCORE_NOT_FIRST) { //非第一名
             content = QP_SCORE_NOT_FIRST;
-            int firstOpenS1Count = firstScoreMember.getOpen().getOrDefault("1", 0);
+            /*int firstOpenS1Count = firstScoreMember.getOpen().getOrDefault("1", 0);
             int firstOpenS2Count = firstScoreMember.getOpen().getOrDefault("2", 0);
             int firstOpenS3Count = firstScoreMember.getOpen().getOrDefault("3", 0);
             int firstOpenS4Count = firstScoreMember.getOpen().getOrDefault("4", 0);
@@ -160,9 +161,8 @@ public class BearyChatConst {
             }
             if (diffCloseCount < 0) {
                 diffCloseCount = 0;
-            }
-            return String.format(content, bearyChatId, memberQualityPoint, scoreDiff, diffOpenCount, diffCloseCount
-                    , openS1Count, openS2Count, openS3Count, openS4Count,
+            }*/
+            return String.format(content, bearyChatId, memberQualityPoint, scoreDiff, openS1Count, openS2Count, openS3Count, openS4Count,
                     closeS1Count, closeS2Count, closeS3Count, closeS4Count);
         } else if (contentType == TYPE_QP_SCROE_EQUEALS) {  //同一起跑线
             content = QP_SCROE_EQUEALS;
@@ -197,16 +197,15 @@ public class BearyChatConst {
         // (关闭 S2 级 Bug 数)x8 +
         // (关闭 S3 级 Bug 数)x1.5 +
         // (关闭 S4 级 Bug 数)x2
-
-        float qp = (float) (
-                member.getOpen().getOrDefault("1", 0) * 16 +
-                        member.getOpen().getOrDefault("2", 0) * 8 +
-                        member.getOpen().getOrDefault("3", 0) +
-                        member.getOpen().getOrDefault("4", 0) * 0.5 +
-                        member.getClose().getOrDefault("1", 0) * 20 +
-                        member.getClose().getOrDefault("2", 0) * 8 +
-                        member.getClose().getOrDefault("3", 0) * 1.5 +
-                        member.getClose().getOrDefault("4", 0) * 2);
+        boolean isPO = member.getUserRole() == Role.PO;
+        float qp = (float) (member.getOpen().getOrDefault("1", 0) * (isPO ? 21 : 16) +
+                member.getOpen().getOrDefault("2", 0) * (isPO ? 13 : 8) +
+                member.getOpen().getOrDefault("3", 0) * (isPO ? 4 : 1) +
+                member.getOpen().getOrDefault("4", 0) * (isPO ? 0 : 0.5) +
+                member.getClose().getOrDefault("1", 0) * (isPO ? 22 : 20) +
+                member.getClose().getOrDefault("2", 0) * (isPO ? 10 : 8) +
+                member.getClose().getOrDefault("3", 0) * (isPO ? 3.5 : 1.5) +
+                member.getClose().getOrDefault("4", 0) * (isPO ? 4 : 2));
 
 
         return calculateSpecialQualityPoint(member.getStatus()) + qp + getTrelloMoveCount(member);
@@ -221,10 +220,10 @@ public class BearyChatConst {
     private static int calculateSpecialQualityPoint(TaskStatus tasks) {
         int sum = 0;
         sum += tasks.isTaskSuccess1() ? 1 : 0;
-        sum += tasks.isTaskSuccess2() ? 1 : 0;
-        sum += tasks.isTaskSuccess3() ? 3 : 0;
-        sum += tasks.isTaskSuccess4() ? 5 : 0;
-        sum += tasks.isTaskSuccess5() ? 5 : 0;
+        sum += tasks.isTaskSuccess2() ? TaskConst.TASK_NAME_2_EXTRA_SCORE : 0;
+        sum += tasks.isTaskSuccess3() ? TaskConst.TASK_NAME_3_EXTRA_SCORE : 0;
+        sum += tasks.isTaskSuccess4() ? TaskConst.TASK_NAME_4_EXTRA_SCORE : 0;
+        sum += tasks.isTaskSuccess5() ? TaskConst.TASK_NAME_5_EXTRA_SCORE : 0;
         sum += tasks.isTaskSuccess6() ? 2 : 0;
         sum += tasks.isTaskSuccess7() ? 2 : 0;
         sum += tasks.isTaskSuccess8() ? 5 : 0;

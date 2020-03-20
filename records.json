@@ -1,1 +1,18 @@
-[]
+[
+  {
+    "exchanged":false,
+    "name":"何情",
+    "opened":true,
+    "qualityFragment":0,
+    "qualityPoint":50.5,
+    "ts":1584019593097
+  },
+  {
+    "exchanged":false,
+    "name":"胡立芳",
+    "opened":true,
+    "qualityFragment":1,
+    "qualityPoint":66.5,
+    "ts":1584102845500
+  }
+]

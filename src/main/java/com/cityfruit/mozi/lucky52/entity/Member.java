@@ -2,6 +2,7 @@ package com.cityfruit.mozi.lucky52.entity;
 
 import com.alibaba.fastjson.annotation.JSONField;
 import com.cityfruit.mozi.lucky52.constant.BearyChatConst;
+import com.cityfruit.mozi.lucky52.enums.Role;
 import lombok.Data;
 
 import java.util.ArrayList;
@@ -35,6 +36,11 @@ public class Member {
      * Trello ID
      */
     private String trelloId;
+
+    /**
+     * 用户类型
+     */
+    private Role userRole;
 
     /**
      * 有效创建不同级别的 BUG 数量
@@ -72,6 +78,7 @@ public class Member {
         member.setBearyChatId(memberBean.getBearyChatId());
         member.setZentaoId(memberBean.getZentaoId());
         member.setName(memberBean.getName());
+        member.setUserRole(memberBean.getUserRole());
         return member;
     }
 

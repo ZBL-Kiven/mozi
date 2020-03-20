@@ -26,6 +26,12 @@ public class DateUtil {
         return sdf.format(new Date(currentTs));
     }
 
+    public static String getCurrentDateTimes2() {
+        long currentTs = System.currentTimeMillis();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
+        sdf.setTimeZone(TimeZone.getTimeZone("GMT+8"));
+        return sdf.format(new Date(currentTs));
+    }
 
     public static String getCurrentDateTime() {
         long currentTs = System.currentTimeMillis();
@@ -57,7 +63,30 @@ public class DateUtil {
      */
     public static String getZombieDate() {
         Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.DAY_OF_WEEK, 2);
+        // calendar.set(Calendar.DAY_OF_WEEK, 2);
+        calendar.add(Calendar.DAY_OF_MONTH, -14);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        sdf.setTimeZone(TimeZone.getTimeZone("GMT+8"));
+        return sdf.format(calendar.getTime());
+    }
+
+    /**
+     * 获取上周末 再减去14天（国外时间这个周第一天）
+     *
+     * @return 周末
+     */
+    public static String getZombieDate(String day) {
+        Date date;
+        SimpleDateFormat sdfDay = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            date = sdfDay.parse(day);
+        } catch (ParseException e) {
+            sdfDay.setTimeZone(TimeZone.getTimeZone("GMT+8"));
+            date = new Date(System.currentTimeMillis());
+        }
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        // calendar.set(Calendar.DAY_OF_WEEK, 2);
         calendar.add(Calendar.DAY_OF_MONTH, -14);
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         sdf.setTimeZone(TimeZone.getTimeZone("GMT+8"));
@@ -83,8 +112,8 @@ public class DateUtil {
         return date.getTime();
     }
 
-    public static String getDayFromStr(String time){
-        SimpleDateFormat sdf  = new SimpleDateFormat("yyyy-MM-dd");
+    public static String getDayFromStr(String time) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         sdf.setTimeZone(TimeZone.getTimeZone("GMT+8"));
         return sdf.format(new Date(DateUtil.getTimeMillisFromBug(time)));
     }

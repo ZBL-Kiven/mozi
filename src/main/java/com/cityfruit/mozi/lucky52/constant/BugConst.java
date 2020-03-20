@@ -1,6 +1,9 @@
 package com.cityfruit.mozi.lucky52.constant;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -37,6 +40,10 @@ public final class BugConst {
             put("2", 8f);
             put("3", 1f);
             put("4", 0.5f);
+            put("P1", 21f);
+            put("P2", 13f);
+            put("P3", 4f);
+            put("P4", 0f);
         }});
         QUALITY_POINTS.put(ACTION_TYPE_RESOLVE, new HashMap<String, Float>() {{
             put("1", 16f);

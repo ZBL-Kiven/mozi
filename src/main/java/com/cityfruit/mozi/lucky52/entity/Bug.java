@@ -9,6 +9,7 @@ import lombok.Data;
 @Data
 public class Bug {
 
+
     /**
      * BUG ID
      */
@@ -59,6 +60,39 @@ public class Bug {
      */
     private String assignedTo;
 
+    /**
+     * 当前 BUG 状态
+     */
     private String status;
 
+    /**
+     * 指派日期
+     */
+    private String assignedDate;
+    /**
+     * BUG 类型
+     */
+    private String type;
+    /**
+     * 激活次数
+     */
+    private String activatedCount;
+    /**
+     * 最后激活一次日期
+     */
+    private String activatedDate;
+    /**
+     * 最后解决日期
+     */
+    private String resolvedDate;
+    /**
+     * 最后一次操作人
+     */
+    private String lastEditedBy;
+
+    /**
+     * 最后一次修改日期
+     */
+    private String lastEditedDate;
 }
+

@@ -59,7 +59,7 @@ public class ScheduledTasks {
     /**
      * 每日 18 点向倍洽群组推送不满足开宝箱条件的用户
      */
-    @Scheduled(cron = "0 0 18 * * ?", zone = "Asia/Shanghai")
+    @Scheduled(cron = "30 0 18 * * ?", zone = "Asia/Shanghai")
     public void pushCannotOpenTreasureBoxMembersToBearyChat() {
         List<Member> members = memberService.getMembers();
         BearyChatPushUtil.pushCannotOpenTreasureBoxMembers(members);
@@ -68,7 +68,7 @@ public class ScheduledTasks {
     /**
      * 每日 18 点向倍洽群组推送满足开宝箱条件的用户提醒
      */
-    @Scheduled(cron = "0 0 18 * * ?", zone = "Asia/Shanghai")
+    @Scheduled(cron = "0 1 18 * * ?", zone = "Asia/Shanghai")
     public void pushOpenTreasureBoxNoticeToBearyChat() {
         List<Member> members = memberService.getMembers();
         BearyChatPushUtil.pushOpenTreasureBoxNotice(members);

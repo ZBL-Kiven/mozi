@@ -4,16 +4,18 @@ import com.alibaba.fastjson.JSON;
 import com.cityfruit.mozi.comman.util.DateUtil;
 import com.cityfruit.mozi.comman.util.JsonUtil;
 import com.cityfruit.mozi.comman.util.StringUtil;
-import com.cityfruit.mozi.lucky52.entity.UserInfo;
 import com.cityfruit.mozi.lucky52.constant.FilePathConst;
 import com.cityfruit.mozi.lucky52.constant.JsonKeysConst;
 import com.cityfruit.mozi.lucky52.entity.Member;
+import com.cityfruit.mozi.lucky52.entity.UserInfo;
 import com.cityfruit.mozi.lucky52.tools.MapType;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.ILoggerFactory;
 
 import java.lang.reflect.Type;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 @Slf4j
 public class ScoreUtil {
@@ -67,7 +69,7 @@ public class ScoreUtil {
     }
 
     public static HashMap<String, Member> createScore(String fileName) {
-        log.error("文件地址：{}", FilePathConst.MEMBERS_JSON_FILE);
+        log.info("文件地址：{}", FilePathConst.MEMBERS_JSON_FILE);
         return UserUtil.listUer(true, userInfos -> {
             HashMap<String, Member> members = new HashMap<>();
             // 生成今日的统计报告 MemberBean -> Member

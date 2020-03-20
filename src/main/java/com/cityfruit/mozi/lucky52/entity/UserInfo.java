@@ -5,45 +5,6 @@ import lombok.Data;
 
 @Data
 public class UserInfo {
-    public String getBearyChatId() {
-        return bearyChatId;
-    }
-
-    public void setBearyChatId(String bearyChatId) {
-        this.bearyChatId = bearyChatId;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getZentaoId() {
-        return zentaoId;
-    }
-
-    public void setZentaoId(String zentaoId) {
-        this.zentaoId = zentaoId;
-    }
-
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
-    }
-
-    public int getQualityFragment() {
-        return qualityFragment;
-    }
-
-    public void setQualityFragment(int qualityFragment) {
-        this.qualityFragment = qualityFragment;
-    }
 
     private String bearyChatId;
 
@@ -69,9 +30,9 @@ public class UserInfo {
     }
 
     /**
-     * @param bearyChatId
-     * @param name
-     * @param zentaoId
+     * @param bearyChatId bc id
+     * @param name user name
+     * @param zentaoId zentao id
      */
     public UserInfo(String bearyChatId, String name, String zentaoId, String role) {
         this.bearyChatId = bearyChatId;

@@ -1,11 +1,1 @@
-[{"bearyChatId":"heqing","name":"何情","qualityFragment":1,"zentaoId":"cfruit.hq","role": "QA"},
-  {"bearyChatId":"hulifang20191125","name":"胡立芳","qualityFragment":0,"zentaoId":"tfl.hlf","role": "QA"},
-  {"bearyChatId":"zgtmac","name":"郑大钱","qualityFragment":0,"zentaoId":"cfruit.zdq","role": "PO"},
-  {"bearyChatId":"Areo.Chou","name":"周锐","qualityFragment":2,"zentaoId":"tlf.zr","role": "PO"},
-  {"bearyChatId":"xwt","name":"许文婷","qualityFragment":0,"zentaoId":"tlf.xwt","role": "QA"},
-  {"bearyChatId":"菜酱","name":"袁暠罡","qualityFragment":0,"zentaoId":"cfruit.yhg","role": "PO"},
-  {"bearyChatId":"haiyang.yin","name":"殷海洋","qualityFragment":0,"zentaoId":"cfruit.yhy","role": "PO"},
-  {"bearyChatId":"wcgwangcg","name":"王崇刚","qualityFragment":0,"zentaoId":"cfruit.wcg","role": "PO"},
-  {"bearyChatId":"huyunxiao","name":"胡云肖","qualityFragment":0,"zentaoId":"cfruit.hyx","role": "PO"},
-  {"bearyChatId":"zhixinzhu1","name":"朱智鑫","qualityFragment":0,"zentaoId":"cfruit.zzx","role": "PO"},
-  {"bearyChatId":"qiannan.shi","name":"史倩楠","qualityFragment":0,"zentaoId":"cfruit.sqn","role": "PO"}]
+[{"bearyChatId":"heqing","name":"何情","qualityFragment":1,"role":"QA","userRole":"QA","zentaoId":"cfruit.hq"},{"bearyChatId":"hulifang20191125","name":"胡立芳","qualityFragment":0,"role":"QA","userRole":"QA","zentaoId":"tfl.hlf"},{"bearyChatId":"zgtmac","name":"郑大钱","qualityFragment":0,"role":"PO","userRole":"PO","zentaoId":"cfruit.zdq"},{"bearyChatId":"Areo.Chou","name":"周锐","qualityFragment":2,"role":"PO","userRole":"PO","zentaoId":"tlf.zr"},{"bearyChatId":"xwt","name":"许文婷","qualityFragment":0,"role":"QA","userRole":"QA","zentaoId":"tlf.xwt"},{"bearyChatId":"菜酱","name":"袁暠罡","qualityFragment":0,"role":"PO","userRole":"PO","zentaoId":"cfruit.yhg"},{"bearyChatId":"haiyang.yin","name":"殷海洋","qualityFragment":0,"role":"PO","userRole":"PO","zentaoId":"cfruit.yhy"},{"bearyChatId":"wcgwangcg","name":"王崇刚","qualityFragment":0,"role":"PO","userRole":"PO","zentaoId":"cfruit.wcg"},{"bearyChatId":"huyunxiao","name":"胡云肖","qualityFragment":0,"role":"PO","userRole":"PO","zentaoId":"cfruit.hyx"},{"bearyChatId":"zhixinzhu1","name":"朱智鑫","qualityFragment":0,"role":"PO","userRole":"PO","zentaoId":"cfruit.zzx"},{"bearyChatId":"qiannan.shi","name":"史倩楠","qualityFragment":0,"role":"PO","userRole":"PO","zentaoId":"cfruit.sqn"}]

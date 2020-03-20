@@ -309,7 +309,7 @@ public class ZentaoUtil {
         }});
     }
 
-    public static String zentaoSid = "9kfif5uhfkd6d0esmt2c2f7e42";
+    public static String zentaoSid = "q2863hu1rvabjkdbo5l2n57qf4";
 
     public static String zentaoCookie = "zentaosid=" + zentaoSid + "; path=/";
 

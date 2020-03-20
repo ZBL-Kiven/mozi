@@ -14,46 +14,6 @@ public class BugInfo {
      */
     private int productID;
 
-    public int getProductID() {
-        return productID;
-    }
-
-    public void setProductID(int productID) {
-        this.productID = productID;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getProductName() {
-        return productName;
-    }
-
-    public void setProductName(String productName) {
-        this.productName = productName;
-    }
-
-    public Bug getBug() {
-        return bug;
-    }
-
-    public void setBug(Bug bug) {
-        this.bug = bug;
-    }
-
-    public List<BugAction> getAction() {
-        return action;
-    }
-
-    public void setAction(List<BugAction> action) {
-        this.action = action;
-    }
-
     /**
      * BUG 标题
      */
